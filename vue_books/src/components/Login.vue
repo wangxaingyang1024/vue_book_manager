@@ -2,11 +2,13 @@
   <el-container>
     <el-header>
       <span class="topText">登录</span>
-      <div class="logo" ><img src="../../public/logo.svg" height=""></div>
+      <div class="logo"><img src="../../public/logo.svg" height="" /></div>
     </el-header>
     <el-main>
       <div class="login_container">
-        <div class="picture"><img src="../../public/picture.png" height="400px"></div>
+        <div class="picture">
+          <img src="../../public/picture.png" height="400px" />
+        </div>
         <div class="login_box">
           <!-- 登录表单区域 -->
           <el-form
@@ -21,6 +23,7 @@
               <el-input
                 v-model="loginForm.username"
                 prefix-icon="el-icon-user"
+                placeholder="用户名"
               ></el-input>
             </el-form-item>
             <!-- 密码 -->
@@ -29,12 +32,13 @@
                 v-model="loginForm.password"
                 prefix-icon="el-icon-lock"
                 type="password"
+                placeholder="密码"
               ></el-input>
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
               <el-button type="primary" @click="login">登录</el-button>
-              <el-button >注册</el-button>
+              <el-button @click="signUp">注册</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -49,14 +53,14 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: "",
+        password: "",
       },
       //这是表单的验证规则对象
       loginFormRules: {
         //验证用户名是否合法
         username: [
-          { required: true, message: "请输入登录名称", trigger: "blur" },
+          { required: true, message: "请输入用户名", trigger: "blur" },
           {
             min: 3,
             max: 10,
@@ -69,8 +73,8 @@ export default {
           { required: true, message: "请输入登录密码", trigger: "blur" },
           {
             min: 6,
-            max: 15,
-            message: "长度在 6 到 15 个字符",
+            //max: 15,
+            message: "密码至少为8位",
             trigger: "blur",
           },
         ],
@@ -78,6 +82,10 @@ export default {
     };
   },
   methods: {
+    signUp() {
+      //跳转注册页面
+      this.$router.push("/signUp");
+    },
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
@@ -94,17 +102,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.el-form-item__error {
-    color: #F56C6C;
-    font-size: 12px;
-    line-height: 1;
-    padding-top: 4px;
-    position: absolute;
-    top: 70px !important;
-    left: 90px !important;
-}
-</style>
+
 <style lang="less" scoped>
 .el-main {
   padding: 0;
@@ -126,43 +124,42 @@ export default {
 .login_box {
   position: relative;
   width: 600px;
-  height: 560px;
+  height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff;
   left: 1100px;
   top: 100px;
 }
-.topText{
-      font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-      font-size:30px;
-      position: relative;
-      left: 520px;
-      top: 2px;
+.topText {
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-size: 30px;
+  position: relative;
+  left: 520px;
+  top: 2px;
 }
-.logo{
+.logo {
   position: absolute;
   left: 370px;
   top: 5px;
 }
-.picture{
+.picture {
   position: absolute;
   left: 250px;
   top: 200px;
 }
-.el-form{
+.el-form {
   text-align: center;
+  top: 20px;
 }
-.el-input{
+.el-input {
   width: 500px;
   margin: 0 auto;
   top: 20px;
   height: 50px;
-  margin-top: 40px;
+  margin-top: 10px;
 }
-.el-button{
+.el-button {
   width: 250px;
   margin-top: 50px;
 }
-
-
 </style>
