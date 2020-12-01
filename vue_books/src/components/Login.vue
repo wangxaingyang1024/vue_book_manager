@@ -53,8 +53,8 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "",
-        password: "",
+        username: "xiaoyang",
+        password: "123",
       },
       //这是表单的验证规则对象
       loginFormRules: {
@@ -72,7 +72,7 @@ export default {
         password: [
           { required: true, message: "请输入登录密码", trigger: "blur" },
           {
-            min: 6,
+            min: 1,
             //max: 15,
             message: "密码至少为8位",
             trigger: "blur",
@@ -87,16 +87,17 @@ export default {
       this.$router.push("/signUp");
     },
     login() {
-      this.$refs.loginFormRef.validate(async (valid) => {
+      let that = this;
+      that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await this.$http.post("login", this.loginForm);
-        if (res.meta.status !== 200) return this.$message.error("登录失败!");
-        this.$message.success("登录成功!");
+        const { data: res } = await that.$http.post("http://localhost:8080/api/login", that.loginForm);
+        if (res.status !== 1000) return that.$message.error("登录失败!");
+        that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         console.log(res);
-        window.sessionStorage.setItem("token", res.data.token);
+        //window.session.setItem("token", res.data.token);
         //通过编程式导航跳转到后台主页，路由地址  /home
-        this.$router.push("/home");
+        that.$router.push("/home");
       });
     },
   },

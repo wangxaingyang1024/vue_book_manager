@@ -10,7 +10,7 @@ Vue.use(ElementUI);
 import axios from 'axios'
 Vue.prototype.$http = axios
     //配置请求根路径
-axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://192.168.2.103:8899'
 
 Vue.config.productionTip = false
 

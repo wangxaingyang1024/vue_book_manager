@@ -3,16 +3,28 @@ import Router from 'vue-router'
 
 import Login from '../components/Login.vue'
 import SignUp from '../components/SignUp.vue'
-
+import Home from '../components/Home.vue'
+//import Welcome from '../components/Welcome.vue'
 
 Vue.use(Router)
 
+
+
+
 const router = new Router({
     routes: [
-        //路由重定向
+        // //路由重定向
         { path: '/', redirect: '/login' },
         { path: '/login', component: Login },
         { path: '/signUp', component: SignUp },
+        {
+            path: '/home',
+            component: Home,
+            //redirect: '/welcome',
+            // children: [
+            //     { path: '/welcome', component: Welcome }
+            // ]
+        }
     ]
 })
 
@@ -25,9 +37,11 @@ router.beforeEach((to, from, next) => {
 
     if (to.path === '/login') return next();
     if (to.path === '/signUp') return next();
-    //获取token 
-    const tokenStr = window.sessionStorage.getItem('token')
-    if (!tokenStr) return next('/login')
+    //TODO 2.通过获取token来拦截
+
+    //获取token
+    //const tokenStr = window.localStorage.getItem('token')
+    //if (!tokenStr) return next('/login')
     next()
 })
 

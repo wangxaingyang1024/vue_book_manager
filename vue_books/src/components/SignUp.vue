@@ -31,14 +31,14 @@
               <el-input
                 v-model="addForm.password"
                 prefix-icon="el-icon-lock"
-                type=""
+                type="password"
                 placeholder="设置您的登录密码"
               ></el-input>
             </el-form-item>
             <!-- 二次验证密码 -->
             <el-form-item prop="checkPassword">
               <el-input
-                type=""
+                type="password"
                 v-model="addForm.checkPassword"
                 autocomplete="off"
                 prefix-icon="el-icon-edit"
@@ -221,8 +221,8 @@ export default {
         checkPassword: [
           {
             required: true,
-            min: 8,
-            max: 15,
+            //min: 8,
+            //max: 15,
             trigger: "blur",
           },
           { validator: validatePassword2, trigger: "blur" },
@@ -239,6 +239,9 @@ export default {
             message: "长度3~10之间",
             trigger: "blur",
           },
+        ],
+        gender: [
+          { required: true, message: "请选择性别", trigger: "change" },
         ],
         //工号
         // job_number: [
@@ -291,14 +294,13 @@ export default {
         if (!valid) return;
         //可发起注册网络请求
         const { data: res } = await this.$http.post("users", this.addForm);
-        
-        if(res.meta.status !== 201){
+        //注册成功跳转到登录，失败则停留当前页面
+        if (res.meta.status !== 201) {
           this.$message.error("注册失败！");
-        }else{
-          this.$message.success("注册成功！")
+        } else {
+          this.$message.success("注册成功！");
+          this.$router.push("/Login");
         }
-
-        this.$router.push("/Login");
       });
     },
   },
