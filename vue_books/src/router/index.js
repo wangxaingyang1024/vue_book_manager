@@ -4,11 +4,12 @@ import Router from 'vue-router'
 import Login from '../components/Login.vue'
 import SignUp from '../components/SignUp.vue'
 import Home from '../components/Home.vue'
-//import Welcome from '../components/Welcome.vue'
+import Welcome from '../components/Welcome.vue'
+import User from '../components/user/User.vue'
+import Book from '../components/book/Book.vue'
+import AddBook from '../components/book/AddBook.vue'
 
 Vue.use(Router)
-
-
 
 
 const router = new Router({
@@ -20,10 +21,13 @@ const router = new Router({
         {
             path: '/home',
             component: Home,
-            //redirect: '/welcome',
-            // children: [
-            //     { path: '/welcome', component: Welcome }
-            // ]
+            redirect: '/welcome',
+            children: [
+                { path: '/welcome', component: Welcome },
+                { path: '/user', component: User },
+                { path: '/book', component: Book },
+                { path: '/addbook', component: AddBook },
+            ]
         }
     ]
 })
