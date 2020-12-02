@@ -1,5 +1,5 @@
 <template>
-    <div>用户组件</div>
+    <div> 管理用户组件</div>
 </template>
 
 <script>

@@ -1,13 +1,14 @@
 <template>
   <el-container>
     <el-header>
-      <span class="topText">登录</span>
-      <div class="logo"><img src="../../public/logo.svg" height="" /></div>
+      <span class="topText">管理员登录</span>
+      <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
+      <el-button type="info" round @click="checkout" class="checkout">切换用户端入口</el-button>
     </el-header>
     <el-main>
       <div class="login_container">
         <div class="picture">
-          <img src="../../public/picture.png" height="400px" />
+          <img src="../../../public/picture.png" height="400px" />
         </div>
         <div class="login_box">
           <!-- 登录表单区域 -->
@@ -37,8 +38,8 @@
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
-              <el-button type="primary" @click="login">登录</el-button>
-              <el-button @click="signUp">注册</el-button>
+              <el-button type="primary" @click="login" class="login">登录</el-button>
+              <!-- <el-button @click="signUp">注册</el-button> -->
             </el-form-item>
           </el-form>
         </div>
@@ -53,8 +54,8 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "xiaoyang",
-        password: "123",
+        username: "wxy",
+        password: "123456",
       },
       //这是表单的验证规则对象
       loginFormRules: {
@@ -82,23 +83,30 @@ export default {
     };
   },
   methods: {
-    signUp() {
-      //跳转注册页面
-      this.$router.push("/signUp");
+    // signUp() {
+    //   //跳转注册页面
+    //   this.$router.push("/signUp");
+    // },
+    checkout() {
+      //跳转用户登录界面
+      this.$router.push("/Login");
     },
     login() {
       let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await that.$http.post("http://localhost:8080/api/login", that.loginForm);
-        if (res.status !== 1000) return that.$message.error("登录失败!");
+        const { data: res } = await that.$http.post("http://localhost:8080/api/admin/login", that.loginForm);
+        if (res.status == 3000 ) return that.$message.error("用户名不存在")
+        if (res.status == 3001 ) return that.$message.error("密码错误！")
+        if (res.status !== 1001) return that.$message.error("亲，您不是管理员用户偶~~，切勿谋朝篡位丫～(^∩^)～....");
+        //if (res.data.role !== 2)return that.$message.error("您没有权限登录！")
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         console.log(res);
         //window.session.setItem("token", res.data.token);
         //通过编程式导航跳转到后台主页，路由地址  /home
-        that.$router.push("/home");
-      });
+        that.$router.push("/adminHome");
+      }); 
     },
   },
 };
@@ -159,8 +167,13 @@ export default {
   height: 50px;
   margin-top: 10px;
 }
-.el-button {
-  width: 250px;
+.login {
+  width: 510px;
   margin-top: 50px;
+}
+.checkout{
+  position: absolute;
+  right: 250px;
+  top: 5px;
 }
 </style>

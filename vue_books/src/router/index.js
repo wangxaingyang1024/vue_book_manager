@@ -1,32 +1,46 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Login from '../components/Login.vue'
-import SignUp from '../components/SignUp.vue'
-import Home from '../components/Home.vue'
-import Welcome from '../components/Welcome.vue'
-import User from '../components/user/User.vue'
-import Book from '../components/book/Book.vue'
-import AddBook from '../components/book/AddBook.vue'
+//用户路由
+import Login from '../components/users/Login.vue'
+import SignUp from '../components/users/SignUp.vue'
+import Home from '../components/users/Home.vue'
+import Books from '../components/users/Books.vue'
+//管理员路由
+import AdminHome from '../components/management/AdminHome.vue'
+import AdminLogin from '../components/management/AdminLogin.vue'
+import Welcome from '../components/management/Welcome.vue'
+import User from '../components/management/user/User.vue'
+import AddBook from '../components/management/book/AddBook.vue'
+import ChangeBook from '../components/management/book/ChangeBook.vue'
 
 Vue.use(Router)
 
 
 const router = new Router({
     routes: [
-        // //路由重定向
+        // 用户路由
         { path: '/', redirect: '/login' },
         { path: '/login', component: Login },
         { path: '/signUp', component: SignUp },
         {
             path: '/home',
             component: Home,
+            redirect: '/books',
+            children: [
+                { path: '/books', component: Books },
+            ]
+        },
+        //管理员路由
+        { path: '/adminLogin', component: AdminLogin },
+        {
+            path: '/adminHome',
+            component: AdminHome,
             redirect: '/welcome',
             children: [
                 { path: '/welcome', component: Welcome },
                 { path: '/user', component: User },
-                { path: '/book', component: Book },
-                { path: '/addbook', component: AddBook },
+                { path: '/changeBook', component: ChangeBook },
+                { path: '/addBook', component: AddBook },
             ]
         }
     ]
@@ -41,6 +55,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.path === '/login') return next();
     if (to.path === '/signUp') return next();
+    if (to.path === '/adminLogin') return next();
     //TODO 2.通过获取token来拦截
 
     //获取token

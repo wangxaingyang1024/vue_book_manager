@@ -2,12 +2,12 @@
   <el-container>
     <el-header>
       <span class="topText">注册</span>
-      <div class="logo"><img src="../../public/logo.svg" height="" /></div>
+      <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
     </el-header>
     <el-main>
       <div class="add_container">
         <div class="picture">
-          <img src="../../public/picture.png" height="400px" />
+          <img src="../../../public/picture.png" height="400px" />
         </div>
         <div class="add_box">
           <!-- 注册表单区域 -->
@@ -46,9 +46,9 @@
               ></el-input>
             </el-form-item>
             <!-- 昵称 -->
-            <el-form-item prop="nick_name">
+            <el-form-item prop="nickName">
               <el-input
-                v-model="addForm.nick_name"
+                v-model="addForm.nickName"
                 prefix-icon="el-icon-mobile"
                 placeholder="设置您的昵称"
               ></el-input>
@@ -179,7 +179,7 @@ export default {
       addForm: {
         username: "",
         password: "",
-        nick_name: "", // 昵称
+        nickName: "", // 昵称
         job_number: "",
         gender: "",
         phone: "",
@@ -227,7 +227,7 @@ export default {
           },
           { validator: validatePassword2, trigger: "blur" },
         ],
-        nick_name: [
+        nickName: [
           {
             required: true,
             message: "请输入昵称",
@@ -293,12 +293,13 @@ export default {
       this.$refs.addFormRef.validate(async (valid) => {
         if (!valid) return;
         //可发起注册网络请求
-        const { data: res } = await this.$http.post("users", this.addForm);
+        const { data: res } = await this.$http.post("http://localhost:8080/api/signUp", this.addForm);
         //注册成功跳转到登录，失败则停留当前页面
-        if (res.meta.status !== 201) {
+        if (res.status == 3021) return this.$message.error('用户名已存在！')
+        if (res.status !== 3024) {
           this.$message.error("注册失败！");
         } else {
-          this.$message.success("注册成功！");
+          this.$message.success("注册成功！请登录！");
           this.$router.push("/Login");
         }
       });
