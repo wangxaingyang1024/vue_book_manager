@@ -10,7 +10,6 @@
           ></el-button>
         </el-input> -->
         <div class="block">
-          <span class="demonstration"></span>
           <el-date-picker
             v-model="time"
             type="datetimerange"
@@ -18,6 +17,7 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           >
+            >
           </el-date-picker>
         </div>
       </el-col>
@@ -43,22 +43,24 @@
 export default {
   data() {
     return {
-        //TODO  通过时间选择器返回起始时间与结束时间
-    //   pickerOptions: {
-    //     shortcuts: [
-    //       {
-    //         onClick(picker) {
-    //           const end = new Date();
-    //           const start = new Date();
-    //           start.setTime(start.getTime());
-    //           picker.$emit("pick", [start, end]);
-    //         },
-    //       },
-    //     ],
-    //   },
-    //   time: [new Date(), new Date()],
+      //TODO  通过时间选择器返回起始时间与结束时间
+      //   pickerOptions: {
+      //     shortcuts: [
+      //       {
+      //         onClick(picker) {
+      //           const end = new Date();
+      //           const start = new Date();
+      //           start.setTime(start.getTime());
+      //           picker.$emit("pick", [start, end]);
+      //         },
+      //       },
+      //     ],
+      //   },
+      //   time: [new Date(), new Date()],
       loglist: [],
-      time:''
+      time: "",
+      startTime: "",
+      endTime: "",
     };
   },
   created() {
@@ -75,9 +77,18 @@ export default {
       this.loglist = res.data;
     },
   },
+  watch: {
+    time(val) {
+      this.startTime = val[0]
+        .toLocaleString("zh", { hour12: false })
+        .replaceAll("/", "-");
+      this.endTime = val[1]
+        .toLocaleString("zh", { hour12: false })
+        .replaceAll("/", "-");
+      this.getLog();
+    },
+  },
 };
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

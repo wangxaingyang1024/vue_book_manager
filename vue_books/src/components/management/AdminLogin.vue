@@ -3,13 +3,12 @@
     <el-header>
       <span class="topText">管理员登录</span>
       <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
-      <el-button type="info" round @click="checkout" class="checkout">切换用户端入口</el-button>
+      <el-button type="info" round @click="checkout" class="checkout"
+        >切换用户端入口</el-button
+      >
     </el-header>
     <el-main>
       <div class="login_container">
-        <div class="picture">
-          <img src="../../../public/picture.png" height="400px" />
-        </div>
         <div class="login_box">
           <!-- 登录表单区域 -->
           <el-form
@@ -38,7 +37,9 @@
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
-              <el-button type="primary" @click="login" class="login">登录</el-button>
+              <el-button type="primary" @click="login" class="login"
+                >登录</el-button
+              >
               <!-- <el-button @click="signUp">注册</el-button> -->
             </el-form-item>
           </el-form>
@@ -95,10 +96,16 @@ export default {
       let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await that.$http.post("http://localhost:8080/api/admin/login", that.loginForm);
-        if (res.status == 3000 ) return that.$message.error("用户名不存在")
-        if (res.status == 3001 ) return that.$message.error("密码错误！")
-        if (res.status !== 1001) return that.$message.error("亲，您不是管理员用户偶~~，切勿谋朝篡位丫～(^∩^)～....");
+        const { data: res } = await that.$http.post(
+          "http://localhost:8080/api/admin/login",
+          that.loginForm
+        );
+        if (res.status == 3000) return that.$message.error("用户名不存在");
+        if (res.status == 3001) return that.$message.error("密码错误！");
+        if (res.status !== 1001)
+          return that.$message.error(
+            "亲，您不是管理员用户偶~~，切勿谋朝篡位丫～(^∩^)～...."
+          );
         //if (res.data.role !== 2)return that.$message.error("您没有权限登录！")
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
@@ -106,13 +113,16 @@ export default {
         //window.session.setItem("token", res.data.token);
         //通过编程式导航跳转到后台主页，路由地址  /home
         that.$router.push("/adminHome");
-      }); 
+      });
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+body {
+  background-color: #f5f5f6;
+}
 .el-main {
   padding: 0;
 }
@@ -126,18 +136,12 @@ export default {
   z-index: 1000;
   clear: both;
 }
-.login_container {
-  background-color: #f5f5f6;
-  height: 890px;
-}
 .login_box {
-  position: relative;
+  margin: 100px auto;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff;
-  left: 1100px;
-  top: 100px;
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -150,11 +154,6 @@ export default {
   position: absolute;
   left: 370px;
   top: 5px;
-}
-.picture {
-  position: absolute;
-  left: 250px;
-  top: 200px;
 }
 .el-form {
   text-align: center;
@@ -171,7 +170,7 @@ export default {
   width: 510px;
   margin-top: 50px;
 }
-.checkout{
+.checkout {
   position: absolute;
   right: 250px;
   top: 5px;

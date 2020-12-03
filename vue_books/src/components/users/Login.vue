@@ -3,13 +3,12 @@
     <el-header>
       <span class="topText">用户登录</span>
       <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
-      <el-button type="info" round @click="checkout" class="checkout">切换管理员入口</el-button>
+      <el-button type="info" round @click="checkout" class="checkout"
+        >切换管理员入口</el-button
+      >
     </el-header>
     <el-main>
       <div class="login_container">
-        <div class="picture">
-          <img src="../../../public/picture.png" height="400px" />
-        </div>
         <div class="login_box">
           <!-- 登录表单区域 -->
           <el-form
@@ -42,7 +41,6 @@
                 >登录</el-button
               >
               <el-button @click="signUp" class="signUp">注册</el-button>
-              
             </el-form-item>
           </el-form>
         </div>
@@ -57,8 +55,8 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "haha1",
-        password: "111111qQ",
+        username: "haha",
+        password: "789",
       },
       //这是表单的验证规则对象
       loginFormRules: {
@@ -116,6 +114,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+body {
+  background-color: #f5f5f6;
+}
 .el-main {
   padding: 0;
 }
@@ -129,18 +130,12 @@ export default {
   z-index: 1000;
   clear: both;
 }
-.login_container {
-  background-color: #f5f5f6;
-  height: 890px;
-}
 .login_box {
-  position: relative;
+  margin: 100px auto;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff;
-  left: 1100px;
-  top: 100px;
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -153,11 +148,6 @@ export default {
   position: absolute;
   left: 370px;
   top: 5px;
-}
-.picture {
-  position: absolute;
-  left: 250px;
-  top: 200px;
 }
 .el-form {
   text-align: center;
@@ -174,7 +164,7 @@ export default {
   width: 250px;
   margin-top: 50px;
 }
-.signUp{
+.signUp {
   width: 250px;
   margin-top: 50px;
 }

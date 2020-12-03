@@ -23,31 +23,22 @@
           placeholder="添加作者"
         ></el-input>
       </el-form-item>
-      <!-- 类型   下拉框选择
+      <!-- 类型 -->
       <el-form-item prop="type">
         <el-select
           v-model="addBook.type"
           placeholder="请选择书的类别"
           prefix-icon="el-icon-edit"
         >
-          <el-option
-            v-for="item in rolesList"
-            :key="item.id"
-            :label="item.roleName"
-            :value="item.id"
-          ></el-option>
+          <!-- <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            ></el-option> -->
           <el-option></el-option>
         </el-select>
-      </el-form-item> -->
-      <!-- 类型 -->
-      <el-form-item prop="type">
-        <el-input
-          v-model="addBook.type"
-          prefix-icon="el-icon-collection-tag"
-          placeholder="添加类别"
-        ></el-input>
       </el-form-item>
-
       <!-- 简介 -->
       <el-form-item prop="synopsis">
         <el-input
@@ -102,20 +93,7 @@ export default {
             trigger: "blur",
           },
         ],
-        //type: [{ required: true, message: "请选择类别", trigger: "change" }],
-        type:[
-          {
-            required: true,
-            message: "请输入书的种类",
-            trigger: "blur",
-          },
-           {
-            min: 1,
-            max: 8,
-            message: "长度请小于8",
-            trigger: "blur",
-          },
-        ],
+        type: [{ required: true, message: "请选择类别", trigger: "change" }],
         synopsis: [
           {
             required: true,
@@ -140,8 +118,8 @@ export default {
         if (!valid) return;
         //可发起网络请求
         const { data: res } = await this.$hhtp.post("", this.addBook);
-        if (res.status !== 200) return this.$message.error("添加书籍失败！");
-        this.$message.success("添加书籍成功！");
+        if (res.status !==200) return this.$message.error('添加书籍失败！');
+        this.$message.success('添加书籍成功！');
         this.$router.push("/changeBook");
       });
     },

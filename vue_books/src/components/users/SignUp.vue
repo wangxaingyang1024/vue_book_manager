@@ -1,14 +1,11 @@
 <template>
   <el-container>
     <el-header>
-      <span class="topText">注册</span>
+      <span class="topText">注册页面</span>
       <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
     </el-header>
     <el-main>
       <div class="add_container">
-        <div class="picture">
-          <img src="../../../public/picture.png" height="400px" />
-        </div>
         <div class="add_box">
           <!-- 注册表单区域 -->
           <el-form
@@ -240,9 +237,7 @@ export default {
             trigger: "blur",
           },
         ],
-        gender: [
-          { required: true, message: "请选择性别", trigger: "change" },
-        ],
+        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         //工号
         // job_number: [
         //   {
@@ -293,9 +288,12 @@ export default {
       this.$refs.addFormRef.validate(async (valid) => {
         if (!valid) return;
         //可发起注册网络请求
-        const { data: res } = await this.$http.post("http://localhost:8080/api/signUp", this.addForm);
+        const { data: res } = await this.$http.post(
+          "http://localhost:8080/api/signUp",
+          this.addForm
+        );
         //注册成功跳转到登录，失败则停留当前页面
-        if (res.status == 3021) return this.$message.error('用户名已存在！')
+        if (res.status == 3021) return this.$message.error("用户名已存在！");
         if (res.status !== 3024) {
           this.$message.error("注册失败！");
         } else {
@@ -335,18 +333,15 @@ export default {
   z-index: 1000;
   clear: both;
 }
-.add_container {
+body {
   background-color: #f5f5f6;
-  height: 890px;
 }
 .add_box {
-  position: relative;
+  margin: 50px auto;
   width: 600px;
   height: 760px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff;
-  left: 1100px;
-  top: 50px;
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -359,11 +354,6 @@ export default {
   position: absolute;
   left: 370px;
   top: 5px;
-}
-.picture {
-  position: absolute;
-  left: 250px;
-  top: 200px;
 }
 .el-form {
   text-align: center;

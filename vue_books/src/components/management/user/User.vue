@@ -1,20 +1,20 @@
 <template>
   <el-card class="box-card">
-    <el-table :data="userlist" border style="width: 100%" :stripe="true">
-      <el-table-column type="index" label="序号" width="180"> </el-table-column>
-      <el-table-column prop="username" label="用户名" width="180">
+    <el-table :data="userlist" border stripe>
+      <el-table-column type="index" label="序号" width="70"> </el-table-column>
+      <el-table-column prop="username" label="用户名" width="120">
       </el-table-column>
-      <el-table-column prop="jobNumber" label="工号" width="180">
+      <el-table-column prop="jobNumber" label="工号" width="120">
       </el-table-column>
-      <el-table-column prop="nickName" label="昵称" width="180">
+      <el-table-column prop="nickName" label="昵称" width="120">
       </el-table-column>
-      <el-table-column prop="gender" label="性别" width="180">
+      <el-table-column prop="gender" label="性别" width="70">
         <template slot-scope="scope">
           {{ scope.row.gender == 1 ? "男" : "女" }}
         </template>
       </el-table-column>
       <el-table-column prop="phone" label="电话" width="180"> </el-table-column>
-      <el-table-column prop="age" label="年龄" width="180"> </el-table-column>
+      <el-table-column prop="age" label="年龄" width="70"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <!-- 删除按钮 -->
@@ -60,7 +60,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning",
         }
-      ).catch((err) => err); 
+      ).catch((err) => err);
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
@@ -84,6 +84,4 @@ export default {
 };
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
