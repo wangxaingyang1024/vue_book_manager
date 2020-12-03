@@ -21,7 +21,8 @@
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          @click="removeUser"
+          @click="removeUser()"
+
         ></el-button>
       </el-table-column>
     </el-table>
