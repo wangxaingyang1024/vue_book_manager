@@ -12,7 +12,7 @@
         <div class="block">
           <span class="demonstration"></span>
           <el-date-picker
-            v-model="time"
+            v-bind="time"
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -58,7 +58,6 @@ export default {
     //   },
     //   time: [new Date(), new Date()],
       loglist: [],
-      time:''
     };
   },
   created() {

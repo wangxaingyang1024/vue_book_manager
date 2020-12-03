@@ -30,20 +30,22 @@
       <el-table-column prop="synopsis" label="简介" width="180">
       </el-table-column>
       <el-table-column label="操作">
-        <!-- 删除按钮 -->
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          size="mini"
-          @click="removeBook"
-        ></el-button>
-        <!-- 修改按钮 -->
-        <el-button
-          type="primary"
-          icon="el-icon-edit"
-          size="mini"
-          @click="showEditDialog(scope.row.isbn)"
-        ></el-button>
+        <template slot-scope="scope">
+          <!-- 删除按钮 -->
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            @click="removeBook"
+          ></el-button>
+          <!-- 修改按钮 -->
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+            @click="showEditDialog(scope.row.isbn)"
+          ></el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 修改书籍对话框 -->
@@ -67,20 +69,8 @@
         </el-form-item>
 
         <!-- 类型 -->
-        <el-form-item prop="type">
-          <el-select
-            v-model="booklist.type"
-            placeholder="请选择书的类别"
-            prefix-icon="el-icon-edit"
-          >
-            <!-- <el-option
-              v-for="item in rolesList"
-              :key="item.id"
-              :label="item.roleName"
-              :value="item.id"
-            ></el-option> -->
-            <el-option></el-option>
-          </el-select>
+        <el-form-item label="类型" prop="type">
+          <el-input v-model="editForm.type"></el-input>
         </el-form-item>
         <el-form-item label="简介" prop="synopsis">
           <el-input v-model="editForm.synopsis"></el-input>
@@ -131,7 +121,20 @@ export default {
             trigger: "blur",
           },
         ],
-        type: [{ required: true, message: "请选择类别", trigger: "change" }],
+        //type: [{ required: true, message: "请选择类别", trigger: "change" }],
+        type: [
+          {
+            required: true,
+            message: "请输入书的种类",
+            trigger: "blur",
+          },
+          {
+            min: 1,
+            max: 8,
+            message: "长度请小于8",
+            trigger: "blur",
+          },
+        ],
         synopsis: [
           {
             required: true,

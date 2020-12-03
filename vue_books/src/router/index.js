@@ -5,6 +5,7 @@ import Login from '../components/users/Login.vue'
 import SignUp from '../components/users/SignUp.vue'
 import Home from '../components/users/Home.vue'
 import Books from '../components/users/Books.vue'
+import Borrow from '../components/users/Borrow.vue'
 //管理员路由
 import AdminHome from '../components/management/AdminHome.vue'
 import AdminLogin from '../components/management/AdminLogin.vue'
@@ -29,6 +30,7 @@ const router = new Router({
             redirect: '/books',
             children: [
                 { path: '/books', component: Books },
+                { path: '/borrow', component: Borrow },
             ]
         },
         //管理员路由

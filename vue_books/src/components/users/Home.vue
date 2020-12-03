@@ -6,6 +6,9 @@
       <el-button type="info" round @click="logout" class="logout"
         >退出</el-button
       >
+      <el-button type="primary" round @click="borrow" class="borrow"
+        >借阅记录</el-button
+      >
       <!-- //TODO  1.显示XX已登录 -->
       <!-- <div>欢迎{{session.user.nick_name}}</div> -->
     </el-header>
@@ -39,6 +42,9 @@ export default {
     },
     addBook() {
       this.$router.push("/addBook");
+    },
+    borrow() {
+      this.$router.push("/borrow");
     },
   },
 };
@@ -90,5 +96,9 @@ export default {
   right: 250px;
   top: 5px;
 }
-
+.borrow {
+  position: absolute;
+  right: 400px;
+  top: 5px;
+}
 </style>
