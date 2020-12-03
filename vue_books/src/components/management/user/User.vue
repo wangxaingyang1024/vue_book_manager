@@ -16,14 +16,15 @@
       <el-table-column prop="phone" label="电话" width="180"> </el-table-column>
       <el-table-column prop="age" label="年龄" width="180"> </el-table-column>
       <el-table-column label="操作">
-        <!-- 删除按钮 -->
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          size="mini"
-          @click="removeUser()"
-
-        ></el-button>
+        <template slot-scope="scope">
+          <!-- 删除按钮 -->
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            @click="removeUser(scope.row.jobNumber)"
+          ></el-button>
+        </template>
       </el-table-column>
     </el-table>
   </el-card>

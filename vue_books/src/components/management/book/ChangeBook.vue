@@ -14,7 +14,7 @@
         <el-button type="primary" @click="goAddBook">添加书籍</el-button>
       </el-col>
     </el-row>
-    <el-table :data="userlist" border style="width: 100%" :stripe="true">
+    <el-table :data="booklist" border style="width: 100%" :stripe="true">
       <el-table-column type="index" label="序号" width="180"> </el-table-column>
       <el-table-column prop="name" label="图书名" width="180">
       </el-table-column>
@@ -69,7 +69,7 @@
         <!-- 类型 -->
         <el-form-item prop="type">
           <el-select
-            v-model="addBook.type"
+            v-model="booklist.type"
             placeholder="请选择书的类别"
             prefix-icon="el-icon-edit"
           >
@@ -104,7 +104,7 @@ export default {
       //查询到的用户信息对象
       editForm: {},
       //修改书的验证规则对象
-      editBookRules: {
+      editFormRules: {
         name: [
           {
             required: true,
@@ -146,15 +146,10 @@ export default {
           },
         ],
       },
-      //需要被分配角色的用户信息
-      userInfo: {},
-      //已选中的角色Id值
-      selectedRoleId: "",
     };
   },
   created() {
     this.getBookList();
-    
   },
   methods: {
     //跳转添加书籍路由
