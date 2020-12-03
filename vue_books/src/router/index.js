@@ -12,6 +12,7 @@ import Welcome from '../components/management/Welcome.vue'
 import User from '../components/management/user/User.vue'
 import AddBook from '../components/management/book/AddBook.vue'
 import ChangeBook from '../components/management/book/ChangeBook.vue'
+import Borrowed from '../components/management/book/Borrowed.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,7 @@ const router = new Router({
                 { path: '/user', component: User },
                 { path: '/changeBook', component: ChangeBook },
                 { path: '/addBook', component: AddBook },
+                { path: '/borrowed', component: Borrowed },
             ]
         }
     ]

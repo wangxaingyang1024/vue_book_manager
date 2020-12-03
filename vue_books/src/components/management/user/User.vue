@@ -45,7 +45,7 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/emps"
       );
-      if (res.status !== 900) {
+      if (res.status !== 200) {
         return this.$message.error("获取用户列表失败！");
       }
       this.userlist = res.data;
@@ -60,7 +60,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning",
         }
-      ).catch((err) => err);
+      ).catch((err) => err); 
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
@@ -78,6 +78,7 @@ export default {
 
       this.$message.success("删除用户成功！");
       this.getUserList();
+      //TODO 删除后没刷新
     },
   },
 };
