@@ -14,19 +14,19 @@
         <el-button type="primary" @click="goAddBook">添加书籍</el-button>
       </el-col>
     </el-row>
-    <el-table :data="booklist" border style="width: 100%" :stripe="true">
-      <el-table-column type="index" label="序号" width="180"> </el-table-column>
-      <el-table-column prop="name" label="图书名" width="180">
+    <el-table :data="booklist" border stripe>
+      <el-table-column type="index" label="序号" width="70"> </el-table-column>
+      <el-table-column prop="name" label="图书名" width="120">
       </el-table-column>
-      <el-table-column prop="author" label="作者" width="180">
+      <el-table-column prop="author" label="作者" width="120">
       </el-table-column>
-      <el-table-column prop="type" label="类型" width="180"> </el-table-column>
-      <el-table-column prop="status" label="状态" width="180">
+      <el-table-column prop="type" label="类型" width="120"> </el-table-column>
+      <el-table-column prop="status" label="状态" width="120">
         <template slot-scope="scope">
           {{ scope.row.status == true ? "已借出" : "可借阅" }}
         </template>
       </el-table-column>
-      <el-table-column prop="isbn" label="书号" width="180"> </el-table-column>
+      <el-table-column prop="isbn" label="书号" width="120"> </el-table-column>
       <el-table-column prop="synopsis" label="简介" width="180">
       </el-table-column>
       <el-table-column label="操作">
@@ -234,5 +234,4 @@ export default {
   margin-bottom: 25px;
 }
 </style>
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

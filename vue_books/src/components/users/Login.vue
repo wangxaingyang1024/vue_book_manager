@@ -1,11 +1,19 @@
 <template>
   <el-container>
     <el-header>
-      <span class="topText">用户登录</span>
-      <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
-      <el-button type="info" round @click="checkout" class="checkout"
-        >切换管理员入口</el-button
-      >
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <img src="../../../public/logo.svg" height="" />
+        </el-col>
+        <el-col :span="16">
+          <span class="topText">用户登录</span>
+        </el-col>
+        <el-col :span="4">
+          <el-button type="info" round @click="checkout" class="checkout"
+            >切换管理员端入口</el-button
+          >
+        </el-col>
+      </el-row>
     </el-header>
     <el-main>
       <div class="login_container">
@@ -117,18 +125,12 @@ export default {
 body {
   background-color: #f5f5f6;
 }
-.el-main {
-  padding: 0;
-}
 .el-header {
+  line-height: 50px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
   height: 80px;
-  width: 100%;
-  position: relative;
-  z-index: 1000;
-  clear: both;
+  text-align: center;
 }
 .login_box {
   margin: 100px auto;
@@ -139,15 +141,7 @@ body {
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 30px;
-  position: relative;
-  left: 520px;
-  top: 2px;
-}
-.logo {
-  position: absolute;
-  left: 370px;
-  top: 5px;
+  font-size: 25px;
 }
 .el-form {
   text-align: center;
@@ -167,10 +161,5 @@ body {
 .signUp {
   width: 250px;
   margin-top: 50px;
-}
-.checkout {
-  position: absolute;
-  right: 250px;
-  top: 5px;
 }
 </style>

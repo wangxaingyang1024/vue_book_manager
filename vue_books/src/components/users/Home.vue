@@ -1,11 +1,20 @@
 <template>
   <el-container>
     <el-header>
-      <span class="topText">用户已登录</span>
-      <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
-      <el-button type="info" round @click="logout" class="logout"
-        >退出</el-button
-      >
+      <el-row :gutter="20">
+        <el-col :span="18">
+          <img src="../../../public/logo.svg" height="" />
+        </el-col>
+        <el-col :span="3">
+          用户已登录
+        </el-col>
+        <el-col :span="3">
+          <el-button type="info" round @click="logout" class="logout"
+            >退出</el-button
+          >
+        </el-col>
+      </el-row>
+
       <!-- //TODO  1.显示XX已登录 -->
       <!-- <div>欢迎{{session.user.nick_name}}</div> -->
     </el-header>
@@ -44,21 +53,17 @@ export default {
 };
 </script>
 
-
 <style lang="less">
 .el-menu-item-group__title {
   padding: 0 !important;
 }
 </style>
 
-
 <style lang="less" scoped>
 .el-main {
   height: 87%;
-  width: 99%;
-  top: 77px;
   //left: 216px;
-  position: absolute;
+  margin-top: 15px;
   padding: 0;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -66,29 +71,7 @@ export default {
 .el-header {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
   height: 80px;
-  width: 100%;
-  position: relative;
-  z-index: 1000;
-  clear: both;
+  line-height: 50px;
 }
-.topText {
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 30px;
-  position: relative;
-  left: 520px;
-  top: 2px;
-}
-.logo {
-  position: absolute;
-  left: 370px;
-  top: 5px;
-}
-.logout {
-  position: absolute;
-  right: 250px;
-  top: 5px;
-}
-
 </style>

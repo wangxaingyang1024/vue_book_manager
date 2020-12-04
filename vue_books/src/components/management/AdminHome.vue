@@ -3,19 +3,15 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="18">
-          <div class="">
-            <img src="../../../public/logo.svg" height="" />
-          </div>
+          <img src="../../../public/logo.svg" height="" />
         </el-col>
         <el-col :span="3">
-          <div class="">管理员已登录</div>
+          管理员已登录
         </el-col>
         <el-col :span="3">
-          <div class="">
-            <el-button type="info" round @click="logout" class="logout"
-              >退出</el-button
-            >
-          </div>
+          <el-button type="info" round @click="logout" class="logout"
+            >退出</el-button
+          >
         </el-col>
       </el-row>
       <!-- //TODO  1.显示XX已登录 -->
@@ -51,8 +47,7 @@
                 >增加书籍</el-menu-item
               >
               <el-menu-item index="1-3" @click="borrowed"
-                ><i class="el-icon-bell"></i
-                >借阅记录</el-menu-item
+                ><i class="el-icon-bell"></i>借阅记录</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
@@ -90,9 +85,9 @@ export default {
     addBook() {
       this.$router.push("/addBook");
     },
-    borrowed(){
-      this.$router.push('/borrowed')
-    }
+    borrowed() {
+      this.$router.push("/borrowed");
+    },
   },
 };
 </script>

@@ -22,17 +22,17 @@
         </div>
       </el-col>
     </el-row>
-    <el-table :data="loglist" border style="width: 100%" :stripe="true">
-      <el-table-column type="index" label="序号" width="180"> </el-table-column>
-      <el-table-column prop="nickName" label="借阅人" width="180">
+    <el-table :data="loglist" border stripe>
+      <el-table-column type="index" label="序号" width="70"> </el-table-column>
+      <el-table-column prop="nickName" label="借阅人" width="120">
       </el-table-column>
-      <el-table-column prop="jobNumber" label="工号" width="180">
+      <el-table-column prop="jobNumber" label="工号" width="120">
       </el-table-column>
       <el-table-column prop="lendTime" label="借出时间" width="180">
       </el-table-column>
-      <el-table-column prop="bookName" label="书名" width="180">
+      <el-table-column prop="bookName" label="书名" width="120">
       </el-table-column>
-      <el-table-column prop="isbn" label="编号" width="180"> </el-table-column>
+      <el-table-column prop="isbn" label="编号" width="120"> </el-table-column>
       <el-table-column prop="returnTime" label="归还时间" width="180">
       </el-table-column>
     </el-table>
