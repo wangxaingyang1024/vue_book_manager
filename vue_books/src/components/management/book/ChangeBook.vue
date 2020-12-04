@@ -2,7 +2,12 @@
   <el-card>
     <el-row :gutter="20">
       <el-col :span="8">
-        <el-input placeholder="请输入内容" clearable @clear="getBookList">
+        <el-input
+          placeholder="请输入内容"
+          clearable
+          @clear="getBookList"
+          v-model="id"
+        >
           <el-button
             slot="append"
             icon="el-icon-search"
@@ -30,20 +35,24 @@
       <el-table-column prop="synopsis" label="简介" width="180">
       </el-table-column>
       <el-table-column label="操作">
-        <!-- 删除按钮 -->
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          size="mini"
-          @click="removeBook"
-        ></el-button>
         <!-- 修改按钮 -->
-        <el-button
-          type="primary"
-          icon="el-icon-edit"
-          size="mini"
-          @click="showEditDialog(scope.row.isbn)"
-        ></el-button>
+        <template slot-scope="scope">
+          <el-button
+            type="warning"
+            icon="el-icon-edit"
+            size="mini"
+            circle
+            @click="showEditDialog(scope.row)"
+          ></el-button>
+          <!-- 删除按钮 -->
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            circle
+            @click="removeBook(scope.row.isbn)"
+          ></el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 修改书籍对话框 -->
@@ -73,13 +82,13 @@
             placeholder="请选择书的类别"
             prefix-icon="el-icon-edit"
           >
-            <!-- <el-option
-              v-for="item in rolesList"
+            <el-option
+              v-for="item in typeList"
               :key="item.id"
-              :label="item.roleName"
+              :label="item.name"
               :value="item.id"
-            ></el-option> -->
-            <el-option></el-option>
+            ></el-option>
+            <!-- <el-option></el-option> -->
           </el-select>
         </el-form-item>
         <el-form-item label="简介" prop="synopsis">
@@ -146,6 +155,8 @@ export default {
           },
         ],
       },
+      id: "",
+      typeList: [],
     };
   },
   created() {
@@ -158,13 +169,13 @@ export default {
     },
     async getBookList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/login"
+        "http://localhost:8080/api/admin/find"
       );
-      if (res.meta.status !== 200) {
+      console.log(res);
+      if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
-      this.booklist = res.books;
-      console.log(res);
+      this.booklist = res.data;
     },
     //监听修改书籍对话框的关闭事件
     editDialogClosed() {
@@ -176,7 +187,7 @@ export default {
         if (!valid) return;
         //发起修改用户信息的请求
         const { data: res } = await this.$http.put(
-          "http://localhost:8080/api/admin/" + this.editForm.isbn,
+          "http://localhost:8080/api/admin/updata/" + this.editForm.isbn,
           {
             name: this.editForm.name,
             author: this.editForm.author,
@@ -185,7 +196,7 @@ export default {
           }
         );
 
-        if (res.meta.status !== 200) {
+        if (res.meta.status !== 6004) {
           return this.$message.error("更新书籍信息失败！");
         }
 
@@ -213,18 +224,31 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-
+      // console.log(typeof isbn);
       const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/admin/remove/"
+        "http://localhost:8080/api/admin/delete/" + isbn
         // `http://localhost:8080/api/admin/remove/jobNumber/`
       );
-
-      if (res.meta.status !== 3033) {
+      if (res.status !== 6002) {
         return this.$message.error("删除书籍失败");
       }
-
       this.$message.success("删除书籍成功！");
       this.getBookList();
+    },
+    showEditDialog(data) {
+      this.getTypeList();
+      this.editDialogVisible = true;
+      this.editForm = data;
+    },
+    async getTypeList() {
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/type"
+      );
+      // console.log(res.data);
+      if (res.meta.status !== 200)
+        return this.$message.error("获取分类列表失败！");
+
+      this.typeList = res.data;
     },
   },
 };

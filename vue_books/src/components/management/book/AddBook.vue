@@ -110,18 +110,29 @@ export default {
       },
     };
   },
-  created() {},
+  created() {
+    this.getClassList();
+  },
   methods: {
     //点击按钮添加
     add() {
       this.$refs.addBookRef.validate(async (valid) => {
         if (!valid) return;
         //可发起网络请求
-        const { data: res } = await this.$hhtp.post("", this.addBook);
-        if (res.status !==200) return this.$message.error('添加书籍失败！');
-        this.$message.success('添加书籍成功！');
+        const { data: res } = await this.$http.post("", this.addBook);
+        if (res.status !== 200) return this.$message.error("添加书籍失败！");
+        this.$message.success("添加书籍成功！");
         this.$router.push("/changeBook");
       });
+    },
+    async getClassList() {
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/find"
+      );
+      // if (res.status !== 200)
+      // return this.$message.error('获取书籍分类数据列表失败！')
+      // this.cateList = res.data
+      console.log(res);
     },
   },
 };

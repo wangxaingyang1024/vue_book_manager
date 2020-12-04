@@ -45,6 +45,10 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/emps"
       );
+      console.log(res.status);
+      if (res.status === 3023) {
+        return (this.userlist = []);
+      }
       if (res.status !== 200) {
         return this.$message.error("获取用户列表失败！");
       }
@@ -72,7 +76,7 @@ export default {
         // `http://localhost:8080/api/admin/remove/jobNumber/`
       );
 
-      if (res.meta.status !== 3033) {
+      if (res.status !== 3033) {
         return this.$message.error("删除用户失败");
       }
 

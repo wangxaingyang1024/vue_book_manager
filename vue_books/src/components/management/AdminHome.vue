@@ -19,7 +19,7 @@
     </el-header>
     <el-container>
       <!-- 左侧菜单 -->
-      <el-aside el-aside width="200px">
+      <el-aside width="200px">
         <el-menu :default-openeds="['1', '2']">
           <el-submenu index="1">
             <template slot="title"
@@ -112,7 +112,7 @@ export default {
   margin-bottom: 15px;
 }
 .el-aside {
-  background-color: rgb(238, 241, 246);
+  background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 </style>

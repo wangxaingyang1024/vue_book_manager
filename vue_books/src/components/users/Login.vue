@@ -63,8 +63,8 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "haha",
-        password: "789",
+        username: "zzz",
+        password: "Guo123456",
       },
       //这是表单的验证规则对象
       loginFormRules: {
@@ -108,11 +108,16 @@ export default {
           "http://localhost:8080/api/login",
           that.loginForm
         );
+        if (res.status === 3031)
+          return that.$message.error("用户名不存在，请先注册!");
         if (res.status !== 1000) return that.$message.error("登录失败!");
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
-        console.log(res);
+        // console.log(res);
         //window.session.setItem("token", res.data.token);
+        //将jobNumber保存到客户端的sessionStorage中
+        window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
+        // console.log(res.data.jobNumber);
         //通过编程式导航跳转到后台主页，路由地址  /home
         that.$router.push("/home");
       });

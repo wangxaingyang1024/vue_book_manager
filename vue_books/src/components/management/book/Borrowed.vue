@@ -58,9 +58,11 @@ export default {
       //   },
       //   time: [new Date(), new Date()],
       loglist: [],
-      time: "",
-      startTime: "",
-      endTime: "",
+      time: [],
+      findTime: {
+        startTime: "",
+        endTime: "",
+      },
     };
   },
   created() {
@@ -71,6 +73,17 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/log/admin/newLogs"
       );
+      console.log(res);
+      if (res.status !== 200) {
+        return this.$message.error("获取借阅记录失败！");
+      }
+      this.loglist = res.data;
+    },
+    async getLogByTime() {
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/log/admin/longT" + this.findTime
+      );
+      // console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }
@@ -79,13 +92,19 @@ export default {
   },
   watch: {
     time(val) {
-      this.startTime = val[0]
+      if (val === null) {
+        return this.getLog();
+      }
+      this.findTime.startTime = val[0]
         .toLocaleString("zh", { hour12: false })
-        .replaceAll("/", "-");
-      this.endTime = val[1]
+        .replaceAll("/", "-")
+        .replace(" 24:", " 00:");
+      this.findTime.endTime = val[1]
         .toLocaleString("zh", { hour12: false })
-        .replaceAll("/", "-");
-      this.getLog();
+        .replaceAll("/", "-")
+        .replace(" 24:", " 00:");
+      // console.log(typeof this.findTime);
+      this.getLogByTime();
     },
   },
 };

@@ -300,6 +300,7 @@ export default {
           this.$message.success("注册成功！请登录！");
           this.$router.push("/Login");
         }
+        console.log(res);
       });
     },
   },

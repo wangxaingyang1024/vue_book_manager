@@ -7,13 +7,15 @@
             <span>{{ props.row.name }}</span>
           </el-form-item>
           <el-form-item label="作者">
-            <span>{{ props.row.author}}</span>
+            <span>{{ props.row.author }}</span>
           </el-form-item>
           <el-form-item label="类型">
             <span>{{ props.row.type }}</span>
           </el-form-item>
           <el-form-item label="状态">
-            <span>{{ props.row.status }}</span>
+            <span>{{
+              props.row.status.toString() === "true" ? "未借出" : "已借出"
+            }}</span>
           </el-form-item>
           <el-form-item label="简介">
             <span>{{ props.row.synopsis }}</span>
@@ -27,12 +29,19 @@
     <el-table-column label="书名" prop="name"> </el-table-column>
     <el-table-column label="作者" prop="author"> </el-table-column>
     <el-table-column label="编号" prop="isbn"> </el-table-column>
-    <el-table-column label="操作">
-      <el-button
-          type=""
+    <el-table-column label="操作" prop="status">
+      <template slot-scope="scope">
+        <el-button
+          type="primary"
           size="mini"
           @click="borrowBook"
-        >借阅此书</el-button>
+          v-if="scope.row.status.toString() === 'true'"
+          >借阅此书</el-button
+        >
+        <el-button type="" size="mini" @click="borrowBook" disabled v-else
+          >借阅此书</el-button
+        >
+      </template>
     </el-table-column>
   </el-table>
 </template>
@@ -47,21 +56,32 @@ export default {
   created() {
     this.getBookList();
   },
-  methods: {},
+  methods: {
+    async getBookList() {
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/find"
+      );
+      if (res.status !== 6011) {
+        return this.$message.error("获取图书列表失败！");
+      }
+      this.booklist = res.data;
+      // console.log(res.status);
+    },
+  },
 };
 </script>
 
 <style>
- .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 </style>
