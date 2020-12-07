@@ -34,11 +34,11 @@
         <el-button
           type="primary"
           size="mini"
-          @click="borrowBook"
+          @click="borrowBook(scope.row.isbn)"
           v-if="scope.row.status.toString() === 'true'"
           >借阅此书</el-button
         >
-        <el-button type="" size="mini" @click="borrowBook" disabled v-else
+        <el-button type="" size="mini"  disabled v-else
           >借阅此书</el-button
         >
       </template>
