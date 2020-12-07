@@ -266,7 +266,9 @@ export default {
   watch: {
     name(val) {
       if (val === null) return this.getBookList();
-      this.getBookListByName();
+      setTimeout(() => {
+        this.getBookListByName();
+      }, 500);
     },
   },
 };

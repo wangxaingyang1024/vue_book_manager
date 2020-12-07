@@ -41,15 +41,15 @@
               <i class="el-icon-star-on"></i>
               书籍管理
             </template>
-          <el-menu-item-group>
+            <el-menu-item-group>
               <el-menu-item index="1-1" @click="book">
                 <i class="el-icon-tickets"></i>
-                  书籍列表
+                书籍列表
               </el-menu-item>
               <el-menu-item index="1-2" @click="addBook">
                 <i class="el-icon-circle-plus-outline"></i>
                 增加书籍
-                </el-menu-item>
+              </el-menu-item>
               <el-menu-item index="1-3" @click="borrowed">
                 <i class="el-icon-bell"></i>
                 借阅记录
@@ -104,11 +104,6 @@ export default {
 </style>
 
 <style lang="less" scoped>
-.el-main {
-  background-color: #fff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  margin-left: 15px;
-}
 .el-header {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -116,15 +111,15 @@ export default {
   line-height: 60px;
   margin-bottom: 15px;
 }
-.el-header img{
-  margin-top:8px;
+.el-header img {
+  margin-top: 8px;
   margin-left: 74px;
 }
 .el-aside {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
-img{
+img {
   margin-top: 8px;
 }
 </style>
