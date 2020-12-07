@@ -32,7 +32,7 @@
     <el-table-column label="操作">
       <template slot-scope="scope">
         <!-- 归还按钮 -->
-        <el-button type="success" size="mini" @click="returnBook(scope.row.id)"
+        <el-button type="success" size="mini" @click="returnBook(scope.row.isbn)"
           >归还</el-button
         >
       </template>
@@ -63,6 +63,22 @@ export default {
       }
       this.booklist = res.data;
       console.log(res.status);
+    },
+    async returnBook(isbn) {
+      this.jobNumber = window.sessionStorage.getItem("jobNumber");
+      const { data: res } = await this.$http.post(
+        "http://localhost:8080/api/book/borrow",
+        {
+          jobNumber: this.jobNumber,
+          isbn: isbn,
+        }
+      );
+      //console.log(res);
+      if (res.status !== 6006){
+        return this.$message.error("归还书籍失败！")
+      }
+      this.$message.success('归还书籍成功!')
+      this.getBookList();
     },
   },
 };

@@ -38,9 +38,7 @@
           v-if="scope.row.status.toString() === 'true'"
           >借阅此书</el-button
         >
-        <el-button type="" size="mini"  disabled v-else
-          >借阅此书</el-button
-        >
+        <el-button type="" size="mini" disabled v-else>借阅此书</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -51,6 +49,7 @@ export default {
   data() {
     return {
       booklist: [],
+      jobNumber: "",
     };
   },
   created() {
@@ -66,6 +65,22 @@ export default {
       }
       this.booklist = res.data;
       // console.log(res.status);
+    },
+    async borrowBook(isbn) {
+      this.jobNumber = window.sessionStorage.getItem("jobNumber");
+      const { data: res } = await this.$http.post(
+        "http://localhost:8080/api/book/borrow",
+        {
+          jobNumber: this.jobNumber,
+          isbn: isbn,
+        }
+      );
+      //console.log(res);
+      if (res.status !== 6006){
+        return this.$message.error("借阅书籍失败！")
+      }
+      this.$message.success('借阅书籍成功!')
+      this.getBookList();
     },
   },
 };
