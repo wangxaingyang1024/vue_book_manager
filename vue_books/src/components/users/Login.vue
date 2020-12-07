@@ -98,6 +98,8 @@ export default {
   },
   methods: {
     checkout() {
+      //清空sessionStorage
+      window.sessionStorage.clear();
       //跳转管理员登录界面
       this.$router.push("/adminLogin");
     },
@@ -119,7 +121,7 @@ export default {
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         // console.log(res);
-        //window.session.setItem("token", res.data.token);
+        //window.sessionStorage.setItem("token", res.data.token);
         //将jobNumber保存到客户端的sessionStorage中
         window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
         // console.log(res.data.jobNumber);

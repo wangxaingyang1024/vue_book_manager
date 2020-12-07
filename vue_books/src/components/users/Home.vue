@@ -3,7 +3,7 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="18">
-          <img src="../../../public/logo.svg" height="" />
+          <img src="../../../public/logo.svg" />
         </el-col>
         <el-col :span="3">
           用户已登录
@@ -20,7 +20,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu :default-openeds="['1', '2']">
+        <el-menu unique-opened :default-openeds="['1']" :default-active="`1-1`">
           <el-submenu index="1">
             <template slot="title"
               ><i class="el-icon-star-on"></i>书籍查询</template
@@ -84,6 +84,7 @@ export default {
   line-height: 50px;
 }
 .el-aside {
+  min-height: 300px;
   margin-top: 15px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);

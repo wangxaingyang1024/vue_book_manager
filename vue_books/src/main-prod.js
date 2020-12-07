@@ -3,6 +3,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+// 引入element-ui
+// import ElementUI from "element-ui";
+// Vue.use(ElementUI);
 //引入nprogress包对应的js和css
 import NProgress from "nprogress";
 //引入axios

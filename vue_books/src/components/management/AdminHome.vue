@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="18">
-          <img src="../../../public/logo.svg" height="" />
+          <img src="../../../public/logo.svg" />
         </el-col>
         <el-col :span="3">
           管理员已登录
@@ -20,7 +20,7 @@
     <el-container>
       <!-- 左侧菜单 -->
       <el-aside width="200px">
-        <el-menu :default-openeds="['1', '2']">
+        <el-menu unique-opened>
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-s-custom"></i>
@@ -33,24 +33,21 @@
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-        </el-menu>
-
-        <el-menu :default-openeds="['1', '2']">
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-star-on"></i>
               书籍管理
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="book">
+              <el-menu-item index="2-1" @click="book">
                 <i class="el-icon-tickets"></i>
                 书籍列表
               </el-menu-item>
-              <el-menu-item index="1-2" @click="addBook">
+              <el-menu-item index="2-2" @click="addBook">
                 <i class="el-icon-circle-plus-outline"></i>
                 增加书籍
               </el-menu-item>
-              <el-menu-item index="1-3" @click="borrowed">
+              <el-menu-item index="2-3" @click="borrowed">
                 <i class="el-icon-bell"></i>
                 借阅记录
               </el-menu-item>
@@ -116,6 +113,7 @@ export default {
   margin-top: 15px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  min-height: 300px;
 }
 img {
   margin-top: 8px;
