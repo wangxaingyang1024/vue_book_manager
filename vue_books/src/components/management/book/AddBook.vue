@@ -25,19 +25,13 @@
       </el-form-item>
       <!-- 类型 -->
       <el-form-item prop="type">
-        <el-select
+        <el-cascader
           v-model="addBook.type"
           placeholder="请选择书的类别"
-          prefix-icon="el-icon-edit"
-        >
-          <!-- <el-option
-              v-for="item in rolesList"
-              :key="item.id"
-              :label="item.roleName"
-              :value="item.id"
-            ></el-option> -->
-          <el-option></el-option>
-        </el-select>
+          :options="cateList"
+          :props="cascaderProps"
+          clearable
+        ></el-cascader>
       </el-form-item>
       <!-- 简介 -->
       <el-form-item prop="synopsis">
@@ -49,7 +43,9 @@
       </el-form-item>
       <!-- 按钮区域 -->
       <el-form-item class="btns">
-        <el-button type="primary" @click="add" class="add">确认添加</el-button>
+        <el-button type="primary" @click="addBook" class="add"
+          >确认添加</el-button
+        >
       </el-form-item>
     </el-form>
   </el-card>
@@ -59,6 +55,42 @@
 export default {
   data() {
     return {
+      cateList: [
+        {
+          cat_id: 1,
+          cat_name: "军事",
+          cat_pid: 0,
+          cat_level: 0,
+          children: [
+            {
+              cat_id: 3,
+              cat_name: "中国军事",
+              cat_pid: 1,
+              cat_level: 1,
+              children: [
+                {
+                  cat_id: 6,
+                  cat_name: "中国陆军",
+                  cat_pid: 3,
+                  cat_level: 2,
+                },
+                {
+                  cat_id: 7,
+                  cat_name: "中国海军",
+                  cat_pid: 3,
+                  cat_level: 2,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      cascaderProps: {
+        value: "cat_id",
+        label: "cat_name",
+        children: "children",
+        expandTrigger: "hover",
+      },
       addBook: {
         name: "",
         author: "",
@@ -111,11 +143,11 @@ export default {
     };
   },
   created() {
-    this.getClassList();
+    // this.getClassList();
   },
   methods: {
     //点击按钮添加
-    add() {
+    addBook() {
       this.$refs.addBookRef.validate(async (valid) => {
         if (!valid) return;
         //可发起网络请求
@@ -129,9 +161,9 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/find"
       );
-      // if (res.status !== 200)
-      // return this.$message.error('获取书籍分类数据列表失败！')
-      // this.cateList = res.data
+      if (res.status !== 200)
+        return this.$message.error("获取书籍分类数据列表失败！");
+      this.cateList = res.data;
       console.log(res);
     },
   },
@@ -141,20 +173,11 @@ export default {
 <style lang="less" scoped>
 .el-input {
   width: 500px;
-  margin: 0 auto;
-  top: 20px;
-  height: 50px;
-  margin-top: 10px;
-}
-.el-select {
-  width: 500px;
-  margin: 0 auto;
-  top: 20px;
   height: 50px;
   margin-top: 10px;
 }
 .add {
-  width: 510px;
+  width: 500px;
   margin-top: 50px;
 }
 </style>
