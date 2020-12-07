@@ -58,15 +58,19 @@ const AdminLogin = () =>
 
 const AddBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_borrowed" */ "../components/management/book/AddBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/AddBook.vue"
   );
 const ChangeBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_borrowed" */ "../components/management/book/ChangeBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/ChangeBook.vue"
+  );
+const Attributes = () =>
+  import(
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/Attributes.vue"
   );
 const Borrowed = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_borrowed" */ "../components/management/book/Borrowed.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/Borrowed.vue"
   );
 
 Vue.use(Router);
@@ -97,6 +101,7 @@ const router = new Router({
         { path: "/user", component: User },
         { path: "/changeBook", component: ChangeBook },
         { path: "/addBook", component: AddBook },
+        { path: "/attributes", component: Attributes },
         { path: "/borrowed", component: Borrowed },
       ],
     },

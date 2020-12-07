@@ -15,13 +15,15 @@
       </el-col>
     </el-row>
     <el-table :data="booklist" border stripe>
-      <el-table-column type="index" label="序号" width="70"> </el-table-column>
-      <el-table-column prop="name" label="图书名" width="120">
+      <el-table-column type="index" label="序号" width="70px">
       </el-table-column>
-      <el-table-column prop="author" label="作者" width="120">
+      <el-table-column prop="name" label="图书名" width="120px">
       </el-table-column>
-      <el-table-column prop="type" label="类型" width="120"> </el-table-column>
-      <el-table-column prop="status" label="状态" width="120">
+      <el-table-column prop="author" label="作者" width="120px">
+      </el-table-column>
+      <el-table-column prop="type" label="类型" width="120px">
+      </el-table-column>
+      <el-table-column prop="status" label="状态" width="120px">
         <template slot-scope="scope">
           <el-tag type="success" v-if="scope.row.status.toString() === 'true'"
             >可借阅</el-tag

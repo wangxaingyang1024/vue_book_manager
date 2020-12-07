@@ -47,7 +47,11 @@
                 <i class="el-icon-circle-plus-outline"></i>
                 增加书籍
               </el-menu-item>
-              <el-menu-item index="2-3" @click="borrowed">
+              <el-menu-item index="2-3" @click="attributes">
+                <i class="el-icon-copy-document"></i>
+                分类列表
+              </el-menu-item>
+              <el-menu-item index="2-4" @click="borrowed">
                 <i class="el-icon-bell"></i>
                 借阅记录
               </el-menu-item>
@@ -87,6 +91,9 @@ export default {
     addBook() {
       this.$router.push("/addBook");
     },
+    attributes() {
+      this.$router.push("/attributes");
+    },
     borrowed() {
       this.$router.push("/borrowed");
     },
@@ -113,7 +120,7 @@ export default {
   margin-top: 15px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  min-height: 300px;
+  min-height: 350px;
 }
 img {
   margin-top: 8px;

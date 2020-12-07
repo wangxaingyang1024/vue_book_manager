@@ -8,6 +8,8 @@ import store from "./store";
 // Vue.use(ElementUI);
 //引入nprogress包对应的js和css
 import NProgress from "nprogress";
+//引入tree-table
+import TreeTable from "vue-table-with-tree-grid";
 //引入axios
 import axios from "axios";
 //配置请求根路径
@@ -41,6 +43,8 @@ router.afterEach(() => {
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
+
+Vue.component("tree-table", TreeTable);
 
 new Vue({
   el: "#app",

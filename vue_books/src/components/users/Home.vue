@@ -21,7 +21,7 @@
     <el-container>
       <el-aside width="200px">
         <el-menu unique-opened :default-openeds="['1']" :default-active="`1-1`">
-          <el-submenu index="1">
+          <el-submenu index="1" class="el-icon-star-on">
             <template slot="title"
               ><i class="el-icon-star-on"></i>书籍查询</template
             >
@@ -84,7 +84,7 @@ export default {
   line-height: 50px;
 }
 .el-aside {
-  min-height: 300px;
+  min-height: 350px;
   margin-top: 15px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);

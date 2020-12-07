@@ -1,14 +1,15 @@
 <template>
   <el-card class="box-card">
     <el-table :data="userlist" border stripe>
-      <el-table-column type="index" label="序号" width="70"> </el-table-column>
-      <el-table-column prop="username" label="用户名" width="120">
+      <el-table-column type="index" label="序号" width="70px">
       </el-table-column>
-      <el-table-column prop="jobNumber" label="工号" width="120">
+      <el-table-column prop="username" label="用户名" width="120px">
       </el-table-column>
-      <el-table-column prop="nickName" label="昵称" width="120">
+      <el-table-column prop="jobNumber" label="工号" width="120px">
       </el-table-column>
-      <el-table-column prop="gender" label="性别" width="70">
+      <el-table-column prop="nickName" label="昵称" width="120px">
+      </el-table-column>
+      <el-table-column prop="gender" label="性别" width="70px">
         <template slot-scope="scope">
           {{ scope.row.gender == 1 ? "男" : "女" }}
         </template>
