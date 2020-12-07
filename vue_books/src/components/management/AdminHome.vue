@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-row :gutter="20">
+      <el-row>
         <el-col :span="18">
           <img src="../../../public/logo.svg" height="" />
         </el-col>
@@ -22,33 +22,38 @@
       <el-aside width="200px">
         <el-menu :default-openeds="['1', '2']">
           <el-submenu index="1">
-            <template slot="title"
-              ><i class="el-icon-s-custom"></i>人员管理</template
-            >
+            <template slot="title">
+              <i class="el-icon-s-custom"></i>
+              人员管理
+            </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="user"
-                ><i class="el-icon-copy-document"></i>用户列表</el-menu-item
-              >
+              <el-menu-item index="1-1" @click="user">
+                <i class="el-icon-copy-document"></i>
+                用户列表
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
 
         <el-menu :default-openeds="['1', '2']">
           <el-submenu index="2">
-            <template slot="title"
-              ><i class="el-icon-star-on"></i>书籍管理</template
-            >
-            <el-menu-item-group>
-              <el-menu-item index="1-1" @click="book"
-                ><i class="el-icon-tickets"></i>书籍列表</el-menu-item
-              >
-              <el-menu-item index="1-2" @click="addBook"
-                ><i class="el-icon-circle-plus-outline"></i
-                >增加书籍</el-menu-item
-              >
-              <el-menu-item index="1-3" @click="borrowed"
-                ><i class="el-icon-bell"></i>借阅记录</el-menu-item
-              >
+            <template slot="title">
+              <i class="el-icon-star-on"></i>
+              书籍管理
+            </template>
+          <el-menu-item-group>
+              <el-menu-item index="1-1" @click="book">
+                <i class="el-icon-tickets"></i>
+                  书籍列表
+              </el-menu-item>
+              <el-menu-item index="1-2" @click="addBook">
+                <i class="el-icon-circle-plus-outline"></i>
+                增加书籍
+                </el-menu-item>
+              <el-menu-item index="1-3" @click="borrowed">
+                <i class="el-icon-bell"></i>
+                借阅记录
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -111,8 +116,15 @@ export default {
   line-height: 60px;
   margin-bottom: 15px;
 }
+.el-header img{
+  margin-top:8px;
+  margin-left: 74px;
+}
 .el-aside {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+img{
+  margin-top: 8px;
 }
 </style>

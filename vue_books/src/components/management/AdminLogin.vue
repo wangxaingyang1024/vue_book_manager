@@ -8,7 +8,7 @@
         <el-col :span="16">
           <span class="topText">管理员登录</span>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-button type="info" round @click="checkout" class="checkout"
             >切换用户端入口</el-button
           >
@@ -45,7 +45,7 @@
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
-              <el-button type="primary" @click="login" class="login"
+              <el-button type="primary" round @click="login" class="login"
                 >登录</el-button
               >
               <!-- <el-button @click="signUp">注册</el-button> -->
@@ -138,8 +138,12 @@ body {
   line-height: 50px;
   text-align: center;
 }
+.el-header img{
+  margin-top: 8px;
+}
 .login_box {
   margin: 100px auto;
+  margin-top: 190px;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
@@ -151,17 +155,16 @@ body {
 }
 .el-form {
   text-align: center;
-  top: 20px;
 }
 .el-input {
   width: 500px;
   margin: 0 auto;
-  top: 20px;
+  top: 50px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .login {
-  width: 510px;
-  margin-top: 50px;
+  width: 500px;
+  margin-top: 85px;
 }
 </style>
