@@ -5,14 +5,9 @@
         <el-input
           placeholder="请输入内容"
           clearable
-          @clear="getBookList"
-          v-model="id"
+          v-model="name"
+          prefix-icon="el-icon-search"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getBookList"
-          ></el-button>
         </el-input>
       </el-col>
       <el-col :span="4">
@@ -28,7 +23,11 @@
       <el-table-column prop="type" label="类型" width="120"> </el-table-column>
       <el-table-column prop="status" label="状态" width="120">
         <template slot-scope="scope">
-          {{ scope.row.status == true ? "已借出" : "可借阅" }}
+          <el-tag type="success" v-if="scope.row.status.toString() === 'true'"
+            >可借阅</el-tag
+          >
+          <el-tag v-else>已借出</el-tag>
+          <!-- {{ scope.row.status }} -->
         </template>
       </el-table-column>
       <el-table-column prop="isbn" label="书号" width="120"> </el-table-column>
@@ -155,7 +154,7 @@ export default {
           },
         ],
       },
-      id: "",
+      name: "",
       typeList: [],
     };
   },
@@ -171,8 +170,21 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/find"
       );
-      console.log(res);
+      // console.log(res);
       if (res.status !== 6011) {
+        return this.$message.error("获取图书列表失败！");
+      }
+      this.booklist = res.data;
+    },
+    async getBookListByName() {
+      const { data: res } = await this.$http.post(
+        "http://localhost:8080/api/book/likeName",
+        {
+          name: this.name,
+        }
+      );
+      // console.log(res);
+      if (res.status !== 200) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data;
@@ -249,6 +261,12 @@ export default {
         return this.$message.error("获取分类列表失败！");
 
       this.typeList = res.data;
+    },
+  },
+  watch: {
+    name(val) {
+      if (val === null) return this.getBookList();
+      this.getBookListByName();
     },
   },
 };
