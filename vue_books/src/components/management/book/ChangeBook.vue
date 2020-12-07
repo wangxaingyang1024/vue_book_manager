@@ -79,7 +79,7 @@
         <!-- 类型 -->
         <el-form-item prop="type">
           <el-cascader
-            v-model="addBook.type"
+            v-model="editForm.type"
             placeholder="请选择书的类别"
             :options="typeList"
             :props="cascaderProps"
