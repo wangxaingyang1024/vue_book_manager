@@ -11,22 +11,36 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 //引入axios
 import axios from "axios";
-Vue.prototype.$http = axios;
 //配置请求根路径
 axios.defaults.baseURL = "http://192.168.2.103:8899";
 
 //在request拦截器中，展示进度条
-axios.interceptors.request.use((config) => {
+// axios.interceptors.request.use((config) => {
+//   NProgress.start();
+//   //   config.headers.Authorization = window.sessionStorage.getItem("token");
+//   return config;
+// });
+// //在request拦截器中，隐藏进度条
+// axios.interceptors.request.use((config) => {
+//   NProgress.done();
+//   return config;
+// });
+
+NProgress.inc(0.2);
+NProgress.configure({ easing: "ease", speed: 500, showSpinner: false });
+
+//在request拦截器中，展示进度条
+router.beforeEach((to, from, next) => {
   NProgress.start();
-  // config.headers.Authorization = window.sessionStorage.getItem('token')
-  return config;
-});
-//在request拦截器中，隐藏进度条
-axios.interceptors.request.use((config) => {
-  NProgress.done();
-  return config;
+  next();
 });
 
+// //在request拦截器中，隐藏进度条
+router.afterEach(() => {
+  NProgress.done();
+});
+
+Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 new Vue({
