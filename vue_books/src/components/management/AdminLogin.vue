@@ -138,12 +138,12 @@ body {
   line-height: 50px;
   text-align: center;
 }
-.el-header img{
-  margin-top: 8px;
+.el-header img {
+  margin-top: 10px;
 }
 .login_box {
-  margin: 100px auto;
-  margin-top: 190px;
+  margin: 80px auto;
+  margin-top: 50px;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);

@@ -3,13 +3,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// 引入element-ui
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-Vue.use(ElementUI);
 //引入nprogress包对应的js和css
 import NProgress from "nprogress";
-import "nprogress/nprogress.css";
 //引入axios
 import axios from "axios";
 //配置请求根路径

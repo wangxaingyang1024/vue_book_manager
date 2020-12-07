@@ -32,7 +32,8 @@
               <el-input
                 v-model="loginForm.username"
                 prefix-icon="el-icon-user"
-                placeholder="用户名">
+                placeholder="用户名"
+              >
               </el-input>
             </el-form-item>
             <!-- 密码 -->
@@ -41,7 +42,8 @@
                 v-model="loginForm.password"
                 prefix-icon="el-icon-lock"
                 type="password"
-                placeholder="密码">
+                placeholder="密码"
+              >
               </el-input>
             </el-form-item>
             <!-- 按钮区域 -->
@@ -56,7 +58,7 @@
           </el-form>
         </div>
       </div>
-      </el-main>
+    </el-main>
   </el-container>
 </template>
 
@@ -140,12 +142,12 @@ body {
   height: 80px;
   text-align: center;
 }
-.el-header img{
-  margin-top: 8px;
+.el-header img {
+  margin-top: 10px;
 }
 .login_box {
-  margin: 100px auto;
-  margin-top: 190px;
+  margin: 80px auto;
+  margin-top: 50px;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
@@ -169,7 +171,7 @@ body {
   width: 250px;
   margin-top: 85px;
 }
-.signUp{
+.signUp {
   width: 250px;
 }
 </style>

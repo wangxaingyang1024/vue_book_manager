@@ -107,15 +107,13 @@ export default {
 .el-header {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  width: 100%;
   line-height: 60px;
-  margin-bottom: 15px;
 }
 .el-header img {
-  margin-top: 8px;
-  margin-left: 74px;
+  margin-top: 10px;
 }
 .el-aside {
+  margin-top: 15px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }

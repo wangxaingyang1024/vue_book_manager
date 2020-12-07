@@ -89,7 +89,6 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 img {
-  margin-top: 8px;
-  margin-left: 74px;
+  margin-top: 10px;
 }
 </style>
