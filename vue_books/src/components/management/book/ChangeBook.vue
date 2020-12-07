@@ -78,20 +78,15 @@
 
         <!-- 类型 -->
         <el-form-item prop="type">
-          <el-select
-            v-model="booklist.type"
+          <el-cascader
+            v-model="addBook.type"
             placeholder="请选择书的类别"
-            prefix-icon="el-icon-edit"
-          >
-            <el-option
-              v-for="item in typeList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-            <!-- <el-option></el-option> -->
-          </el-select>
+            :options="typeList"
+            :props="cascaderProps"
+            clearable
+          ></el-cascader>
         </el-form-item>
+        <!-- 简介 -->
         <el-form-item label="简介" prop="synopsis">
           <el-input v-model="editForm.synopsis"></el-input>
         </el-form-item>
@@ -158,6 +153,12 @@ export default {
       },
       name: "",
       typeList: [],
+      cascaderProps: {
+        value: "cat_id",
+        label: "cat_name",
+        children: "children",
+        expandTrigger: "hover",
+      },
     };
   },
   created() {
@@ -191,6 +192,22 @@ export default {
       }
       this.booklist = res.data;
     },
+    //监听修改书籍对话框的开启事件
+    showEditDialog(data) {
+      this.getTypeList();
+      this.editDialogVisible = true;
+      this.editForm = data;
+    },
+    //获取书籍分类
+    async getTypeList() {
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/type"
+      );
+      // console.log(res.data);
+      if (res.status !== 200)
+        return this.$message.error("获取书籍分类列表失败！");
+      this.typeList = res.data;
+    },
     //监听修改书籍对话框的关闭事件
     editDialogClosed() {
       this.$refs.editFormRef.resetFields();
@@ -210,7 +227,7 @@ export default {
           }
         );
 
-        if (res.meta.status !== 6004) {
+        if (res.status !== 6004) {
           return this.$message.error("更新书籍信息失败！");
         }
 
@@ -248,21 +265,6 @@ export default {
       }
       this.$message.success("删除书籍成功！");
       this.getBookList();
-    },
-    showEditDialog(data) {
-      this.getTypeList();
-      this.editDialogVisible = true;
-      this.editForm = data;
-    },
-    async getTypeList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type"
-      );
-      // console.log(res.data);
-      if (res.meta.status !== 200)
-        return this.$message.error("获取分类列表失败！");
-
-      this.typeList = res.data;
     },
   },
   watch: {

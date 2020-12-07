@@ -28,7 +28,7 @@
         <el-cascader
           v-model="addBook.type"
           placeholder="请选择书的类别"
-          :options="cateList"
+          :options="typeList"
           :props="cascaderProps"
           clearable
         ></el-cascader>
@@ -55,7 +55,7 @@
 export default {
   data() {
     return {
-      cateList: [
+      typeList: [
         {
           cat_id: 1,
           cat_name: "军事",
@@ -143,7 +143,7 @@ export default {
     };
   },
   created() {
-    // this.getClassList();
+    // this.getTypeList();
   },
   methods: {
     //点击按钮添加
@@ -157,14 +157,13 @@ export default {
         this.$router.push("/changeBook");
       });
     },
-    async getClassList() {
+    async getTypeList() {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/find"
       );
       if (res.status !== 200)
-        return this.$message.error("获取书籍分类数据列表失败！");
-      this.cateList = res.data;
-      console.log(res);
+        return this.$message.error("获取书籍分类列表失败！");
+      this.typeList = res.data;
     },
   },
 };
