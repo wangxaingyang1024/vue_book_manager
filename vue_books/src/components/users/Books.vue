@@ -76,10 +76,10 @@ export default {
         }
       );
       //console.log(res);
-      if (res.status !== 6006){
-        return this.$message.error("借阅书籍失败！")
+      if (res.status !== 6006) {
+        return this.$message.error("借阅书籍失败！");
       }
-      this.$message.success('借阅书籍成功!')
+      this.$message.success("借阅书籍成功!");
       this.getBookList();
     },
   },

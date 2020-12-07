@@ -2,13 +2,6 @@
   <el-card class="box-card">
     <el-row :gutter="20">
       <el-col :span="8">
-        <!-- <el-input placeholder="请输入内容" clearable @clear="getBookList">
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getBookList"
-          ></el-button>
-        </el-input> -->
         <div class="block">
           <el-date-picker
             v-model="time"
@@ -33,7 +26,11 @@
       <el-table-column prop="bookName" label="书名" width="120">
       </el-table-column>
       <el-table-column prop="isbn" label="编号" width="120"> </el-table-column>
-      <el-table-column prop="returnTime" label="归还时间" width="180">
+      <el-table-column prop="returnTime" label="归还时间">
+        <template slot-scope="scope">
+          <p v-if="scope.row.returnTime">{{ scope.row.returnTime }}</p>
+          <el-tag v-else>未归还</el-tag>
+        </template>
       </el-table-column>
     </el-table>
   </el-card>
@@ -43,26 +40,13 @@
 export default {
   data() {
     return {
-      //TODO  通过时间选择器返回起始时间与结束时间
-      //   pickerOptions: {
-      //     shortcuts: [
-      //       {
-      //         onClick(picker) {
-      //           const end = new Date();
-      //           const start = new Date();
-      //           start.setTime(start.getTime());
-      //           picker.$emit("pick", [start, end]);
-      //         },
-      //       },
-      //     ],
-      //   },
-      //   time: [new Date(), new Date()],
       loglist: [],
       time: [],
       findTime: {
         startTime: "",
         endTime: "",
       },
+      tag: "AA",
     };
   },
   created() {
