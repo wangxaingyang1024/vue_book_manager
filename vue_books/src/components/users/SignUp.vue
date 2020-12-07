@@ -2,7 +2,9 @@
   <el-container>
     <el-header>
       <span class="topText">注册页面</span>
-      <div class="logo"><img src="../../../public/logo.svg" height="" /></div>
+      <div class="logo">
+        <img src="../../../public/logo.svg" height="" />
+      </div>
     </el-header>
     <el-main>
       <div class="add_container">
@@ -83,7 +85,7 @@
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
-              <el-button type="primary" @click="addUser">提交</el-button>
+              <el-button type="primary" round @click="addUser">提交</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -96,7 +98,7 @@
 export default {
   data() {
     //验证用户名规则
-    var checkUsername = (rule, value, callback) => {
+    const checkUsername = (rule, value, callback) => {
       const regUsername = /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/;
       if (regUsername.test(value)) {
         //合法用户名
@@ -106,7 +108,7 @@ export default {
       callback(new Error("需以字母开头，字母数字组合3~10长度"));
     };
     //验证密码
-    var validatePassword = (rule, value, callback) => {
+    const validatePassword = (rule, value, callback) => {
       const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
       if (regPass.test(value)) {
         //合法密码
@@ -123,7 +125,7 @@ export default {
       }
     };
     //二次验证
-    var validatePassword2 = (rule, value, callback) => {
+    const validatePassword2 = (rule, value, callback) => {
       const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
       if (regPass.test(value)) {
         //合法密码
@@ -213,7 +215,10 @@ export default {
             message: "需包含大小写字母数字，不使用特殊字符8~15长度",
             trigger: "blur",
           },
-          { validator: validatePassword, trigger: "blur" },
+          { 
+            validator: validatePassword, 
+            trigger: "blur" 
+          },
         ],
         checkPassword: [
           {
@@ -312,7 +317,7 @@ export default {
   .el-form-item__error {
     color: #f56c6c;
     font-size: 12px;
-    line-height: 1;
+    line-height: 30px;
     padding-top: 4px;
     position: absolute;
     top: 40px;
@@ -327,7 +332,6 @@ export default {
 .el-header {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
   height: 80px;
   width: 100%;
   position: relative;
@@ -346,15 +350,15 @@ body {
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   position: relative;
-  left: 520px;
+  left: 47%;
   top: 2px;
 }
 .logo {
   position: absolute;
-  left: 370px;
-  top: 5px;
+  left: 94px;
+  top: 8px;
 }
 .el-form {
   text-align: center;
@@ -362,19 +366,19 @@ body {
 .el-input {
   width: 500px;
   margin: 0 auto;
-  top: 20px;
+  top: 25px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .el-select {
   width: 500px;
   margin: 0 auto;
-  top: 20px;
+  top: 25px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .el-button {
   width: 500px;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 </style>

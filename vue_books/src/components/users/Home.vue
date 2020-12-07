@@ -77,7 +77,7 @@ export default {
 </style>
 
 <style lang="less" scoped>
-.el-main {
+  .el-main {
   height: 87%;
   //left: 216px;
   margin-top: 15px;
@@ -95,5 +95,9 @@ export default {
   margin-top: 15px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+img{
+  margin-top: 8px;
+  margin-left: 74px;
 }
 </style>

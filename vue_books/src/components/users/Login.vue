@@ -9,10 +9,10 @@
         <el-col :span="16">
           <span class="topText">用户登录</span>
         </el-col>
-        <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout"
-            >切换管理员端入口</el-button
-          >
+        <el-col :span="3">
+          <el-button type="info" round @click="checkout" class="checkout">
+            切换管理员端入口
+          </el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -32,8 +32,8 @@
               <el-input
                 v-model="loginForm.username"
                 prefix-icon="el-icon-user"
-                placeholder="用户名"
-              ></el-input>
+                placeholder="用户名">
+              </el-input>
             </el-form-item>
             <!-- 密码 -->
             <el-form-item prop="password">
@@ -41,20 +41,22 @@
                 v-model="loginForm.password"
                 prefix-icon="el-icon-lock"
                 type="password"
-                placeholder="密码"
-              ></el-input>
+                placeholder="密码">
+              </el-input>
             </el-form-item>
             <!-- 按钮区域 -->
             <el-form-item class="btns">
-              <el-button type="primary" @click="login" class="login"
-                >登录</el-button
-              >
-              <el-button @click="signUp" class="signUp">注册</el-button>
+              <el-button type="primary" round @click="login" class="login">
+                登录
+              </el-button>
+              <el-button type="success" round @click="signUp" class="signUp">
+                注册
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
-      </div></el-main
-    >
+      </div>
+      </el-main>
   </el-container>
 </template>
 
@@ -138,8 +140,12 @@ body {
   height: 80px;
   text-align: center;
 }
+.el-header img{
+  margin-top: 8px;
+}
 .login_box {
   margin: 100px auto;
+  margin-top: 190px;
   width: 600px;
   height: 400px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
@@ -151,21 +157,19 @@ body {
 }
 .el-form {
   text-align: center;
-  top: 20px;
 }
 .el-input {
   width: 500px;
   margin: 0 auto;
-  top: 20px;
+  top: 50px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .login {
   width: 250px;
-  margin-top: 50px;
+  margin-top: 85px;
 }
-.signUp {
+.signUp{
   width: 250px;
-  margin-top: 50px;
 }
 </style>
