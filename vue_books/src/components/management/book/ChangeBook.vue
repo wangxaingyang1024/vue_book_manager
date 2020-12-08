@@ -250,13 +250,15 @@ export default {
     },
     //修改书籍信息并提交
     editBookInfo() {
-      if (this.editForm.level.length !== 3) {
-        this.editForm.level = [];
-        return this.$message.error("书籍分类必须为三级分类！");
-      }
-      this.editForm.type = this.editForm.level[this.editForm.level.length - 1];
       this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return;
+        if (this.editForm.level.length !== 3) {
+          this.editForm.level = [];
+          return this.$message.error("书籍分类必须为三级分类！");
+        }
+        this.editForm.type = this.editForm.level[
+          this.editForm.level.length - 1
+        ];
         //发起修改用户信息的请求
         const { data: res } = await this.$http.post(
           "http://localhost:8080/api/admin/update",

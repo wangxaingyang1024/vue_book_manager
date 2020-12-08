@@ -43,9 +43,7 @@
       </el-form-item>
       <!-- 按钮区域 -->
       <el-form-item class="btns">
-        <el-button type="primary" @click="add" class="add"
-          >确认添加</el-button
-        >
+        <el-button type="primary" @click="add" class="add">确认添加</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -55,10 +53,8 @@
 export default {
   data() {
     return {
-      typeList: [
-       
-      ],
-      selectedKeys:[],
+      typeList: [],
+      selectedKeys: [],
       cascaderProps: {
         value: "mid",
         label: "name",
@@ -122,15 +118,18 @@ export default {
   methods: {
     //点击按钮添加
     add() {
-      if (this.addBook.type.length !== 3) {
-        this.addBook.type = [];
-        return this.$message.error("书籍分类必须为三级分类！");
-      }
-      this.addBook.type = this.addBook.type[this.addBook.type.length-1];
       this.$refs.addBookRef.validate(async (valid) => {
         if (!valid) return;
+        if (this.addBook.type.length !== 3) {
+          this.addBook.type = [];
+          return this.$message.error("书籍分类必须为三级分类！");
+        }
+        this.addBook.type = this.addBook.type[this.addBook.type.length - 1];
         //可发起网络请求
-        const { data: res } = await this.$http.post("http://localhost:8080/api/admin/add", this.addBook);
+        const { data: res } = await this.$http.post(
+          "http://localhost:8080/api/admin/add",
+          this.addBook
+        );
         if (res.status !== 6000) return this.$message.error("添加书籍失败！");
         this.$message.success("添加书籍成功！");
         this.$router.push("/changeBook");
