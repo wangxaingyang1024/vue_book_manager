@@ -6,7 +6,8 @@
           <img src="../../../public/logo.svg" />
         </el-col>
         <el-col :span="3">
-          用户已登录
+          <i class="el-icon-user-solid"> </i>
+          Hi, {{ this.nickName }}
         </el-col>
         <el-col :span="3">
           <el-button type="info" round @click="logout" class="logout"
@@ -49,7 +50,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      nickName: window.sessionStorage.getItem("nickName"),
+    };
   },
   created() {
     // var nick_name = "${session.user.nick_name}";
@@ -82,14 +85,17 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   line-height: 50px;
+  .el-icon-user-solid {
+    color: orange;
+  }
+  img {
+    margin-top: 10px;
+  }
 }
 .el-aside {
   height: 350px;
   margin-top: 15px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-img {
-  margin-top: 10px;
 }
 </style>

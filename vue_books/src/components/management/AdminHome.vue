@@ -6,7 +6,8 @@
           <img src="../../../public/logo.svg" />
         </el-col>
         <el-col :span="3">
-          管理员已登录
+          <i class="el-icon-s-custom"> </i>
+          Hi, {{ this.nickName }}
         </el-col>
         <el-col :span="3">
           <el-button type="info" round @click="logout" class="logout"
@@ -71,7 +72,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      nickName: window.sessionStorage.getItem("nickName"),
+    };
   },
   created() {
     // var nick_name = "${session.user.nick_name}";
@@ -80,7 +83,7 @@ export default {
     //退出
     logout() {
       window.sessionStorage.clear();
-      this.$router.push("/login");
+      this.$router.push("/adminLogin");
     },
     user() {
       this.$router.push("/user");
@@ -112,17 +115,17 @@ export default {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   line-height: 60px;
-}
-.el-header img {
-  margin-top: 10px;
+  .el-icon-s-custom {
+    color: orange;
+  }
+  img {
+    margin-top: 10px;
+  }
 }
 .el-aside {
   margin-top: 15px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 350px;
-}
-img {
-  margin-top: 8px;
 }
 </style>

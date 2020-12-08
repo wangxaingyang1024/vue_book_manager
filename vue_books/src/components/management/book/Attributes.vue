@@ -88,7 +88,7 @@ export default {
       addTypeDialogVisible: false,
       addTypeForm: {
         name: "",
-        pid: 0,
+        parentId: 0,
         level: 1,
       },
       addTypeFormRules: {
@@ -124,10 +124,7 @@ export default {
     //获取父级分类列表
     async getParentTypeList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type/2",
-        {
-          params: { type: 2 },
-        }
+        "http://localhost:8080/api/admin/type/2"
       );
       if (res.status !== 200) return this.$message.error("获取父级分类失败！");
       this.parentTypeList = res.data;
@@ -140,8 +137,10 @@ export default {
           "http://localhost:8080/api/admin/bookType/add",
           this.addTypeForm
         );
-        if (res.status !== 201)
+        console.log(res);
+        if (res.status === 2001)
           return this.$message.error("分类已存在，添加失败！");
+        if (res.status !== 200) return this.$message.error("添加失败！");
         this.$message.success("添加分类成功！");
         this.addTypeDialogVisible = false;
         this.getTypeList();
@@ -151,7 +150,7 @@ export default {
       this.$refs.addTypeFormRef.resetFields();
       this.selectedKeys = [];
       this.addTypeForm.level = 1;
-      this.addTypeForm.pid = 0;
+      this.addTypeForm.parentId = 0;
     },
     //删除分类
     async removeTypeDialog(mid) {
@@ -175,13 +174,14 @@ export default {
   },
   watch: {
     selectedKeys(val) {
-      console.log(val);
       if (this.selectedKeys.length > 0) {
-        this.addTypeForm.pid = this.selectedKeys[this.selectedKeys.length - 1];
-        this.addTypeForm.level = this.selectedKeys.length;
+        this.addTypeForm.parentId = this.selectedKeys[
+          this.selectedKeys.length - 1
+        ];
+        this.addTypeForm.level = this.selectedKeys.length + 1;
         return;
       } else {
-        this.addTypeForm.pid = 0;
+        this.addTypeForm.parentId = 0;
         this.addTypeForm.level = 1;
       }
     },
