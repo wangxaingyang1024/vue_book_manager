@@ -16,6 +16,15 @@
           <el-tag type="success" v-else-if="scope.row.level === 2">二级</el-tag>
           <el-tag type="warning" v-else>三级</el-tag>
         </template>
+        <template slot="opt" slot-scope="scope">
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            circle
+            @click="removeTypeDialog(scope.row.mid)"
+          ></el-button>
+        </template>
       </tree-table>
     </el-card>
     <!-- 添加分类 -->
@@ -65,11 +74,15 @@ export default {
           label: "分类名称",
           prop: "name",
         },
-
         {
           label: "分类等级",
           type: "template",
           template: "order",
+        },
+        {
+          label: "操作",
+          type: "template",
+          template: "opt",
         },
       ],
       addTypeDialogVisible: false,
@@ -96,6 +109,7 @@ export default {
     this.getTypeList();
   },
   methods: {
+    //获取分类列表
     async getTypeList() {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/type/3"
@@ -104,9 +118,10 @@ export default {
       this.typeList = res.data;
     },
     showAddTypeDialog() {
-        this.getParentTypeList();
+      this.getParentTypeList();
       this.addTypeDialogVisible = true;
     },
+    //获取父级分类列表
     async getParentTypeList() {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/type/2",
@@ -117,6 +132,7 @@ export default {
       if (res.status !== 200) return this.$message.error("获取父级分类失败！");
       this.parentTypeList = res.data;
     },
+    //添加分类
     addType() {
       this.$refs.addTypeFormRef.validate(async (vaild) => {
         if (!vaild) return;
@@ -133,6 +149,25 @@ export default {
       this.selectedKeys = [];
       this.addTypeForm.level = 1;
       this.addTypeForm.pid = 0;
+    },
+    //删除分类
+    async removeTypeDialog(mid) {
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该分类, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+      if (confirmResult !== "confirm")
+        return this.$message.info("已取消删除！");
+      console.log(mid);
+      // const { data: res } = await this.$http.delete("url" + mid);
+      // if (res.status !== 200) return this.$message.error("删除分类失败！");
+      // this.$message.success("删除分类成功！");
+      // this.getTypeList();
     },
   },
   watch: {
