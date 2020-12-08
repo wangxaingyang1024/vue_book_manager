@@ -48,7 +48,6 @@ export default {
         startTime: "",
         endTime: "",
       },
-      tag: "AA",
     };
   },
   created() {
@@ -66,10 +65,12 @@ export default {
       this.loglist = res.data;
     },
     async getLogByTime() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/log/admin/longT" + this.findTime
+      console.log(this.findTime);
+      const { data: res } = await this.$http.post(
+        "http://localhost:8080/api/log/admin/logT",
+        this.findTime
       );
-      // console.log(res);
+      console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }

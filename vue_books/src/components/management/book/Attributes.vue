@@ -133,7 +133,7 @@ export default {
     addType() {
       this.$refs.addTypeFormRef.validate(async (vaild) => {
         if (!vaild) return;
-        const { data: res } = await this.$http.post(
+        const { data: res } = await this.$http.put(
           "http://localhost:8080/api/admin/bookType/add",
           this.addTypeForm
         );
