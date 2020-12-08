@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <el-backtop></el-backtop>
     <!-- 路由占位符 -->
     <router-view></router-view>
   </div>
@@ -11,5 +12,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

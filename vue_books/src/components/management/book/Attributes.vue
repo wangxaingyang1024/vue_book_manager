@@ -136,7 +136,10 @@ export default {
     addType() {
       this.$refs.addTypeFormRef.validate(async (vaild) => {
         if (!vaild) return;
-        const { data: res } = await this.$http.post("url", this.addTypeForm);
+        const { data: res } = await this.$http.post(
+          "http://localhost:8080/api/admin/bookType/add",
+          this.addTypeForm
+        );
         if (res.status !== 201)
           return this.$message.error("分类已存在，添加失败！");
         this.$message.success("添加分类成功！");

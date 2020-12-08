@@ -120,7 +120,7 @@ export default {
   margin-top: 15px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  min-height: 350px;
+  height: 350px;
 }
 img {
   margin-top: 8px;
