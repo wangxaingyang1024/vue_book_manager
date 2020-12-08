@@ -55,10 +55,20 @@
             @click="removeBook(scope.row.isbn)"
             v-if="scope.row.status.toString() === 'true'"
           ></el-button>
-          <el-tag  type="info" v-else>禁止修改</el-tag>
+          <el-tag type="info" v-else>禁止修改</el-tag>
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页区域 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="queryInfo.pagenum"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="queryInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
     <!-- 修改书籍对话框 -->
     <el-dialog
       title="修改书籍"
@@ -80,7 +90,7 @@
         </el-form-item>
 
         <!-- 类型 -->
-        <el-form-item prop="level" label="分类"> 
+        <el-form-item prop="level" label="分类">
           <el-cascader
             v-model="editForm.level"
             placeholder="请选择书的类别"
@@ -106,13 +116,20 @@
 export default {
   data() {
     return {
+      //获取用户列表的参数对象
+      queryInfo: {
+        query: "",
+        //当前页数
+        pagenum: 1,
+        //当前每页显示多少条数据
+        pagesize: 2,
+      },
+      total: 0,
       booklist: [],
       //控制修改用户对话框的显示与隐藏
       editDialogVisible: false,
       //查询到的用户信息对象
-      editForm: {
-
-      },
+      editForm: {},
       //修改书的验证规则对象
       editFormRules: {
         name: [
@@ -170,6 +187,18 @@ export default {
     this.getBookList();
   },
   methods: {
+    //监听 pagesize 改变的事件
+    handleSizeChange(newSize) {
+      //console.log(newSize)
+      this.queryInfo.pagesize = newSize;
+      this.getUserList();
+    },
+    //监听 页码值改变的事件
+    handleCurrentChange(newPage) {
+      //console.log(newPage)
+      this.queryInfo.pagenum = newPage;
+      this.getUserList();
+    },
     //跳转添加书籍路由
     goAddBook() {
       this.$router.push("/addBook");
@@ -177,12 +206,14 @@ export default {
     async getBookList() {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/find"
+        //,{params: this.queryInfo,}
       );
       console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data;
+      //this.total = res.data.total;
     },
     async getBookListByName() {
       const { data: res } = await this.$http.post(
@@ -219,16 +250,17 @@ export default {
     },
     //修改书籍信息并提交
     editBookInfo() {
-       if (this.editForm.level.length !== 3) {
-        this.editForm.level = []
+      if (this.editForm.level.length !== 3) {
+        this.editForm.level = [];
         return this.$message.error("书籍分类必须为三级分类！");
       }
-      this.editForm.type = this.editForm.level[this.editForm.level.length-1];
+      this.editForm.type = this.editForm.level[this.editForm.level.length - 1];
       this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return;
         //发起修改用户信息的请求
         const { data: res } = await this.$http.post(
-          "http://localhost:8080/api/admin/update" , this.editForm
+          "http://localhost:8080/api/admin/update",
+          this.editForm
         );
 
         if (res.status !== 6004) {
@@ -286,4 +318,8 @@ export default {
   margin-bottom: 25px;
 }
 </style>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-pagination {
+  margin-top: 25px;
+}
+</style>

@@ -28,6 +28,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页区域 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="queryInfo.pagenum"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="queryInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
   </el-card>
 </template>
 
@@ -35,6 +45,15 @@
 export default {
   data() {
     return {
+      //获取用户列表的参数对象
+      queryInfo: {
+        query: "",
+        //当前页数
+        pagenum: 1,
+        //当前每页显示多少条数据
+        pagesize: 2,
+      },
+      total: 0,
       userlist: [],
     };
   },
@@ -42,9 +61,22 @@ export default {
     this.getUserList();
   },
   methods: {
+    //监听 pagesize 改变的事件
+    handleSizeChange(newSize) {
+      //console.log(newSize)
+      this.queryInfo.pagesize = newSize;
+      this.getUserList();
+    },
+    //监听 页码值改变的事件
+    handleCurrentChange(newPage) {
+      //console.log(newPage)
+      this.queryInfo.pagenum = newPage;
+      this.getUserList();
+    },
     async getUserList() {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/emps"
+        //,{params: this.queryInfo,}
       );
       console.log(res.status);
       if (res.status === 3023) {
@@ -54,6 +86,7 @@ export default {
         return this.$message.error("获取用户列表失败！");
       }
       this.userlist = res.data;
+      //this.total = res.data.total;
     },
     async removeUser(jobNumber) {
       //弹框询问用户是否删除数据
@@ -89,4 +122,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-pagination {
+  margin-top: 25px;
+}
+</style>
