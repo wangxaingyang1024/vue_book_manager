@@ -148,6 +148,10 @@ export default {
   methods: {
     //点击按钮添加
     addBook() {
+      if (this.addBook.type.length !== 3) {
+        this.addBook.type = "";
+        return this.$message.error("书籍分类必须为三级分类！");
+      }
       this.$refs.addBookRef.validate(async (valid) => {
         if (!valid) return;
         //可发起网络请求
