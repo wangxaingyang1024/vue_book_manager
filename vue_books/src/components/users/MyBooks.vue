@@ -72,14 +72,13 @@ export default {
     async returnBook(isbn) {
       this.jobNumber = window.sessionStorage.getItem("jobNumber");
       const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/book/borrow",
+        "http://localhost:8080/api/book/return",
         {
           jobNumber: this.jobNumber,
           isbn: isbn,
         }
       );
-      //console.log(res);
-      if (res.status !== 6006) {
+      if (res.status !== 6008) {
         return this.$message.error("归还书籍失败！");
       }
       this.$message.success("归还书籍成功!");

@@ -44,6 +44,7 @@
             size="mini"
             circle
             @click="showEditDialog(scope.row)"
+            v-if="scope.row.status.toString() === 'true'"
           ></el-button>
           <!-- 删除按钮 -->
           <el-button
@@ -52,7 +53,9 @@
             size="mini"
             circle
             @click="removeBook(scope.row.isbn)"
+            v-if="scope.row.status.toString() === 'true'"
           ></el-button>
+          <el-tag  type="info" v-else>禁止修改</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -77,9 +80,9 @@
         </el-form-item>
 
         <!-- 类型 -->
-        <el-form-item prop="type">
+        <el-form-item prop="level" label="分类"> 
           <el-cascader
-            v-model="editForm.type"
+            v-model="editForm.level"
             placeholder="请选择书的类别"
             :options="typeList"
             :props="cascaderProps"
@@ -107,7 +110,9 @@ export default {
       //控制修改用户对话框的显示与隐藏
       editDialogVisible: false,
       //查询到的用户信息对象
-      editForm: {},
+      editForm: {
+
+      },
       //修改书的验证规则对象
       editFormRules: {
         name: [
@@ -136,7 +141,7 @@ export default {
             trigger: "blur",
           },
         ],
-        type: [{ required: true, message: "请选择类别", trigger: "change" }],
+        level: [{ required: true, message: "请选择类别", trigger: "change" }],
         synopsis: [
           {
             required: true,
@@ -154,8 +159,8 @@ export default {
       name: "",
       typeList: [],
       cascaderProps: {
-        value: "cat_id",
-        label: "cat_name",
+        value: "mid",
+        label: "name",
         children: "children",
         expandTrigger: "hover",
       },
@@ -173,7 +178,7 @@ export default {
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/admin/find"
       );
-      // console.log(res);
+      console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
@@ -201,7 +206,7 @@ export default {
     //获取书籍分类
     async getTypeList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type"
+        "http://localhost:8080/api/admin/type/3"
       );
       // console.log(res.data);
       if (res.status !== 200)
@@ -214,17 +219,16 @@ export default {
     },
     //修改书籍信息并提交
     editBookInfo() {
+       if (this.editForm.level.length !== 3) {
+        this.editForm.level = []
+        return this.$message.error("书籍分类必须为三级分类！");
+      }
+      this.editForm.type = this.editForm.level[this.editForm.level.length-1];
       this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return;
         //发起修改用户信息的请求
-        const { data: res } = await this.$http.put(
-          "http://localhost:8080/api/admin/updata/" + this.editForm.isbn,
-          {
-            name: this.editForm.name,
-            author: this.editForm.author,
-            type: this.editForm.type,
-            synopsis: this.editForm.synopsis,
-          }
+        const { data: res } = await this.$http.post(
+          "http://localhost:8080/api/admin/update" , this.editForm
         );
 
         if (res.status !== 6004) {

@@ -43,7 +43,7 @@
       </el-form-item>
       <!-- 按钮区域 -->
       <el-form-item class="btns">
-        <el-button type="primary" @click="addBook" class="add"
+        <el-button type="primary" @click="add" class="add"
           >确认添加</el-button
         >
       </el-form-item>
@@ -56,38 +56,12 @@ export default {
   data() {
     return {
       typeList: [
-        {
-          cat_id: 1,
-          cat_name: "军事",
-          cat_pid: 0,
-          cat_level: 0,
-          children: [
-            {
-              cat_id: 3,
-              cat_name: "中国军事",
-              cat_pid: 1,
-              cat_level: 1,
-              children: [
-                {
-                  cat_id: 6,
-                  cat_name: "中国陆军",
-                  cat_pid: 3,
-                  cat_level: 2,
-                },
-                {
-                  cat_id: 7,
-                  cat_name: "中国海军",
-                  cat_pid: 3,
-                  cat_level: 2,
-                },
-              ],
-            },
-          ],
-        },
+       
       ],
+      selectedKeys:[],
       cascaderProps: {
-        value: "cat_id",
-        label: "cat_name",
+        value: "mid",
+        label: "name",
         children: "children",
         expandTrigger: "hover",
       },
@@ -96,7 +70,7 @@ export default {
         author: "",
         type: "",
         synopsis: "",
-        status: "1",
+        status: true,
       },
       addBookRules: {
         name: [
@@ -143,27 +117,28 @@ export default {
     };
   },
   created() {
-    // this.getTypeList();
+    this.getTypeList();
   },
   methods: {
     //点击按钮添加
-    addBook() {
+    add() {
       if (this.addBook.type.length !== 3) {
-        this.addBook.type = "";
+        this.addBook.type = [];
         return this.$message.error("书籍分类必须为三级分类！");
       }
+      this.addBook.type = this.addBook.type[this.addBook.type.length-1];
       this.$refs.addBookRef.validate(async (valid) => {
         if (!valid) return;
         //可发起网络请求
-        const { data: res } = await this.$http.post("", this.addBook);
-        if (res.status !== 200) return this.$message.error("添加书籍失败！");
+        const { data: res } = await this.$http.post("http://localhost:8080/api/admin/add", this.addBook);
+        if (res.status !== 6000) return this.$message.error("添加书籍失败！");
         this.$message.success("添加书籍成功！");
         this.$router.push("/changeBook");
       });
     },
     async getTypeList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/find"
+        "http://localhost:8080/api/admin/type/3"
       );
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");

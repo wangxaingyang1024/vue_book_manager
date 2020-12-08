@@ -12,10 +12,8 @@
         :show-row-hover="false"
       >
         <template slot="order" slot-scope="scope">
-          <el-tag v-if="scope.row.cat_level === 0">一级</el-tag>
-          <el-tag type="success" v-else-if="scope.row.cat_level === 1"
-            >二级</el-tag
-          >
+          <el-tag v-if="scope.row.level === 1">一级</el-tag>
+          <el-tag type="success" v-else-if="scope.row.level === 2">二级</el-tag>
           <el-tag type="warning" v-else>三级</el-tag>
         </template>
       </tree-table>
@@ -34,9 +32,9 @@
         label-width="80px"
         status-icon
       >
-        <el-form-item label="分类名称" prop="cat_name">
+        <el-form-item label="分类名称" prop="name">
           <el-input
-            v-model="addTypeForm.cat_name"
+            v-model="addTypeForm.name"
             placeholder="分类名称"
           ></el-input>
         </el-form-item>
@@ -61,40 +59,11 @@
 export default {
   data() {
     return {
-      typeList: [
-        {
-          cat_id: 1,
-          cat_name: "军事",
-          cat_pid: 0,
-          cat_level: 0,
-          children: [
-            {
-              cat_id: 3,
-              cat_name: "中国军事",
-              cat_pid: 1,
-              cat_level: 1,
-              children: [
-                {
-                  cat_id: 6,
-                  cat_name: "中国陆军",
-                  cat_pid: 3,
-                  cat_level: 2,
-                },
-                {
-                  cat_id: 7,
-                  cat_name: "中国海军",
-                  cat_pid: 3,
-                  cat_level: 2,
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      typeList: [],
       columns: [
         {
           label: "分类名称",
-          prop: "cat_name",
+          prop: "name",
         },
 
         {
@@ -105,34 +74,17 @@ export default {
       ],
       addTypeDialogVisible: false,
       addTypeForm: {
-        cat_name: "",
-        cat_pid: 0,
-        cat_level: 0,
+        name: "",
+        pid: 0,
+        level: 1,
       },
       addTypeFormRules: {
-        cat_name: [
-          { required: true, message: "请输入分类名称", trigger: "blur" },
-        ],
+        name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
       },
-      parentTypeList: [
-        {
-          cat_id: 1,
-          cat_name: "军事",
-          cat_pid: 0,
-          cat_level: 0,
-          children: [
-            {
-              cat_id: 3,
-              cat_name: "中国军事",
-              cat_pid: 1,
-              cat_level: 1,
-            },
-          ],
-        },
-      ],
+      parentTypeList: [],
       cascaderProps: {
-        value: "cat_id",
-        label: "cat_name",
+        value: "mid",
+        label: "name",
         children: "children",
         checkStrictly: true,
         expandTrigger: "hover",
@@ -141,22 +93,27 @@ export default {
     };
   },
   created() {
-    // this.getTypeList();
+    this.getTypeList();
   },
   methods: {
     async getTypeList() {
-      const { data: res } = await this.$http.get("url");
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/type/3"
+      );
       if (res.status !== 200) return this.$message.error("获取图书分类失败！");
-      this.typeList = res.data.result;
+      this.typeList = res.data;
     },
     showAddTypeDialog() {
-      //   this.getParentTypeList();
+        this.getParentTypeList();
       this.addTypeDialogVisible = true;
     },
     async getParentTypeList() {
-      const { data: res } = await this.$http.get("url", {
-        params: { type: 2 },
-      });
+      const { data: res } = await this.$http.get(
+        "http://localhost:8080/api/admin/type/2",
+        {
+          params: { type: 2 },
+        }
+      );
       if (res.status !== 200) return this.$message.error("获取父级分类失败！");
       this.parentTypeList = res.data;
     },
@@ -174,22 +131,20 @@ export default {
     addTypeDialogClosed() {
       this.$refs.addTypeFormRef.resetFields();
       this.selectedKeys = [];
-      this.addTypeForm.cat_level = 0;
-      this.addTypeForm.cat_pid = 0;
+      this.addTypeForm.level = 1;
+      this.addTypeForm.pid = 0;
     },
   },
   watch: {
     selectedKeys(val) {
       console.log(val);
       if (this.selectedKeys.length > 0) {
-        this.addTypeForm.cat_pid = this.selectedKeys[
-          this.selectedKeys.length - 1
-        ];
-        this.addTypeForm.cat_level = this.selectedKeys.length;
+        this.addTypeForm.pid = this.selectedKeys[this.selectedKeys.length - 1];
+        this.addTypeForm.level = this.selectedKeys.length;
         return;
       } else {
-        this.addTypeForm.cat_pid = 0;
-        this.addTypeForm.cat_level = 0;
+        this.addTypeForm.pid = 0;
+        this.addTypeForm.level = 1;
       }
     },
   },
