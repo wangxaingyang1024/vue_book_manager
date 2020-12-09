@@ -39,6 +39,14 @@
       <el-table-column label="书名" prop="name"> </el-table-column>
       <el-table-column label="作者" prop="author"> </el-table-column>
       <el-table-column label="编号" prop="isbn"> </el-table-column>
+      <el-table-column
+        prop="type"
+        label="类型"
+        :filters="typeList"
+        :filter-method="typeFilter"
+        filter-placement="bottom-end"
+      >
+      </el-table-column>
       <el-table-column label="操作" prop="status">
         <template slot-scope="scope">
           <el-button
@@ -60,6 +68,7 @@ export default {
   data() {
     return {
       booklist: [],
+      typeList: [],
       jobNumber: "",
       name: "",
     };
@@ -75,8 +84,20 @@ export default {
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
-      this.booklist = res.data;
-      // console.log(res.status);
+      res.data.forEach((item) => {
+        if (item.type !== null) {
+          this.booklist.push(item);
+        }
+      });
+      let list = [];
+      this.booklist.forEach((item) => {
+        list.push(item.type);
+      });
+      list = [...new Set(list)];
+      list.forEach((item) => {
+        const type = { text: item, value: item };
+        this.typeList.push(type);
+      });
     },
     async getBookListByName() {
       const { data: res } = await this.$http.post(
@@ -107,6 +128,9 @@ export default {
       this.$message.success("借阅书籍成功!");
       this.getBookList();
     },
+    typeFilter(value, row) {
+      return row.type === value;
+    },
   },
   watch: {
     name(val) {
@@ -119,7 +143,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 .demo-table-expand {
   font-size: 0;
 }
@@ -131,5 +155,12 @@ export default {
   margin-right: 0;
   margin-bottom: 0;
   width: 50%;
+}
+</style>
+<style lang="less">
+.el-table__column-filter-trigger {
+  i {
+    font-size: 20px;
+  }
 }
 </style>

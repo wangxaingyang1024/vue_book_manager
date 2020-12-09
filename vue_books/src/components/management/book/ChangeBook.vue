@@ -21,7 +21,14 @@
       </el-table-column>
       <el-table-column prop="author" label="作者" width="120px">
       </el-table-column>
-      <el-table-column prop="type" label="类型" width="120px">
+      <el-table-column
+        prop="type"
+        label="类型"
+        :filters="typeList"
+        :filter-method="typeFilter"
+        filter-placement="bottom-end"
+        width="120px"
+      >
       </el-table-column>
       <el-table-column prop="status" label="状态" width="120px">
         <template slot-scope="scope">
@@ -181,6 +188,7 @@ export default {
         children: "children",
         expandTrigger: "hover",
       },
+      typeList: [],
     };
   },
   created() {
@@ -213,7 +221,19 @@ export default {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data;
+      let list = [];
+      this.booklist.forEach((item) => {
+        list.push(item.type);
+      });
+      list = [...new Set(list)];
+      list.forEach((item) => {
+        const type = { text: item, value: item };
+        this.typeList.push(type);
+      });
       //this.total = res.data.total;
+    },
+    typeFilter(value, row) {
+      return row.type === value;
     },
     async getBookListByName() {
       const { data: res } = await this.$http.post(
@@ -315,7 +335,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .el-row {
   margin-bottom: 25px;
 }
@@ -323,5 +343,12 @@ export default {
 <style lang="less" scoped>
 .el-pagination {
   margin-top: 25px;
+}
+</style>
+<style lang="less">
+.el-table__column-filter-trigger {
+  i {
+    font-size: 20px;
+  }
 }
 </style>
