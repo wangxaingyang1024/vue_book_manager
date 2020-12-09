@@ -52,15 +52,6 @@
                 placeholder="设置您的昵称"
               ></el-input>
             </el-form-item>
-            <!-- 工号 -->
-            <!-- <el-form-item prop="job_number">
-              <el-input
-                v-model="addForm.job_number"
-                prefix-icon="el-icon-data-line"
-                placeholder="请输入您的工号"
-              ></el-input>
-            </el-form-item> -->
-            <!-- 性别 -->
             <el-form-item prop="gender">
               <el-select v-model="addForm.gender" placeholder="请选择您的性别">
                 <el-option label="男" value="1"></el-option>
@@ -110,49 +101,24 @@ export default {
     //验证密码
     const validatePassword = (rule, value, callback) => {
       const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
-      if (regPass.test(value)) {
-        //合法密码
-        return callback();
+      if (!regPass.test(value)) {
+        //不合法密码
+        return callback(
+          new Error("需包含大小写字母数字，不使用特殊字符8~15长度")
+        );
       }
-      callback(new Error("需包含大小写字母数字，不使用特殊字符8~15长度"));
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.addFormRules.checkPassword !== "") {
-          this.$refs.addFormRules.validateField("checkPassword");
-        }
-        callback();
+      if (
+        this.addForm.password !== "" &&
+        this.addForm.checkPassword !== "" &&
+        this.addForm.password !== this.addForm.checkPassword
+      ) {
+        return callback(new Error("两次输入密码不一致"));
       }
+      return callback();
     };
-    //二次验证
-    const validatePassword2 = (rule, value, callback) => {
-      const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
-      if (regPass.test(value)) {
-        //合法密码
-        return callback();
-      }
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.addFormRules.password) {
-        callback(new Error("两次输入密码不一致"));
-      } else {
-        callback();
-      }
-    };
-
-    //验证工号
-    // var checkJob_number = (rule, value, callback) => {
-    //   const Username = /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/;
-    //   if (regUsername.test(value)) {
-    //     //合法用户名
-    //     return callback();
-    //   }
-
-    //   callback(new Error("需包含字母数字，3~10长度"));
-    // };
 
     //验证手机规则
-    var checkPhone = (rule, value, callback) => {
+    const checkPhone = (rule, value, callback) => {
       const regPhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
 
       if (regPhone.test(value)) {
@@ -164,7 +130,7 @@ export default {
     };
 
     //验证年龄
-    var checkAge = (rule, value, callback) => {
+    const checkAge = (rule, value, callback) => {
       const regAge = /^[1-9][0-9]{0,1}$/;
 
       if (regAge.test(value)) {
@@ -215,19 +181,27 @@ export default {
             message: "需包含大小写字母数字，不使用特殊字符8~15长度",
             trigger: "blur",
           },
-          { 
-            validator: validatePassword, 
-            trigger: "blur" 
+          {
+            validator: validatePassword,
+            trigger: "blur",
           },
         ],
         checkPassword: [
           {
             required: true,
-            //min: 8,
-            //max: 15,
+            message: "请再次输入密码",
             trigger: "blur",
           },
-          { validator: validatePassword2, trigger: "blur" },
+          {
+            min: 8,
+            max: 15,
+            message: "需包含大小写字母数字，不使用特殊字符8~15长度",
+            trigger: "blur",
+          },
+          {
+            validator: validatePassword,
+            trigger: "blur",
+          },
         ],
         nickName: [
           {
@@ -243,24 +217,6 @@ export default {
           },
         ],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
-        //工号
-        // job_number: [
-        //   {
-        //     required: true,
-        //     message: "请输入工号",
-        //     trigger: "blur",
-        //   },
-        //   {
-        //     min:8,
-        //     max:8,
-        //     message: "请输入8位工号",
-        //     trigger: "blur",
-        //   },
-        //   {
-        //     validate: checkJob_number,
-        //     trigger: "blur",
-        //   },
-        // ],
         //验证手机
         phone: [
           {
@@ -305,7 +261,6 @@ export default {
           this.$message.success("注册成功！请登录！");
           this.$router.push("/Login");
         }
-        console.log(res);
       });
     },
   },

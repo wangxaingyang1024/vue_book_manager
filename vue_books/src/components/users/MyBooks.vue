@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-table :data="booklist" style="width: 100%" :stripe="true">
+    <el-table :data="booklist" :stripe="true">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     async getBookList() {
-      console.log(this.jobNumber);
       const { data: res } = await this.$http.get(
         "http://localhost:8080/api/book/findOne/" + this.jobNumber
       );
