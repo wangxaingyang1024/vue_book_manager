@@ -22,7 +22,7 @@
             icon="el-icon-delete"
             size="mini"
             circle
-            @click="removeTypeDialog(scope.row.mid)"
+            @click="removeTypeDialog(scope.row)"
           ></el-button>
         </template>
       </tree-table>
@@ -137,7 +137,6 @@ export default {
           "http://localhost:8080/api/admin/bookType/add",
           this.addTypeForm
         );
-        console.log(res);
         if (res.status === 2001)
           return this.$message.error("分类已存在，添加失败！");
         if (res.status !== 200) return this.$message.error("添加失败！");
@@ -153,7 +152,22 @@ export default {
       this.addTypeForm.parentId = 0;
     },
     //删除分类
-    async removeTypeDialog(mid) {
+    async removeTypeDialog(row) {
+      //将要删除的mid的子节点mid存放到cid数组
+      const cid = [];
+      const Arr = [row];
+      Arr.forEach((item) => {
+        // cid.push(item.mid);
+        if (item.children != undefined) {
+          let Arr = item.children;
+          Arr.forEach((item) => {
+            cid.push(item.mid);
+          });
+        }
+      });
+      // console.log(cid.join(","));
+      // console.log(row.level);
+      // console.log(row.mid);
       const confirmResult = await this.$confirm(
         "此操作将永久删除该分类, 是否继续?",
         "提示",
@@ -165,11 +179,17 @@ export default {
       ).catch((err) => err);
       if (confirmResult !== "confirm")
         return this.$message.info("已取消删除！");
-      console.log(mid);
-      // const { data: res } = await this.$http.delete("url" + mid);
-      // if (res.status !== 200) return this.$message.error("删除分类失败！");
-      // this.$message.success("删除分类成功！");
-      // this.getTypeList();
+      const { data: res } = await this.$http.post(
+        "http://localhost:8080/api/admin/bookType/remove",
+        {
+          cid: cid.join(","),
+          level: row.level,
+          mid: row.mid,
+        }
+      );
+      if (res.status !== 200) return this.$message.error("删除分类失败！");
+      this.$message.success("删除分类成功！");
+      this.getTypeList();
     },
   },
   watch: {
@@ -186,6 +206,7 @@ export default {
       }
     },
   },
+  computed: {},
 };
 </script>
 

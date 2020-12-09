@@ -76,9 +76,7 @@ export default {
       nickName: window.sessionStorage.getItem("nickName"),
     };
   },
-  created() {
-    // var nick_name = "${session.user.nick_name}";
-  },
+  created() {},
   methods: {
     //退出
     logout() {
