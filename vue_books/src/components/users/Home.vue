@@ -6,6 +6,7 @@
           <img src="../../../public/logo.svg" />
         </el-col>
         <el-col :span="3">
+          <!-- <el-input v-model="jobNumber"></el-input> -->
           <i class="el-icon-user-solid"> </i>
           Hi, {{ this.nickName }}
         </el-col>
@@ -21,17 +22,22 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu unique-opened :default-openeds="['1']" :default-active="`1-1`">
+        <el-menu
+          unique-opened
+          :default-openeds="['1']"
+          :default-active="`/books`"
+          router
+        >
           <el-submenu index="1">
             <template slot="title"
               ><i class="el-icon-star-on"></i>书籍查询</template
             >
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="book"
+              <el-menu-item index="/books"
                 ><i class="el-icon-tickets"></i>书籍列表</el-menu-item
               >
             </el-menu-item-group>
-            <el-menu-item index="1-2" @click="myBook"
+            <el-menu-item index="/myBooks"
               ><i class="el-icon-goods"></i>我的书籍</el-menu-item
             >
           </el-submenu>
@@ -54,20 +60,12 @@ export default {
       nickName: window.sessionStorage.getItem("nickName"),
     };
   },
-  created() {
-    // var nick_name = "${session.user.nick_name}";
-  },
+  created() {},
   methods: {
     //退出
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/login");
-    },
-    book() {
-      this.$router.push("/books");
-    },
-    myBook() {
-      this.$router.push("/myBooks");
     },
   },
 };

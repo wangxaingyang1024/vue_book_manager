@@ -69,8 +69,8 @@ export default {
     return {
       booklist: [],
       typeList: [],
-      jobNumber: "",
       name: "",
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
     };
   },
   created() {
@@ -113,7 +113,6 @@ export default {
       this.booklist = res.data;
     },
     async borrowBook(isbn) {
-      this.jobNumber = window.sessionStorage.getItem("jobNumber");
       const { data: res } = await this.$http.post(
         "http://localhost:8080/api/book/borrow",
         {

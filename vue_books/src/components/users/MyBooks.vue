@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       booklist: [],
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
     };
   },
   created() {
@@ -57,10 +58,9 @@ export default {
   },
   methods: {
     async getBookList() {
-      const jobNumber = window.sessionStorage.getItem("jobNumber");
-      //   console.dir(jobNumber);
+      console.log(this.jobNumber);
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/book/findOne/" + jobNumber
+        "http://localhost:8080/api/book/findOne/" + this.jobNumber
       );
       console.log(res);
       if (res.status !== 200) {
@@ -70,7 +70,6 @@ export default {
       console.log(res.status);
     },
     async returnBook(isbn) {
-      this.jobNumber = window.sessionStorage.getItem("jobNumber");
       const { data: res } = await this.$http.post(
         "http://localhost:8080/api/book/return",
         {

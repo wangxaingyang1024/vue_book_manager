@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="3">
           <i class="el-icon-s-custom"> </i>
-          Hi, {{ this.nickName }}
+          {{ " Hi, " + this.nickName }}
         </el-col>
         <el-col :span="3">
           <el-button type="info" round @click="logout" class="logout"
@@ -21,14 +21,14 @@
     <el-container>
       <!-- 左侧菜单 -->
       <el-aside width="200px">
-        <el-menu unique-opened>
+        <el-menu unique-opened router>
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-s-custom"></i>
               人员管理
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="user">
+              <el-menu-item index="/user">
                 <i class="el-icon-copy-document"></i>
                 用户列表
               </el-menu-item>
@@ -40,19 +40,19 @@
               书籍管理
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1" @click="book">
+              <el-menu-item index="/changeBook">
                 <i class="el-icon-tickets"></i>
                 书籍列表
               </el-menu-item>
-              <el-menu-item index="2-2" @click="addBook">
+              <el-menu-item index="/addBook">
                 <i class="el-icon-circle-plus-outline"></i>
                 增加书籍
               </el-menu-item>
-              <el-menu-item index="2-3" @click="attributes">
+              <el-menu-item index="/attributes">
                 <i class="el-icon-copy-document"></i>
                 分类列表
               </el-menu-item>
-              <el-menu-item index="2-4" @click="borrowed">
+              <el-menu-item index="/borrowed">
                 <i class="el-icon-bell"></i>
                 借阅记录
               </el-menu-item>
@@ -82,21 +82,6 @@ export default {
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/adminLogin");
-    },
-    user() {
-      this.$router.push("/user");
-    },
-    book() {
-      this.$router.push("/changeBook");
-    },
-    addBook() {
-      this.$router.push("/addBook");
-    },
-    attributes() {
-      this.$router.push("/attributes");
-    },
-    borrowed() {
-      this.$router.push("/borrowed");
     },
   },
 };
