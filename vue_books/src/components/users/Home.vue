@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       nickName: window.sessionStorage.getItem("nickName"),
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
     };
   },
   created() {},
@@ -67,6 +68,11 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
+  },
+  beforeUpdate() {
+    if (this.jobNumber !== window.sessionStorage.getItem("jobNumber")) {
+      this.logout();
+    }
   },
 };
 </script>

@@ -1,87 +1,86 @@
 <template>
   <el-container>
     <el-header>
-      <span class="topText">注册页面</span>
-      <div class="logo">
-        <img src="../../../public/logo.svg" height="" />
-      </div>
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <img src="../../../public/logo.svg" height="" />
+        </el-col>
+        <el-col :span="16">
+          <span class="topText">注册页面</span>
+        </el-col>
+      </el-row>
     </el-header>
     <el-main>
-      <div class="add_container">
-        <div class="add_box">
-          <!-- 注册表单区域 -->
-          <el-form
-            ref="addFormRef"
-            :model="addForm"
-            :rules="addFormRules"
-            label-width="0px"
-            class="add_form"
-          >
-            <!-- 用户名 -->
-            <el-form-item prop="username">
-              <el-input
-                v-model="addForm.username"
-                prefix-icon="el-icon-user"
-                placeholder="设置用户名"
-              ></el-input>
-            </el-form-item>
-            <!-- 密码 -->
-            <el-form-item prop="password">
-              <el-input
-                v-model="addForm.password"
-                prefix-icon="el-icon-lock"
-                type="password"
-                placeholder="设置您的登录密码"
-              ></el-input>
-            </el-form-item>
-            <!-- 二次验证密码 -->
-            <el-form-item prop="checkPassword">
-              <el-input
-                type="password"
-                v-model="addForm.checkPassword"
-                autocomplete="off"
-                prefix-icon="el-icon-edit"
-                placeholder="请再次输入您的密码"
-              ></el-input>
-            </el-form-item>
-            <!-- 昵称 -->
-            <el-form-item prop="nickName">
-              <el-input
-                v-model="addForm.nickName"
-                prefix-icon="el-icon-mobile"
-                placeholder="设置您的昵称"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="gender">
-              <el-select v-model="addForm.gender" placeholder="请选择您的性别">
-                <el-option label="男" value="1"></el-option>
-                <el-option label="女" value="0"></el-option>
-              </el-select>
-            </el-form-item>
-            <!-- 电话 -->
-            <el-form-item prop="phone">
-              <el-input
-                v-model="addForm.phone"
-                prefix-icon="el-icon-phone-outline"
-                placeholder="请输入您的电话"
-              ></el-input>
-            </el-form-item>
-            <!-- 年龄 -->
-            <el-form-item prop="age">
-              <el-input
-                v-model="addForm.age"
-                prefix-icon="el-icon-suitcase"
-                placeholder="请输入您的年龄"
-              ></el-input>
-            </el-form-item>
-            <!-- 按钮区域 -->
-            <el-form-item class="btns">
-              <el-button type="primary" round @click="addUser">提交</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div></el-main
-    >
+      <!-- 注册表单区域 -->
+      <el-form
+        ref="addFormRef"
+        :model="addForm"
+        :rules="addFormRules"
+        status-icon
+      >
+        <!-- 用户名 -->
+        <el-form-item prop="username">
+          <el-input
+            v-model="addForm.username"
+            prefix-icon="el-icon-user"
+            placeholder="设置用户名"
+          ></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item prop="password">
+          <el-input
+            v-model="addForm.password"
+            prefix-icon="el-icon-lock"
+            type="password"
+            placeholder="设置您的登录密码"
+          ></el-input>
+        </el-form-item>
+        <!-- 二次验证密码 -->
+        <el-form-item prop="checkPassword">
+          <el-input
+            type="password"
+            v-model="addForm.checkPassword"
+            autocomplete="off"
+            prefix-icon="el-icon-edit"
+            placeholder="请再次输入您的密码"
+          ></el-input>
+        </el-form-item>
+        <!-- 昵称 -->
+        <el-form-item prop="nickName">
+          <el-input
+            v-model="addForm.nickName"
+            prefix-icon="el-icon-mobile"
+            placeholder="设置您的昵称"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="gender">
+          <el-select v-model="addForm.gender" placeholder="请选择您的性别">
+            <el-option label="男" value="1"></el-option>
+            <el-option label="女" value="0"></el-option>
+          </el-select>
+        </el-form-item>
+        <!-- 电话 -->
+        <el-form-item prop="phone">
+          <el-input
+            v-model="addForm.phone"
+            prefix-icon="el-icon-phone-outline"
+            placeholder="请输入您的电话"
+          ></el-input>
+        </el-form-item>
+        <!-- 年龄 -->
+        <el-form-item prop="age">
+          <el-input
+            v-model="addForm.age"
+            prefix-icon="el-icon-suitcase"
+            placeholder="请输入您的年龄"
+          ></el-input>
+        </el-form-item>
+        <!-- 按钮区域 -->
+        <el-form-item class="btns">
+          <el-button type="primary" round @click="addUser">提交</el-button>
+        </el-form-item>
+      </el-form>
+    </el-main>
   </el-container>
 </template>
 
@@ -266,70 +265,37 @@ export default {
   },
 };
 </script>
-
 <style lang="less">
-.el-form {
-  .el-form-item__error {
-    color: #f56c6c;
-    font-size: 12px;
-    line-height: 30px;
-    padding-top: 4px;
-    position: absolute;
-    top: 40px;
-    left: 270px;
-  }
+.el-form-item__error {
+  margin-top: 7px;
+  margin-left: 7px;
 }
 </style>
 <style lang="less" scoped>
-.el-main {
-  padding: 0;
-}
 .el-header {
-  background: #fff;
+  line-height: 50px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
-  width: 100%;
-  position: relative;
-  z-index: 1000;
-  clear: both;
-}
-body {
-  background-color: #f5f5f6;
-}
-.add_box {
-  margin: 50px auto;
-  width: 600px;
-  height: 760px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  text-align: center;
+  img {
+    margin-top: 10px;
+  }
 }
 .topText {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
   font-size: 25px;
-  position: relative;
-  left: 47%;
-  top: 2px;
-}
-.logo {
-  position: absolute;
-  left: 94px;
-  top: 8px;
 }
 .el-form {
-  text-align: center;
-}
-.el-input {
+  padding: 50px;
+  margin: 50px auto;
   width: 500px;
-  margin: 0 auto;
-  top: 25px;
-  height: 50px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+}
+
+.el-input {
   margin-top: 15px;
 }
 .el-select {
-  width: 500px;
-  margin: 0 auto;
-  top: 25px;
-  height: 50px;
   margin-top: 15px;
 }
 .el-button {
