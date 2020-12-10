@@ -8,3 +8,6 @@ body,
   min-width: 1366px;
   background-color: #fff;
 }
+.el-table__column-filter-trigger i {
+  font-size: 20px;
+}

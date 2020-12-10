@@ -43,7 +43,7 @@
       </el-form-item>
       <!-- 按钮区域 -->
       <el-form-item class="btns">
-        <el-button type="primary" @click="add" class="add">确认添加</el-button>
+        <el-button type="primary" @click="add">确认添加</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -148,13 +148,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-input {
+.el-input,
+.el-cascader,
+.el-button {
   width: 500px;
-  height: 50px;
-  margin-top: 10px;
-}
-.add {
-  width: 500px;
-  margin-top: 50px;
+  margin-top: 15px;
 }
 </style>

@@ -274,16 +274,17 @@ export default {
 <style lang="less" scoped>
 .el-header {
   line-height: 50px;
+  background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   text-align: center;
   img {
     margin-top: 10px;
   }
-}
-.topText {
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 25px;
+  .topText {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 25px;
+  }
 }
 .el-form {
   padding: 50px;
@@ -291,15 +292,16 @@ export default {
   width: 500px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
 }
-
-.el-input {
-  margin-top: 15px;
-}
-.el-select {
-  margin-top: 15px;
-}
-.el-button {
+.el-form {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  margin: 50px auto;
+  padding: 50px;
   width: 500px;
-  margin-top: 40px;
+  .el-input,
+  .el-select,
+  .el-button {
+    width: 500px;
+    margin-top: 20px;
+  }
 }
 </style>

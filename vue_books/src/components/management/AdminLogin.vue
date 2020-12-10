@@ -132,43 +132,29 @@ export default {
 </script>
 
 <style lang="less" scoped>
-body {
-  background-color: #f5f5f6;
-}
 .el-header {
+  line-height: 50px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
-  line-height: 50px;
   text-align: center;
-}
-.el-header img {
-  margin-top: 10px;
-}
-.login_box {
-  margin: 80px auto;
-  margin-top: 50px;
-  width: 600px;
-  height: 400px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
-}
-.topText {
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-  font-size: 25px;
+  img {
+    margin-top: 10px;
+  }
+  .topText {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 25px;
+  }
 }
 .el-form {
-  text-align: center;
-}
-.el-input {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  margin: 50px auto;
+  padding: 50px;
   width: 500px;
-  margin: 0 auto;
-  top: 50px;
-  height: 50px;
-  margin-top: 20px;
-}
-.login {
-  width: 500px;
-  margin-top: 85px;
+  .el-input,
+  .el-button {
+    width: 500px;
+    margin-top: 20px;
+  }
 }
 </style>

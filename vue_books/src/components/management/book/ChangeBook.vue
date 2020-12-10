@@ -336,19 +336,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.el-pagination,
 .el-row {
-  margin-bottom: 25px;
-}
-</style>
-<style lang="less" scoped>
-.el-pagination {
   margin-top: 25px;
-}
-</style>
-<style lang="less">
-.el-table__column-filter-trigger {
-  i {
-    font-size: 20px;
-  }
 }
 </style>
