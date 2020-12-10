@@ -9,6 +9,7 @@
         :expand-type="false"
         show-index
         border
+        :default-expand-all="true"
         :show-row-hover="false"
       >
         <template slot="order" slot-scope="scope">
@@ -206,7 +207,6 @@ export default {
       }
     },
   },
-  computed: {},
 };
 </script>
 

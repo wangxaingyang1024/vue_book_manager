@@ -4,12 +4,12 @@
       <el-input
         placeholder="请输入内容"
         clearable
-        v-model="name"
+        v-model="queryInfo.name"
         prefix-icon="el-icon-search"
       >
       </el-input
     ></el-col>
-    <el-table :data="booklist" :stripe="true">
+    <el-table :data="booklist" stripe>
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -67,9 +67,17 @@
 export default {
   data() {
     return {
+      queryInfo: {
+        //模糊查询
+        name: "",
+        //当前页数
+        pageNum: 1,
+        //当前每页显示多少条数据
+        pageSize: 5,
+      },
+
       booklist: [],
       typeList: [],
-      name: "",
       jobNumber: window.sessionStorage.getItem("jobNumber"),
     };
   },
@@ -79,12 +87,15 @@ export default {
   methods: {
     async getBookList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/find"
+        "http://localhost:8080/api/admin/find",
+        {
+          params: this.queryInfo,
+        }
       );
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
-      res.data.forEach((item) => {
+      res.data.list.forEach((item) => {
         if (item.type !== null) {
           this.booklist.push(item);
         }
@@ -98,19 +109,6 @@ export default {
         const type = { text: item, value: item };
         this.typeList.push(type);
       });
-    },
-    async getBookListByName() {
-      const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/book/likeName",
-        {
-          name: this.name,
-        }
-      );
-      // console.log(res);
-      if (res.status !== 200) {
-        return this.$message.error("获取图书列表失败！");
-      }
-      this.booklist = res.data;
     },
     async borrowBook(isbn) {
       const { data: res } = await this.$http.post(
@@ -132,7 +130,7 @@ export default {
     },
   },
   watch: {
-    name(val) {
+    "queryInfo.name"(val) {
       if (val === null) return this.getBookList();
       setTimeout(() => {
         this.getBookListByName();
@@ -142,4 +140,20 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less">
+.el-table__column-filter-trigger i {
+  font-size: 20px;
+}
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

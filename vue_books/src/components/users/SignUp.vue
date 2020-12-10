@@ -274,7 +274,6 @@ export default {
 <style lang="less" scoped>
 .el-header {
   line-height: 50px;
-  background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   text-align: center;

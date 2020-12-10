@@ -1,21 +1,18 @@
 <template>
   <el-card class="box-card">
     <el-table :data="userlist" border stripe>
-      <el-table-column type="index" label="序号" width="70px">
+      <el-table-column type="index" label="序号" width="50px">
       </el-table-column>
-      <el-table-column prop="username" label="用户名" width="120px">
-      </el-table-column>
-      <el-table-column prop="jobNumber" label="工号" width="120px">
-      </el-table-column>
-      <el-table-column prop="nickName" label="昵称" width="120px">
-      </el-table-column>
-      <el-table-column prop="gender" label="性别" width="70px">
+      <el-table-column prop="username" label="用户名"> </el-table-column>
+      <el-table-column prop="jobNumber" label="工号"> </el-table-column>
+      <el-table-column prop="nickName" label="昵称"> </el-table-column>
+      <el-table-column prop="gender" label="性别">
         <template slot-scope="scope">
           {{ scope.row.gender == 1 ? "男" : "女" }}
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话" width="180"> </el-table-column>
-      <el-table-column prop="age" label="年龄" width="70"> </el-table-column>
+      <el-table-column prop="phone" label="电话"> </el-table-column>
+      <el-table-column prop="age" label="年龄"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <!-- 删除按钮 -->
@@ -32,9 +29,9 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="queryInfo.pagenum"
-      :page-sizes="[1, 2, 5, 10]"
-      :page-size="queryInfo.pagesize"
+      :current-page="queryInfo.pageNum"
+      :page-sizes="[5, 10, , 15, 20]"
+      :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
@@ -45,13 +42,11 @@
 export default {
   data() {
     return {
-      //获取用户列表的参数对象
       queryInfo: {
-        query: "",
         //当前页数
-        pagenum: 1,
+        pageNum: 1,
         //当前每页显示多少条数据
-        pagesize: 2,
+        pageSize: 5,
       },
       total: 0,
       userlist: [],
@@ -61,32 +56,30 @@ export default {
     this.getUserList();
   },
   methods: {
-    //监听 pagesize 改变的事件
+    //监听 pageSize 改变的事件
     handleSizeChange(newSize) {
-      //console.log(newSize)
-      this.queryInfo.pagesize = newSize;
+      this.queryInfo.pageSize = newSize;
+      this.queryInfo.pageNum = 1;
       this.getUserList();
     },
     //监听 页码值改变的事件
     handleCurrentChange(newPage) {
-      //console.log(newPage)
-      this.queryInfo.pagenum = newPage;
+      this.queryInfo.pageNum = newPage;
       this.getUserList();
     },
     async getUserList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/emps"
-        //,{params: this.queryInfo,}
+        `http://localhost:8080/api/admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
       );
-      console.log(res.status);
+      console.log(res.data);
       if (res.status === 3023) {
         return (this.userlist = []);
       }
       if (res.status !== 200) {
         return this.$message.error("获取用户列表失败！");
       }
-      this.userlist = res.data;
-      //this.total = res.data.total;
+      this.userlist = res.data.list;
+      this.total = res.data.total;
     },
     async removeUser(jobNumber) {
       //弹框询问用户是否删除数据

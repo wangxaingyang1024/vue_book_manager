@@ -5,7 +5,7 @@
         <el-input
           placeholder="请输入内容"
           clearable
-          v-model="name"
+          v-model="queryInfo.name"
           prefix-icon="el-icon-search"
         >
         </el-input>
@@ -15,22 +15,19 @@
       </el-col>
     </el-row>
     <el-table :data="booklist" border stripe>
-      <el-table-column type="index" label="序号" width="70px">
+      <el-table-column type="index" label="序号" width="50px">
       </el-table-column>
-      <el-table-column prop="name" label="图书名" width="120px">
-      </el-table-column>
-      <el-table-column prop="author" label="作者" width="120px">
-      </el-table-column>
+      <el-table-column prop="name" label="图书名"> </el-table-column>
+      <el-table-column prop="author" label="作者"> </el-table-column>
       <el-table-column
         prop="type"
         label="类型"
         :filters="typeList"
         :filter-method="typeFilter"
         filter-placement="bottom-end"
-        width="120px"
       >
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="120px">
+      <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag type="success" v-if="scope.row.status.toString() === 'true'"
             >可借阅</el-tag
@@ -39,9 +36,8 @@
           <!-- {{ scope.row.status }} -->
         </template>
       </el-table-column>
-      <el-table-column prop="isbn" label="书号" width="120"> </el-table-column>
-      <el-table-column prop="synopsis" label="简介" width="180">
-      </el-table-column>
+      <el-table-column prop="isbn" label="书号"> </el-table-column>
+      <el-table-column prop="synopsis" label="简介"> </el-table-column>
       <el-table-column label="操作">
         <!-- 修改按钮 -->
         <template slot-scope="scope">
@@ -70,9 +66,9 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="queryInfo.pagenum"
-      :page-sizes="[1, 2, 5, 10]"
-      :page-size="queryInfo.pagesize"
+      :current-page="queryInfo.pageNum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
@@ -123,14 +119,16 @@
 export default {
   data() {
     return {
-      //获取用户列表的参数对象
       queryInfo: {
-        query: "",
+        //模糊查询
+        name: "",
         //当前页数
-        pagenum: 1,
+        pageNum: 1,
         //当前每页显示多少条数据
-        pagesize: 2,
+        pageSize: 5,
       },
+
+      //数据总条数
       total: 0,
       booklist: [],
       //控制修改用户对话框的显示与隐藏
@@ -180,7 +178,6 @@ export default {
           },
         ],
       },
-      name: "",
       typeList: [],
       cascaderProps: {
         value: "mid",
@@ -195,17 +192,16 @@ export default {
     this.getBookList();
   },
   methods: {
-    //监听 pagesize 改变的事件
+    //监听 pageSize 改变的事件
     handleSizeChange(newSize) {
-      //console.log(newSize)
-      this.queryInfo.pagesize = newSize;
-      this.getUserList();
+      this.queryInfo.pageSize = newSize;
+      this.queryInfo.pageNum = 1;
+      this.getBookList();
     },
     //监听 页码值改变的事件
     handleCurrentChange(newPage) {
-      //console.log(newPage)
-      this.queryInfo.pagenum = newPage;
-      this.getUserList();
+      this.queryInfo.pageNum = newPage;
+      this.getBookList();
     },
     //跳转添加书籍路由
     goAddBook() {
@@ -213,14 +209,16 @@ export default {
     },
     async getBookList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/find"
-        //,{params: this.queryInfo,}
+        `http://localhost:8080/api/admin/find`,
+        {
+          params: this.queryInfo,
+        }
       );
       console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
-      this.booklist = res.data;
+      this.booklist = res.data.list;
       let list = [];
       this.booklist.forEach((item) => {
         list.push(item.type);
@@ -230,23 +228,10 @@ export default {
         const type = { text: item, value: item };
         this.typeList.push(type);
       });
-      //this.total = res.data.total;
+      this.total = res.data.total;
     },
     typeFilter(value, row) {
       return row.type === value;
-    },
-    async getBookListByName() {
-      const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/book/likeName",
-        {
-          name: this.name,
-        }
-      );
-      // console.log(res);
-      if (res.status !== 200) {
-        return this.$message.error("获取图书列表失败！");
-      }
-      this.booklist = res.data;
     },
     //监听修改书籍对话框的开启事件
     showEditDialog(data) {
@@ -326,18 +311,21 @@ export default {
     },
   },
   watch: {
-    name(val) {
-      if (val === null) return this.getBookList();
+    "queryInfo.name"(val) {
+      this.queryInfo.pageNum = 1;
       setTimeout(() => {
-        this.getBookListByName();
+        this.getBookList();
       }, 500);
     },
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
+.el-table__column-filter-trigger i {
+  font-size: 20px;
+}
 .el-pagination,
-.el-row {
+.el-table {
   margin-top: 25px;
 }
 </style>

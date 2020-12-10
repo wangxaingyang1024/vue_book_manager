@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-table :data="booklist" :stripe="true">
+    <el-table :data="booklist" stripe>
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">

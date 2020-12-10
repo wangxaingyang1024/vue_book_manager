@@ -83,10 +83,7 @@ export default {
 .el-menu-item-group__title {
   padding: 0 !important;
 }
-</style>
-<style lang="less" scope>
 .el-header {
-  background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   line-height: 50px;
@@ -100,7 +97,6 @@ export default {
 .el-aside {
   height: 350px;
   margin-top: 15px;
-  background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 </style>
