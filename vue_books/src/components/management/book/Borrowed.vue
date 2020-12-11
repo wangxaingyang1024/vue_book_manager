@@ -35,6 +35,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-button @click="all" v-if="list === 0">加载全部</el-button>
   </el-card>
 </template>
 
@@ -48,6 +49,7 @@ export default {
         startTime: "",
         endTime: "",
       },
+      list: 0,
     };
   },
   created() {
@@ -68,11 +70,14 @@ export default {
         "log/admin/logT",
         this.findTime
       );
-      console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }
       this.loglist = res.data;
+    },
+    all() {
+      this.list = 1;
+      this.getLog();
     },
   },
   watch: {
@@ -102,5 +107,9 @@ export default {
 }
 .el-table {
   margin-top: 25px;
+}
+.el-button {
+  width: 100%;
+  margin-top: 15px;
 }
 </style>
