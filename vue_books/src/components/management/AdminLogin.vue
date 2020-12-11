@@ -16,44 +16,40 @@
       </el-row>
     </el-header>
     <el-main>
-      <div class="login_container">
-        <div class="login_box">
-          <!-- 登录表单区域 -->
-          <el-form
-            ref="loginFormRef"
-            :model="loginForm"
-            :rules="loginFormRules"
-            label-width="0px"
-            class="login_form"
+      <!-- 登录表单区域 -->
+      <el-form
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="loginFormRules"
+        label-width="0px"
+        class="login_form"
+      >
+        <!-- 用户名 -->
+        <el-form-item prop="username">
+          <el-input
+            v-model="loginForm.username"
+            prefix-icon="el-icon-user"
+            placeholder="用户名"
+          ></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item prop="password">
+          <el-input
+            v-model="loginForm.password"
+            prefix-icon="el-icon-lock"
+            type="password"
+            placeholder="密码"
+          ></el-input>
+        </el-form-item>
+        <!-- 按钮区域 -->
+        <el-form-item class="btns">
+          <el-button type="primary" round @click="login" class="login"
+            >登录</el-button
           >
-            <!-- 用户名 -->
-            <el-form-item prop="username">
-              <el-input
-                v-model="loginForm.username"
-                prefix-icon="el-icon-user"
-                placeholder="用户名"
-              ></el-input>
-            </el-form-item>
-            <!-- 密码 -->
-            <el-form-item prop="password">
-              <el-input
-                v-model="loginForm.password"
-                prefix-icon="el-icon-lock"
-                type="password"
-                placeholder="密码"
-              ></el-input>
-            </el-form-item>
-            <!-- 按钮区域 -->
-            <el-form-item class="btns">
-              <el-button type="primary" round @click="login" class="login"
-                >登录</el-button
-              >
-              <!-- <el-button @click="signUp">注册</el-button> -->
-            </el-form-item>
-          </el-form>
-        </div>
-      </div></el-main
-    >
+          <!-- <el-button @click="signUp">注册</el-button> -->
+        </el-form-item>
+      </el-form>
+    </el-main>
   </el-container>
 </template>
 
@@ -146,9 +142,17 @@ export default {
     font-size: 25px;
   }
 }
+.el-main {
+  display: flex;
+  //实现垂直居中
+  align-items: center;
+  //实现水平居中
+  justify-content: center;
+  //计算高度
+  height: calc(100vh - 80px);
+}
 .el-form {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  margin: 50px auto;
   padding: 50px;
   width: 500px;
   .el-input,

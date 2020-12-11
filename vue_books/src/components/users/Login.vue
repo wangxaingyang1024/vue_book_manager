@@ -141,9 +141,17 @@ export default {
     font-size: 25px;
   }
 }
+.el-main {
+  display: flex;
+  //实现垂直居中
+  align-items: center;
+  //实现水平居中
+  justify-content: center;
+  //计算高度
+  height: calc(100vh - 80px);
+}
 .el-form {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  margin: 50px auto;
   padding: 50px;
   width: 500px;
   .el-input {
