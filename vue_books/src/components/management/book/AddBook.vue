@@ -29,6 +29,8 @@
     <!-- 简介 -->
     <el-form-item prop="synopsis">
       <el-input
+        type="textarea"
+        rows="3"
         v-model="addBook.synopsis"
         prefix-icon="el-icon-edit-outline"
         placeholder="添加简介"
@@ -136,6 +138,7 @@ export default {
 
 <style lang="less" scoped>
 .el-input,
+.el-textarea,
 .el-cascader,
 .el-button {
   width: 500px;

@@ -53,11 +53,23 @@
             placeholder="设置您的昵称"
           ></el-input>
         </el-form-item>
+        <!-- 性别 -->
         <el-form-item prop="gender">
           <el-select v-model="addForm.gender" placeholder="请选择您的性别">
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="0"></el-option>
           </el-select>
+        </el-form-item>
+        <!-- 生日 -->
+        <el-form-item prop="date">
+          <el-date-picker
+            v-model="addForm.date"
+            type="date"
+            placeholder="请选择您的生日"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
         </el-form-item>
         <!-- 电话 -->
         <el-form-item prop="phone">
@@ -145,7 +157,7 @@ export default {
         password: "",
         nickName: "", // 昵称
         job_number: "",
-        gender: "",
+        gender: "1",
         phone: "",
         age: "",
         checkPassword: "",
@@ -301,6 +313,10 @@ export default {
   .el-button {
     width: 500px;
     margin-top: 20px;
+  }
+
+  .el-date-editor {
+    margin-bottom: 20px;
   }
 }
 </style>
