@@ -59,7 +59,7 @@ export default {
   methods: {
     async getBookList() {
       const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/book/findOne/" + this.jobNumber
+        "book/findOne/" + this.jobNumber
       );
       console.log(res);
       if (res.status !== 200) {
@@ -69,13 +69,10 @@ export default {
       console.log(res.status);
     },
     async returnBook(isbn) {
-      const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/book/return",
-        {
-          jobNumber: this.jobNumber,
-          isbn: isbn,
-        }
-      );
+      const { data: res } = await this.$http.post("book/return", {
+        jobNumber: this.jobNumber,
+        isbn: isbn,
+      });
       if (res.status !== 6008) {
         return this.$message.error("归还书籍失败！");
       }

@@ -112,9 +112,7 @@ export default {
   methods: {
     //获取分类列表
     async getTypeList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type/3"
-      );
+      const { data: res } = await this.$http.get("admin/type/3");
       if (res.status !== 200) return this.$message.error("获取图书分类失败！");
       this.typeList = res.data;
     },
@@ -124,9 +122,7 @@ export default {
     },
     //获取父级分类列表
     async getParentTypeList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type/2"
-      );
+      const { data: res } = await this.$http.get("admin/type/2");
       if (res.status !== 200) return this.$message.error("获取父级分类失败！");
       this.parentTypeList = res.data;
     },
@@ -135,7 +131,7 @@ export default {
       this.$refs.addTypeFormRef.validate(async (vaild) => {
         if (!vaild) return;
         const { data: res } = await this.$http.put(
-          "http://localhost:8080/api/admin/bookType/add",
+          "admin/bookType/add",
           this.addTypeForm
         );
         if (res.status === 2001)
@@ -180,14 +176,11 @@ export default {
       ).catch((err) => err);
       if (confirmResult !== "confirm")
         return this.$message.info("已取消删除！");
-      const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/admin/bookType/remove",
-        {
-          cid: cid.join(","),
-          level: row.level,
-          mid: row.mid,
-        }
-      );
+      const { data: res } = await this.$http.post("admin/bookType/remove", {
+        cid: cid.join(","),
+        level: row.level,
+        mid: row.mid,
+      });
       if (res.status !== 200) return this.$message.error("删除分类失败！");
       this.$message.success("删除分类成功！");
       this.getTypeList();

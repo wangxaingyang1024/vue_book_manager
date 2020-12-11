@@ -69,7 +69,7 @@ export default {
     },
     async getUserList() {
       const { data: res } = await this.$http.get(
-        `http://localhost:8080/api/admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
+        `admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
       );
       console.log(res.data);
       if (res.status === 3023) {
@@ -99,8 +99,8 @@ export default {
       }
 
       const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/admin/remove/" + jobNumber
-        // `http://localhost:8080/api/admin/remove/jobNumber/`
+        "admin/remove/" + jobNumber
+        // `admin/remove/jobNumber/`
       );
 
       if (res.status !== 3033) {

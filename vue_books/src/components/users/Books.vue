@@ -86,12 +86,9 @@ export default {
   },
   methods: {
     async getBookList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/find",
-        {
-          params: this.queryInfo,
-        }
-      );
+      const { data: res } = await this.$http.get("admin/find", {
+        params: this.queryInfo,
+      });
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
@@ -111,13 +108,10 @@ export default {
       });
     },
     async borrowBook(isbn) {
-      const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/book/borrow",
-        {
-          jobNumber: this.jobNumber,
-          isbn: isbn,
-        }
-      );
+      const { data: res } = await this.$http.post("book/borrow", {
+        jobNumber: this.jobNumber,
+        isbn: isbn,
+      });
       //console.log(res);
       if (res.status !== 6006) {
         return this.$message.error("借阅书籍失败！");

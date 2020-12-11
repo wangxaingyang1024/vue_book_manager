@@ -248,10 +248,7 @@ export default {
       this.$refs.addFormRef.validate(async (valid) => {
         if (!valid) return;
         //可发起注册网络请求
-        const { data: res } = await this.$http.post(
-          "http://localhost:8080/api/signUp",
-          this.addForm
-        );
+        const { data: res } = await this.$http.post("signUp", this.addForm);
         //注册成功跳转到登录，失败则停留当前页面
         if (res.status == 3021) return this.$message.error("用户名已存在！");
         if (res.status !== 3024) {

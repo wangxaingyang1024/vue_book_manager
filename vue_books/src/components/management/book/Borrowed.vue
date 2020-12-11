@@ -55,9 +55,7 @@ export default {
   },
   methods: {
     async getLog() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/log/admin/newLogs"
-      );
+      const { data: res } = await this.$http.get("log/admin/newLogs");
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
@@ -67,7 +65,7 @@ export default {
     async getLogByTime() {
       console.log(this.findTime);
       const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/log/admin/logT",
+        "log/admin/logT",
         this.findTime
       );
       console.log(res);

@@ -126,19 +126,14 @@ export default {
         }
         this.addBook.type = this.addBook.type[this.addBook.type.length - 1];
         //可发起网络请求
-        const { data: res } = await this.$http.post(
-          "http://localhost:8080/api/admin/add",
-          this.addBook
-        );
+        const { data: res } = await this.$http.post("admin/add", this.addBook);
         if (res.status !== 6000) return this.$message.error("添加书籍失败！");
         this.$message.success("添加书籍成功！");
         this.$router.push("/changeBook");
       });
     },
     async getTypeList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type/3"
-      );
+      const { data: res } = await this.$http.get("admin/type/3");
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");
       this.typeList = res.data;

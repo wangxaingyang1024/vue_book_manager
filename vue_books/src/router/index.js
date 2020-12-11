@@ -73,11 +73,6 @@ const Borrowed = () =>
     /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/Borrowed.vue"
   );
 
-const test = () =>
-  import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/user/test.vue"
-  );
-
 Vue.use(Router);
 
 const router = new Router({
@@ -110,8 +105,6 @@ const router = new Router({
         { path: "/borrowed", component: Borrowed },
       ],
     },
-
-    { path: "/test", component: test },
   ],
 });
 

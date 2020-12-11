@@ -107,10 +107,7 @@ export default {
       let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await that.$http.post(
-          "http://localhost:8080/api/login",
-          that.loginForm
-        );
+        const { data: res } = await that.$http.post("login", that.loginForm);
         if (res.status === 3031)
           return that.$message.error("用户名不存在，请先注册!");
         if (res.status !== 1000) return that.$message.error("登录失败!");

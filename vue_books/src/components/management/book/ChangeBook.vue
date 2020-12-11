@@ -208,12 +208,9 @@ export default {
       this.$router.push("/addBook");
     },
     async getBookList() {
-      const { data: res } = await this.$http.get(
-        `http://localhost:8080/api/admin/find`,
-        {
-          params: this.queryInfo,
-        }
-      );
+      const { data: res } = await this.$http.get(`admin/find`, {
+        params: this.queryInfo,
+      });
       console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
@@ -241,9 +238,7 @@ export default {
     },
     //获取书籍分类
     async getTypeList() {
-      const { data: res } = await this.$http.get(
-        "http://localhost:8080/api/admin/type/3"
-      );
+      const { data: res } = await this.$http.get("admin/type/3");
       // console.log(res.data);
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");
@@ -266,7 +261,7 @@ export default {
         ];
         //发起修改用户信息的请求
         const { data: res } = await this.$http.post(
-          "http://localhost:8080/api/admin/update",
+          "admin/update",
           this.editForm
         );
 
@@ -300,8 +295,8 @@ export default {
       }
       // console.log(typeof isbn);
       const { data: res } = await this.$http.post(
-        "http://localhost:8080/api/admin/delete/" + isbn
-        // `http://localhost:8080/api/admin/remove/jobNumber/`
+        "admin/delete/" + isbn
+        // `admin/remove/jobNumber/`
       );
       if (res.status !== 6002) {
         return this.$message.error("删除书籍失败");
