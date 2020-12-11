@@ -67,9 +67,19 @@ export default {
   },
   methods: {
     //退出
-    logout() {
-      window.sessionStorage.clear();
-      this.$router.push("/login");
+    async logout() {
+      //弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm("您真的要狠心离开吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).catch((err) => err);
+      //如果用户确认退出,则返回值为字符串confirm
+      //如果用户取消退出，则返回值为字符串cancel
+      if (confirmResult === "confirm") {
+        window.sessionStorage.clear();
+        return this.$router.push("/adminLogin");
+      }
     },
   },
   beforeUpdate() {
