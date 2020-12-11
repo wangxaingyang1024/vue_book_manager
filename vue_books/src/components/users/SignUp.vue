@@ -3,7 +3,7 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="4">
-          <img src="../../../public/logo.svg" height="" />
+          <img src="~assets/logo.svg" height="" />
         </el-col>
         <el-col :span="16">
           <span class="topText">注册页面</span>
@@ -282,11 +282,14 @@ export default {
     font-size: 25px;
   }
 }
-.el-form {
-  padding: 50px;
-  margin: 50px auto;
-  width: 500px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+.el-main {
+  display: flex;
+  //实现垂直居中
+  align-items: center;
+  //实现水平居中
+  justify-content: center;
+  //计算高度
+  min-height: calc(100vh - 80px);
 }
 .el-form {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);

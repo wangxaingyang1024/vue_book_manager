@@ -1,33 +1,32 @@
 <template>
-  <div>
-    <el-card>
-      <el-button type="primary" @click="showAddTypeDialog">添加分类</el-button>
-      <tree-table
-        :data="typeList"
-        :columns="columns"
-        :selection-type="false"
-        :expand-type="false"
-        show-index
-        border
-        :default-expand-all="true"
-        :show-row-hover="false"
-      >
-        <template slot="order" slot-scope="scope">
-          <el-tag v-if="scope.row.level === 1">一级</el-tag>
-          <el-tag type="success" v-else-if="scope.row.level === 2">二级</el-tag>
-          <el-tag type="warning" v-else>三级</el-tag>
-        </template>
-        <template slot="opt" slot-scope="scope">
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            size="mini"
-            circle
-            @click="removeTypeDialog(scope.row)"
-          ></el-button>
-        </template>
-      </tree-table>
-    </el-card>
+  <el-card>
+    <el-button type="primary" @click="showAddTypeDialog">添加分类</el-button>
+    <tree-table
+      :data="typeList"
+      :columns="columns"
+      :selection-type="false"
+      :expand-type="false"
+      show-index
+      border
+      :default-expand-all="true"
+      :show-row-hover="false"
+    >
+      <template slot="order" slot-scope="scope">
+        <el-tag v-if="scope.row.level === 1">一级</el-tag>
+        <el-tag type="success" v-else-if="scope.row.level === 2">二级</el-tag>
+        <el-tag type="warning" v-else>三级</el-tag>
+      </template>
+      <template slot="opt" slot-scope="scope">
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
+          size="mini"
+          circle
+          @click="removeTypeDialog(scope.row)"
+        ></el-button>
+      </template>
+    </tree-table>
+
     <!-- 添加分类 -->
     <el-dialog
       title="添加分类"
@@ -62,7 +61,7 @@
         <el-button type="primary" @click="addType">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -206,5 +205,9 @@ export default {
 <style lang="less" scoped>
 .el-button {
   margin-bottom: 15px;
+}
+.el-card {
+  width: 100%;
+  height: calc(100% - 2px);
 }
 </style>

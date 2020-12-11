@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="18">
-          <img src="../../../public/logo.svg" />
+          <img src="~assets/logo.svg" />
         </el-col>
         <el-col :span="3">
           <i class="el-icon-s-custom"> </i>
@@ -99,7 +99,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .el-menu-item-group__title {
   padding: 0 !important;
 }
@@ -118,5 +118,15 @@ export default {
   height: 350px;
   margin-top: 15px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+.el-main {
+  display: flex;
+  //实现垂直居中
+  align-items: center;
+  //实现水平居中
+  justify-content: center;
+  //计算高度
+  min-height: calc(100vh - 80px);
+  width: 100vh;
 }
 </style>

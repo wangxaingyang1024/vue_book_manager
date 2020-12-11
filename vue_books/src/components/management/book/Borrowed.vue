@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card>
     <el-row :gutter="20">
       <el-col :span="8">
         <div class="block">
@@ -95,4 +95,12 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-card {
+  width: 100%;
+  height: calc(100% - 2px);
+}
+.el-table {
+  margin-top: 25px;
+}
+</style>

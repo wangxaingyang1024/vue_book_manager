@@ -323,4 +323,8 @@ export default {
 .el-table {
   margin-top: 25px;
 }
+.el-card {
+  width: 100%;
+  height: calc(100% - 2px);
+}
 </style>

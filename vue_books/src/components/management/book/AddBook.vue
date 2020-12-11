@@ -1,52 +1,44 @@
 <template>
-  <el-card class="add_box">
-    <el-form
-      ref="addBookRef"
-      :model="addBook"
-      :rules="addBookRules"
-      label-width="0px"
-      class="add_Book"
-    >
-      <!-- 书名 -->
-      <el-form-item prop="name">
-        <el-input
-          v-model="addBook.name"
-          prefix-icon="el-icon-document-checked"
-          placeholder="添加书名"
-        ></el-input>
-      </el-form-item>
-      <!-- 作者 -->
-      <el-form-item prop="author">
-        <el-input
-          v-model="addBook.author"
-          prefix-icon="el-icon-edit"
-          placeholder="添加作者"
-        ></el-input>
-      </el-form-item>
-      <!-- 类型 -->
-      <el-form-item prop="type">
-        <el-cascader
-          v-model="addBook.type"
-          placeholder="请选择书的类别"
-          :options="typeList"
-          :props="cascaderProps"
-          clearable
-        ></el-cascader>
-      </el-form-item>
-      <!-- 简介 -->
-      <el-form-item prop="synopsis">
-        <el-input
-          v-model="addBook.synopsis"
-          prefix-icon="el-icon-edit-outline"
-          placeholder="添加简介"
-        ></el-input>
-      </el-form-item>
-      <!-- 按钮区域 -->
-      <el-form-item class="btns">
-        <el-button type="primary" @click="add">确认添加</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <el-form ref="addBookRef" :model="addBook" :rules="addBookRules">
+    <!-- 书名 -->
+    <el-form-item prop="name">
+      <el-input
+        v-model="addBook.name"
+        prefix-icon="el-icon-document-checked"
+        placeholder="添加书名"
+      ></el-input>
+    </el-form-item>
+    <!-- 作者 -->
+    <el-form-item prop="author">
+      <el-input
+        v-model="addBook.author"
+        prefix-icon="el-icon-edit"
+        placeholder="添加作者"
+      ></el-input>
+    </el-form-item>
+    <!-- 类型 -->
+    <el-form-item prop="type">
+      <el-cascader
+        v-model="addBook.type"
+        placeholder="请选择书的类别"
+        :options="typeList"
+        :props="cascaderProps"
+        clearable
+      ></el-cascader>
+    </el-form-item>
+    <!-- 简介 -->
+    <el-form-item prop="synopsis">
+      <el-input
+        v-model="addBook.synopsis"
+        prefix-icon="el-icon-edit-outline"
+        placeholder="添加简介"
+      ></el-input>
+    </el-form-item>
+    <!-- 按钮区域 -->
+    <el-form-item class="btns">
+      <el-button type="primary" @click="add">确认添加</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -148,5 +140,11 @@ export default {
 .el-button {
   width: 500px;
   margin-top: 15px;
+}
+
+.el-form {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  padding: 50px;
+  width: 500px;
 }
 </style>

@@ -13,7 +13,7 @@ import TreeTable from "vue-table-with-tree-grid";
 //引入axios
 import axios from "axios";
 //配置请求根路径
-axios.defaults.baseURL = "http://localhost:8080/api/";
+axios.defaults.baseURL = "http://127.0.0.1:3000/api/";
 
 //在request拦截器中，展示进度条
 // axios.interceptors.request.use((config) => {

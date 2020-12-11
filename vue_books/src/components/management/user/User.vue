@@ -119,4 +119,8 @@ export default {
 .el-pagination {
   margin-top: 25px;
 }
+.el-card {
+  width: 100%;
+  height: calc(100% - 2px);
+}
 </style>

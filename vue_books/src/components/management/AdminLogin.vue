@@ -3,7 +3,7 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="4">
-          <img src="../../../public/logo.svg" height="" />
+          <img src="~assets/logo.svg" height="" />
         </el-col>
         <el-col :span="16">
           <span class="topText">管理员登录</span>
@@ -93,10 +93,8 @@ export default {
     //   this.$router.push("/signUp");
     // },
     checkout() {
-      //清空sessionStorage
-      window.sessionStorage.clear();
       //跳转用户登录界面
-      this.$router.push("/Login");
+      this.$router.push("/login");
     },
     login() {
       let that = this;

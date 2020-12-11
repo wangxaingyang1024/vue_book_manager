@@ -14,7 +14,7 @@
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="书名">
-              <span>{{ props.row.name }}</span>
+              <span>{{ "《" + props.row.name + "》" }}</span>
             </el-form-item>
             <el-form-item label="作者">
               <span>{{ props.row.author }}</span>
@@ -23,9 +23,14 @@
               <span>{{ props.row.type }}</span>
             </el-form-item>
             <el-form-item label="状态">
-              <span>{{
-                props.row.status.toString() === "true" ? "未借出" : "已借出"
-              }}</span>
+              <span>
+                <el-tag
+                  type="success"
+                  v-if="props.row.status.toString() === 'true'"
+                  >未借出</el-tag
+                >
+                <el-tag v-else>已借出</el-tag>
+              </span>
             </el-form-item>
             <el-form-item label="简介">
               <span>{{ props.row.synopsis }}</span>
@@ -134,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .el-table__column-filter-trigger i {
   font-size: 20px;
 }
@@ -149,5 +154,9 @@ export default {
   margin-right: 0;
   margin-bottom: 0;
   width: 50%;
+}
+.el-card {
+  width: 100%;
+  height: calc(100% - 2px);
 }
 </style>

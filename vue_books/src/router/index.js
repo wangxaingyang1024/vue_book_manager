@@ -1,76 +1,72 @@
 import Vue from "vue";
 import Router from "vue-router";
 // //用户路由
-// import Login from "../components/users/Login.vue";
-// import SignUp from "../components/users/SignUp.vue";
-// import Home from "../components/users/Home.vue";
-// import Books from "../components/users/Books.vue";
-// import MyBooks from "../components/users/MyBooks.vue";
+// import Login from "components/users/Login.vue";
+// import SignUp from "components/users/SignUp.vue";
+// import Home from "components/users/Home.vue";
+// import Books from "components/users/Books.vue";
+// import MyBooks from "components/users/MyBooks.vue";
 // //管理员路由
-// import AdminHome from "../components/management/AdminHome.vue";
-// import AdminLogin from "../components/management/AdminLogin.vue";
-// import Welcome from "../components/management/Welcome.vue";
-// import User from "../components/management/user/User.vue";
-// import AddBook from "../components/management/book/AddBook.vue";
-// import ChangeBook from "../components/management/book/ChangeBook.vue";
-// import Borrowed from "../components/management/book/Borrowed.vue";
+// import AdminHome from "components/management/AdminHome.vue";
+// import AdminLogin from "components/management/AdminLogin.vue";
+// import Welcome from "components/management/Welcome.vue";
+// import User from "components/management/user/User.vue";
+// import AddBook from "components/management/book/AddBook.vue";
+// import ChangeBook from "components/management/book/ChangeBook.vue";
+// import Borrowed from "components/management/book/Borrowed.vue";
 
 //更改为懒加载
 const Login = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "../components/users/Login.vue"
+    /* webpackChunkName: "login_signUp_home" */ "components/users/Login.vue"
   );
 const SignUp = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "../components/users/SignUp.vue"
+    /* webpackChunkName: "login_signUp_home" */ "components/users/SignUp.vue"
   );
 const Home = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "../components/users/Home.vue"
+    /* webpackChunkName: "login_signUp_home" */ "components/users/Home.vue"
   );
 
 const Books = () =>
-  import(
-    /* webpackChunkName: "books_myBooks" */ "../components/users/Books.vue"
-  );
+  import(/* webpackChunkName: "books_myBooks" */ "components/users/Books.vue");
 const MyBooks = () =>
   import(
-    /* webpackChunkName: "books_myBooks" */ "../components/users/MyBooks.vue"
+    /* webpackChunkName: "books_myBooks" */ "components/users/MyBooks.vue"
   );
 
 const User = () =>
-  import(
-    /* webpackChunkName: "user" */ "../components/management/user/User.vue"
-  );
+  import(/* webpackChunkName: "user" */ "components/management/user/User.vue");
 
 const Welcome = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "../components/management/Welcome.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/Welcome.vue"
   );
 const AdminHome = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "../components/management/AdminHome.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/AdminHome.vue"
   );
 const AdminLogin = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "../components/management/AdminLogin.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/AdminLogin.vue"
   );
 
 const AddBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/AddBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/AddBook.vue"
   );
 const ChangeBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/ChangeBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/ChangeBook.vue"
   );
 const Attributes = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/Attributes.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/Attributes.vue"
   );
 const Borrowed = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "../components/management/book/Borrowed.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/Borrowed.vue"
   );
 
 Vue.use(Router);
