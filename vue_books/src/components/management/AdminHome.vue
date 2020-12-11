@@ -2,8 +2,11 @@
   <el-container>
     <el-header>
       <el-row>
-        <el-col :span="18">
+        <el-col :span="4">
           <img src="~assets/logo.jpg" @click="home" />
+        </el-col>
+        <el-col :span="14">
+          <span class="topText">钧钧图书馆</span>
         </el-col>
         <el-col :span="3">
           <i class="el-icon-s-custom"> </i>
@@ -108,6 +111,11 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   line-height: 50px;
+  text-align: center;
+  .topText {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 25px;
+  }
   i {
     color: orange;
   }

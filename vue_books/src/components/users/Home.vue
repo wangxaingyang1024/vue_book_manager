@@ -1,17 +1,20 @@
 <template>
   <el-container>
     <el-header>
-      <el-row :gutter="20">
-        <el-col :span="18">
+      <el-row>
+        <el-col :span="4">
           <img src="~assets/logo.jpg" @click="home" />
         </el-col>
+        <el-col :span="14">
+          <span class="topText">钧钧图书馆</span>
+        </el-col>
         <span v-if="jobNumber === null">
-          <el-col :span="2">
+          <el-col :span="3">
             <el-button type="primary" round @click="login" class="logout"
               >登录</el-button
             >
           </el-col>
-          <el-col :span="2">
+          <el-col :span="3">
             <el-button type="success" round @click="signUp" class="logout"
               >注册</el-button
             >
@@ -119,11 +122,13 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   line-height: 50px;
+  text-align: center;
+  .topText {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 25px;
+  }
   i {
     color: orange;
-  }
-  .img :hover {
-    cursor: pointer;
   }
 }
 .el-aside {

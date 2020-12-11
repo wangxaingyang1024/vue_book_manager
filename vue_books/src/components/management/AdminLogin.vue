@@ -1,14 +1,14 @@
 <template>
   <el-container>
     <el-header>
-      <el-row :gutter="20">
+      <el-row>
         <el-col :span="4">
           <img src="~assets/logo.jpg" @click="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">管理员登录</span>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-button type="info" round @click="checkout" class="checkout"
             >切换用户端入口</el-button
           >

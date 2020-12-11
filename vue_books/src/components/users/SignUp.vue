@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-row :gutter="20">
+      <el-row>
         <el-col :span="4">
           <img src="~assets/logo.jpg" @click="home" />
         </el-col>
