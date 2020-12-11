@@ -4,7 +4,7 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="4">
-          <img src="~assets/logo.svg" height="" />
+          <img src="~assets/logo.jpg" @click="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">用户登录</span>
@@ -93,6 +93,9 @@ export default {
     };
   },
   methods: {
+    home() {
+      this.$router.push("/books");
+    },
     checkout() {
       //跳转管理员登录界面
       this.$router.push("/adminLogin");
@@ -131,9 +134,6 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   text-align: center;
-  img {
-    margin-top: 10px;
-  }
   .topText {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     font-size: 25px;

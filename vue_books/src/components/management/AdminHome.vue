@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="18">
-          <img src="~assets/logo.svg" />
+          <img src="~assets/logo.jpg" @click="home" />
         </el-col>
         <el-col :span="3">
           <i class="el-icon-s-custom"> </i>
@@ -15,8 +15,6 @@
           >
         </el-col>
       </el-row>
-      <!-- //TODO  1.显示XX已登录 -->
-      <!-- <div>欢迎{{session.user.nick_name}}</div> -->
     </el-header>
     <el-container>
       <!-- 左侧菜单 -->
@@ -81,6 +79,9 @@ export default {
     this.active = document.location.hash.substr(1);
   },
   methods: {
+    home() {
+      this.$router.push("/books");
+    },
     //退出
     async logout() {
       //弹框询问用户是否删除数据
@@ -109,9 +110,6 @@ export default {
   line-height: 50px;
   i {
     color: orange;
-  }
-  img {
-    margin-top: 10px;
   }
 }
 .el-aside {

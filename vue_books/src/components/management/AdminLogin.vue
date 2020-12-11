@@ -3,7 +3,7 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="4">
-          <img src="~assets/logo.svg" height="" />
+          <img src="~assets/logo.jpg" @click="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">管理员登录</span>
@@ -88,10 +88,9 @@ export default {
     };
   },
   methods: {
-    // signUp() {
-    //   //跳转注册页面
-    //   this.$router.push("/signUp");
-    // },
+    home() {
+      this.$router.push("/books");
+    },
     checkout() {
       //跳转用户登录界面
       this.$router.push("/login");
@@ -116,6 +115,7 @@ export default {
         console.log(res.data);
         console.log(res.data.nickname);
         //window.sessionStorage.setItem("token", res.data.token);
+        window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
         window.sessionStorage.setItem("nickName", res.data.nickName);
         //通过编程式导航跳转到后台主页，路由地址  /home
         that.$router.push("/adminHome");
@@ -132,9 +132,6 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
   text-align: center;
-  img {
-    margin-top: 10px;
-  }
   .topText {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     font-size: 25px;

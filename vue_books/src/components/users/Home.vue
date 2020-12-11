@@ -3,25 +3,35 @@
     <el-header>
       <el-row :gutter="20">
         <el-col :span="18">
-          <img src="~assets/logo.svg" />
+          <img src="~assets/logo.jpg" @click="home" />
         </el-col>
-        <el-col :span="3">
-          <!-- <el-input v-model="jobNumber"></el-input> -->
-          <i class="el-icon-user-solid"> </i>
-          Hi, {{ this.nickName }}
-        </el-col>
-        <el-col :span="3">
-          <el-button type="info" round @click="logout" class="logout"
-            >退出</el-button
-          >
-        </el-col>
+        <span v-if="jobNumber === null">
+          <el-col :span="2">
+            <el-button type="primary" round @click="login" class="logout"
+              >登录</el-button
+            >
+          </el-col>
+          <el-col :span="2">
+            <el-button type="success" round @click="signUp" class="logout"
+              >注册</el-button
+            >
+          </el-col>
+        </span>
+        <span v-else>
+          <el-col :span="3">
+            <i class="el-icon-user-solid"> </i>
+            Hi, {{ this.nickName }}
+          </el-col>
+          <el-col :span="3">
+            <el-button type="info" round @click="logout" class="logout"
+              >退出</el-button
+            >
+          </el-col>
+        </span>
       </el-row>
-
-      <!-- //TODO  1.显示XX已登录 -->
-      <!-- <div>欢迎{{session.user.nick_name}}</div> -->
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="200px" v-if="jobNumber !== null">
         <el-menu
           unique-opened
           :default-openeds="['1']"
@@ -66,6 +76,17 @@ export default {
     this.active = document.location.hash.substr(1);
   },
   methods: {
+    home() {
+      this.$router.push("/books");
+    },
+    login() {
+      //跳转登录界面
+      this.$router.push("/login");
+    },
+    signUp() {
+      //跳转注册页面
+      this.$router.push("/signUp");
+    },
     //退出
     async logout() {
       //弹框询问用户是否删除数据
@@ -78,11 +99,12 @@ export default {
       //如果用户取消退出，则返回值为字符串cancel
       if (confirmResult === "confirm") {
         window.sessionStorage.clear();
-        return this.$router.push("/adminLogin");
+        return this.$router.push("/login");
       }
     },
   },
   beforeUpdate() {
+    this.active = document.location.hash.substr(1);
     if (this.jobNumber !== window.sessionStorage.getItem("jobNumber")) {
       this.logout();
     }
@@ -100,8 +122,8 @@ export default {
   i {
     color: orange;
   }
-  img {
-    margin-top: 10px;
+  .img :hover {
+    cursor: pointer;
   }
 }
 .el-aside {
@@ -111,11 +133,8 @@ export default {
 }
 .el-main {
   display: flex;
-  //实现垂直居中
   align-items: center;
-  //实现水平居中
   justify-content: center;
-  //计算高度
   min-height: calc(100vh - 80px);
 }
 </style>

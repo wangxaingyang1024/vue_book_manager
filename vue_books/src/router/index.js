@@ -74,7 +74,7 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     // 用户路由
-    { path: "/", redirect: "/login" },
+    { path: "/", redirect: "/books" },
     { path: "/login", component: Login },
     { path: "/signUp", component: SignUp },
     {
