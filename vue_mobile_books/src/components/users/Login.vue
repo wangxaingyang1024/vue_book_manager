@@ -3,14 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="用户登录">
       <template #left>
-        <span class="span">中均图书</span>
-      </template>
-      <template #right>
-        <van-icon
-          @click="checkout"
-          name="exchange"
-          size="20"
-        />
+        <img src="../../assets/logo.jpg">
       </template>
     </van-nav-bar>
     <!-- 登录表单区域 -->
@@ -29,7 +22,7 @@
         label="密码"
         :rules="[
           { required: true, message: '请填写密码' },
-          { validator1, message: '密码必须为6-18位包含数字.字母和大写字母' },
+          { validator, message: '需包含大小写字母数字，不使用特殊字符8~15长度' },
         ]"
       />
       <div style="margin: 35px">
@@ -54,14 +47,10 @@ export default {
     };
   },
   methods: {
-    checkout() {
-      window.sessionStorage.clear();
-      //跳转管理员登录界面
-      this.$router.push("/adminLogin");
-    },
     //跳转到注册页面
     signup() {
       this.$router.push("/signup");
+      //window.sessionStorage.clear();
     },
     //登录
     login() {
@@ -85,18 +74,17 @@ export default {
       });
     },
     //密码验证
-    validator1(val) {
-      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/.test(val);
+    validator(val) {
+      return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.span {
-  font-size: 20px;
-  color: deepskyblue;
-  font-family: 宋体;
+img {
+  width: 60px;
+  margin-top: 7px;
 }
 .welcome {
   margin-top: 5px;
