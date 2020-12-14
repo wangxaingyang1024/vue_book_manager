@@ -127,11 +127,16 @@ router.beforeEach((to, from, next) => {
   if (to.path === "/login") return next();
   if (to.path === "/signUp") return next();
   if (to.path === "/adminLogin") return next();
+  if (to.path === "/books") return next();
   //TODO 2.通过获取token来拦截
 
   //获取token
-  //const tokenStr = window.localStorage.getItem('token')
-  //if (!tokenStr) return next('/login')
+  const tokenStr = window.localStorage.getItem("token");
+  if (!tokenStr) {
+    // this.$message.warning("请先登录再进行此操作！");
+    Vue.prototype.$message.warning("请先进行登录！");
+    return next("/login");
+  }
   next();
 });
 

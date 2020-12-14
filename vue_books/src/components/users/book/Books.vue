@@ -65,6 +65,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页区域 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="queryInfo.pageNum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="queryInfo.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
   </el-card>
 </template>
 
@@ -80,7 +90,8 @@ export default {
         //当前每页显示多少条数据
         pageSize: 5,
       },
-
+      //数据总条数
+      total: 0,
       booklist: [],
       typeList: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
@@ -88,9 +99,23 @@ export default {
   },
   created() {
     this.getBookList();
+    console.log(this.jobNumber);
   },
   methods: {
+    //监听 pageSize 改变的事件
+    handleSizeChange(newSize) {
+      this.queryInfo.pageSize = newSize;
+      this.queryInfo.pageNum = 1;
+      this.getBookList();
+    },
+    //监听 页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.pageNum = newPage;
+      this.getBookList();
+    },
     async getBookList() {
+      this.booklist = [];
+      this.typeList = [];
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
@@ -111,8 +136,12 @@ export default {
         const type = { text: item, value: item };
         this.typeList.push(type);
       });
+      this.total = res.data.total;
     },
     async borrowBook(isbn) {
+      if (this.jobNumber === null) {
+        return this.$message.warning("请先登录再进行此操作！");
+      }
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
         isbn: isbn,
@@ -130,9 +159,9 @@ export default {
   },
   watch: {
     "queryInfo.name"(val) {
-      if (val === null) return this.getBookList();
+      this.queryInfo.pageNum = 1;
       setTimeout(() => {
-        this.getBookListByName();
+        this.getBookList();
       }, 500);
     },
   },
@@ -158,5 +187,9 @@ export default {
 .el-card {
   width: 100%;
   min-height: calc(100% - 2px);
+}
+.el-pagination,
+.el-table {
+  margin-top: 15px;
 }
 </style>
