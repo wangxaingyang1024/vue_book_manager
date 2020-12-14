@@ -321,10 +321,10 @@ export default {
 }
 .el-pagination,
 .el-table {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 .el-card {
   width: 100%;
-  height: calc(100% - 2px);
+  min-height: calc(100% - 2px);
 }
 </style>

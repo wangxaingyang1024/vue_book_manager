@@ -35,12 +35,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px" v-if="jobNumber !== null">
-        <el-menu
-          unique-opened
-          :default-openeds="['1']"
-          :default-active="active"
-          router
-        >
+        <el-menu unique-opened :default-active="active" router>
           <el-submenu index="1">
             <template slot="title"
               ><i class="el-icon-star-on"></i>书籍查询</template
@@ -128,10 +123,12 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .el-menu-item-group__title {
   padding: 0 !important;
 }
+</style>
+<style lang="less" scoped>
 .el-header {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
@@ -145,15 +142,16 @@ export default {
     color: orange;
   }
 }
+.el-container {
+  margin-top: 10px;
+}
 .el-aside {
-  height: 350px;
-  margin-top: 15px;
+  height: calc(100vh - 92px);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 .el-main {
-  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 80px);
+  max-height: calc(100vh - 95px);
 }
 </style>

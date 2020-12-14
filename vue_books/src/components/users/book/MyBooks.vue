@@ -86,6 +86,6 @@ export default {
 <style lang="less" scoped>
 .el-card {
   width: 100%;
-  height: calc(100% - 2px);
+  min-height: calc(100% - 2px);
 }
 </style>

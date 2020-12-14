@@ -109,7 +109,6 @@ export default {
 
       this.$message.success("删除用户成功！");
       this.getUserList();
-      //TODO 删除后没刷新
     },
   },
 };
@@ -117,10 +116,10 @@ export default {
 
 <style lang="less" scoped>
 .el-pagination {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 .el-card {
   width: 100%;
-  height: calc(100% - 2px);
+  min-height: calc(100% - 2px);
 }
 </style>

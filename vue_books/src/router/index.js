@@ -38,6 +38,15 @@ const MyBooks = () =>
     /* webpackChunkName: "books_myBooks" */ "components/users/book/MyBooks.vue"
   );
 
+const Profile = () =>
+  import(
+    /* webpackChunkName: "profile_admin" */ "components/users/personage/Profile.vue"
+  );
+const Admin = () =>
+  import(
+    /* webpackChunkName: "profile_admin" */ "components/users/personage/Admin.vue"
+  );
+
 const User = () =>
   import(/* webpackChunkName: "user" */ "components/management/user/User.vue");
 
@@ -86,6 +95,8 @@ const router = new Router({
       children: [
         { path: "/books", component: Books },
         { path: "/myBooks", component: MyBooks },
+        { path: "/profile", component: Profile },
+        { path: "/admin", component: Admin },
       ],
     },
     //管理员路由

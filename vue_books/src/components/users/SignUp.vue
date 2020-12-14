@@ -186,12 +186,6 @@ export default {
             trigger: "blur",
           },
           {
-            min: 8,
-            max: 15,
-            message: "需包含大小写字母数字，不使用特殊字符8~15长度",
-            trigger: "blur",
-          },
-          {
             validator: validatePassword,
             trigger: "blur",
           },
@@ -200,12 +194,6 @@ export default {
           {
             required: true,
             message: "请再次输入密码",
-            trigger: "blur",
-          },
-          {
-            min: 8,
-            max: 15,
-            message: "需包含大小写字母数字，不使用特殊字符8~15长度",
             trigger: "blur",
           },
           {

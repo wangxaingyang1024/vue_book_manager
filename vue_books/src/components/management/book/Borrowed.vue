@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <el-card class="box-card">
     <el-row :gutter="20">
@@ -101,7 +102,7 @@ export default {
   watch: {
     time(val) {
       if (val === null) {
-        this.all = true;
+        this.all = false;
         this.list = [];
         return this.getLog();
       }
@@ -123,7 +124,7 @@ export default {
 <style lang="less" scoped>
 .el-card {
   width: 100%;
-  height: calc(100% - 2px);
+  min-height: calc(100% - 2px);
 }
 .el-table {
   margin-top: 15px;
