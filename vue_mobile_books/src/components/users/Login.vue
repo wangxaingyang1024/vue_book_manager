@@ -53,14 +53,14 @@ export default {
       //window.sessionStorage.clear();
     },
     //登录
-    login() {
-      let that = this;
+    async login() {
+      /*let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
         const { data: res } = await that.$http.post("login", that.loginForm);
         if (res.status === 3031)
-          return that.$message.error("用户名不存在，请先注册!");
-        if (res.status !== 1000) return that.$message.error("登录失败!");
+          return that.$toast.fail("用户名不存在，请先注册!");
+        if (res.status !== 1000) return that.$toast.fail("登录失败!");
         //that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         //console.log(res.data);
@@ -71,7 +71,12 @@ export default {
         // console.log(res.data.jobNumber);
         //通过编程式导航跳转到后台主页，路由地址  /home
         //that.$router.push("/home");
-      });
+      });*/
+      const { data:res } = await this.$http.post('login',this.loginForm)
+      console.log(res)
+      if(res.status === 3031) return this.$toast.fail("用户名不存在，请先注册!");
+       if (res.status === 3031) return this.$toast.fail("用户名不存在，请先注册!")
+      this.$toast.success("登录成功!");
     },
     //密码验证
     validator(val) {
@@ -91,7 +96,7 @@ img {
   width: 100%;
   height: 80px;
   line-height: 80px;
-  background-image: url("../../assets/beijing.png");
+  background-image: url("~assets/beijing.png");
   p {
     text-align: center;
     color: #eee;
