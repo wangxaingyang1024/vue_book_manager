@@ -91,6 +91,7 @@ export default {
   },
   methods: {
     async getBookList() {
+      (this.booklist = []), (this.typeList = []);
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
@@ -113,6 +114,9 @@ export default {
       });
     },
     async borrowBook(isbn) {
+      if (this.jobNumber === null) {
+        return this.$message.warning("请先登录再进行此操作！");
+      }
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
         isbn: isbn,
@@ -130,9 +134,9 @@ export default {
   },
   watch: {
     "queryInfo.name"(val) {
-      if (val === null) return this.getBookList();
+      this.queryInfo.pageNum = 1;
       setTimeout(() => {
-        this.getBookListByName();
+        this.getBookList();
       }, 500);
     },
   },
