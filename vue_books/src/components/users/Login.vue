@@ -119,6 +119,7 @@ export default {
         //将jobNumber保存到客户端的sessionStorage中
         window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
         window.sessionStorage.setItem("nickName", res.data.nickName);
+        window.sessionStorage.setItem("username", res.data.username);
         // console.log(res.data.jobNumber);
         //通过编程式导航跳转到后台主页，路由地址  /home
         that.$router.push("/home");
