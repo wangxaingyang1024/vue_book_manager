@@ -17,13 +17,7 @@
     </el-header>
     <el-main>
       <!-- 登录表单区域 -->
-      <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        label-width="0px"
-        class="login_form"
-      >
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input

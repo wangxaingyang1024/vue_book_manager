@@ -30,10 +30,12 @@ const Home = () =>
   );
 
 const Books = () =>
-  import(/* webpackChunkName: "books_myBooks" */ "components/users/Books.vue");
+  import(
+    /* webpackChunkName: "books_myBooks" */ "components/users/book/Books.vue"
+  );
 const MyBooks = () =>
   import(
-    /* webpackChunkName: "books_myBooks" */ "components/users/MyBooks.vue"
+    /* webpackChunkName: "books_myBooks" */ "components/users/book/MyBooks.vue"
   );
 
 const User = () =>

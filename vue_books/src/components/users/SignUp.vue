@@ -24,6 +24,7 @@
             v-model="addForm.username"
             prefix-icon="el-icon-user"
             placeholder="设置用户名"
+            v-focus
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -46,22 +47,20 @@
           ></el-input>
         </el-form-item>
         <!-- 昵称 -->
-        <el-form-item prop="nickName">
+        <!-- <el-form-item prop="nickName">
           <el-input
             v-model="addForm.nickName"
             prefix-icon="el-icon-mobile"
             placeholder="设置您的昵称"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 性别 -->
-        <el-form-item prop="gender">
-          <el-select v-model="addForm.gender" placeholder="请选择您的性别">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="0"></el-option>
-          </el-select>
-        </el-form-item>
+        <!-- <el-form-item prop="gender">
+          <el-radio v-model="addForm.gender" label="1">男</el-radio>
+          <el-radio v-model="addForm.gender" label="0">女</el-radio>
+        </el-form-item> -->
         <!-- 生日 -->
-        <el-form-item prop="date">
+        <!-- <el-form-item prop="date">
           <el-date-picker
             v-model="addForm.date"
             type="date"
@@ -70,23 +69,23 @@
             value-format="yyyy-MM-dd"
           >
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 电话 -->
-        <el-form-item prop="phone">
+        <!-- <el-form-item prop="phone">
           <el-input
             v-model="addForm.phone"
             prefix-icon="el-icon-phone-outline"
             placeholder="请输入您的电话"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 年龄 -->
-        <el-form-item prop="age">
+        <!-- <el-form-item prop="age">
           <el-input
             v-model="addForm.age"
             prefix-icon="el-icon-suitcase"
             placeholder="请输入您的年龄"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary" round @click="addUser">提交</el-button>
@@ -129,35 +128,35 @@ export default {
     };
 
     //验证手机规则
-    const checkPhone = (rule, value, callback) => {
-      const regPhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+    // const checkPhone = (rule, value, callback) => {
+    //   const regPhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
 
-      if (regPhone.test(value)) {
-        //合法手机
-        return callback();
-      }
+    //   if (regPhone.test(value)) {
+    //     //合法手机
+    //     return callback();
+    //   }
 
-      callback(new Error("请输入合法手机号"));
-    };
+    //   callback(new Error("请输入合法手机号"));
+    // };
 
     //验证年龄
-    const checkAge = (rule, value, callback) => {
-      const regAge = /^[1-9][0-9]{0,1}$/;
+    // const checkAge = (rule, value, callback) => {
+    //   const regAge = /^[1-9][0-9]{0,1}$/;
 
-      if (regAge.test(value)) {
-        //合法手机
-        return callback();
-      }
+    //   if (regAge.test(value)) {
+    //     //合法手机
+    //     return callback();
+    //   }
 
-      callback(new Error("请输入合法年龄"));
-    };
+    //   callback(new Error("请输入合法年龄"));
+    // };
     return {
       addForm: {
         username: "",
         password: "",
         nickName: "", // 昵称
         job_number: "",
-        gender: "1",
+        gender: "",
         phone: "",
         age: "",
         checkPassword: "",
@@ -214,43 +213,43 @@ export default {
             trigger: "blur",
           },
         ],
-        nickName: [
-          {
-            required: true,
-            message: "请输入昵称",
-            trigger: "blur",
-          },
-          {
-            min: 3,
-            max: 10,
-            message: "长度3~10之间",
-            trigger: "blur",
-          },
-        ],
-        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
+        // nickName: [
+        //   {
+        //     required: true,
+        //     message: "请输入昵称",
+        //     trigger: "blur",
+        //   },
+        //   {
+        //     min: 3,
+        //     max: 10,
+        //     message: "长度3~10之间",
+        //     trigger: "blur",
+        //   },
+        // ],
+        // gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         //验证手机
-        phone: [
-          {
-            required: true,
-            message: "请输入手机",
-            trigger: "blur",
-          },
-          {
-            validator: checkPhone,
-            trigger: "blur",
-          },
-        ],
-        age: [
-          {
-            required: true,
-            message: "请输入年龄",
-            trigger: "blur",
-          },
-          {
-            validator: checkAge,
-            trigger: "blur",
-          },
-        ],
+        // phone: [
+        //   {
+        //     required: true,
+        //     message: "请输入手机",
+        //     trigger: "blur",
+        //   },
+        //   {
+        //     validator: checkPhone,
+        //     trigger: "blur",
+        //   },
+        // ],
+        // age: [
+        //   {
+        //     required: true,
+        //     message: "请输入年龄",
+        //     trigger: "blur",
+        //   },
+        //   {
+        //     validator: checkAge,
+        //     trigger: "blur",
+        //   },
+        // ],
       },
     };
   },
@@ -273,6 +272,13 @@ export default {
           this.$router.push("/Login");
         }
       });
+    },
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.querySelector("input").focus();
+      },
     },
   },
 };
@@ -314,7 +320,6 @@ export default {
     width: 500px;
     margin-top: 20px;
   }
-
   .el-date-editor {
     margin-bottom: 20px;
   }

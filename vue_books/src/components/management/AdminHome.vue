@@ -74,6 +74,7 @@
 export default {
   data() {
     return {
+      date: new Date().toLocaleTimeString(),
       active: "",
       nickName: window.sessionStorage.getItem("nickName"),
     };

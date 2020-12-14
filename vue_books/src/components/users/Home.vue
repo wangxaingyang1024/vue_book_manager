@@ -9,12 +9,12 @@
           <span class="topText">钧钧图书馆</span>
         </el-col>
         <span v-if="jobNumber === null">
-          <el-col :span="3">
+          <el-col :span="2">
             <el-button type="primary" round @click="login" class="logout"
               >登录</el-button
             >
           </el-col>
-          <el-col :span="3">
+          <el-col :span="2">
             <el-button type="success" round @click="signUp" class="logout"
               >注册</el-button
             >
@@ -52,6 +52,19 @@
             </el-menu-item-group>
             <el-menu-item index="/myBooks"
               ><i class="el-icon-goods"></i>我的书籍</el-menu-item
+            >
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"
+              ><i class="el-icon-star-on"></i>账户管理</template
+            >
+            <el-menu-item-group>
+              <el-menu-item index="/profile"
+                ><i class="el-icon-tickets"></i>个人信息</el-menu-item
+              >
+            </el-menu-item-group>
+            <el-menu-item index="/admin"
+              ><i class="el-icon-goods"></i>密码管理</el-menu-item
             >
           </el-submenu>
         </el-menu>
@@ -109,7 +122,8 @@ export default {
   beforeUpdate() {
     this.active = document.location.hash.substr(1);
     if (this.jobNumber !== window.sessionStorage.getItem("jobNumber")) {
-      this.logout();
+      window.sessionStorage.clear();
+      return this.$router.push("/login");
     }
   },
 };
