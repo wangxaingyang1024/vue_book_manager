@@ -9,29 +9,41 @@
     >
     </van-nav-bar>
     <!-- 注册表单区域 -->
-    <van-form :model="SignUpForm" ref="SignUpRef">
+    <div class="welcome">
+      <p>欢迎注册中均图书</p>
+    </div>
+    <van-form :model="signUpForm" ref="signUpFormRef">
       <van-field
-        v-model="SignUpForm.username"
+        v-model="signUpForm.username"
         name="username"
         label="用户名"
-        :rules="[{ required: true, message: '请填写用户名' },
-                 {pattern ,message:'需以字母开头，字母数字组合3~10长度'}]"
+        :rules="[
+          { required: true, message: '请填写用户名' },
+          { pattern, message: '需以字母开头，字母数字组合3~10长度' },
+        ]"
       />
       <van-field
-        v-model="SignUpForm.password"
+        v-model="signUpForm.password"
         type="password"
         name="password"
         label="密码"
-        :rules="[{ required: true, message: '请填写密码' },
-                 { validator,message:'需包含大小写字母数字，不使用特殊字符8~15长度'}]"
+        :rules="[
+          { required: true, message: '请填写密码' },
+          {
+            validator,
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
+        ]"
       />
       <van-field
-        v-model="SignUpForm.checkPassword"
+        v-model="signUpForm.checkPassword"
         type="password"
         name="password"
         label="确认密码"
-        :rules="[{ required: true, message: '请再次填写密码' },
-                 {validator: asyncValidator,message:'两次密码必须一致'}]"
+        :rules="[
+          { required: true, message: '请再次填写密码' },
+          { validator: asyncValidator, message: '两次密码必须一致' },
+        ]"
       />
       <div style="margin: 35px">
         <van-button round block type="primary" @click="signup">
@@ -46,27 +58,27 @@
 export default {
   data() {
     return {
-        SignUpForm:{
-            username:'a11',
-            password:'Explosion0',
-            checkPassword:''
-        },
-        //检验用户名规则
-        pattern:/^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
+      signUpForm: {
+        username: "a11",
+        password: "Explosion0",
+        checkPassword: "",
+      },
+      //检验用户名规则
+      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
     };
   },
   methods: {
     //检验密码规则
-    validator(val){
+    validator(val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
     },
     //检验两次密码是否一致
     asyncValidator(val) {
       return new Promise((resolve) => {
-        this.$toast.loading('验证中');
+        this.$toast.loading("验证中");
         setTimeout(() => {
           this.$toast.clear();
-          resolve(this.SignUpForm.password === this.SignUpForm.checkPassword);
+          resolve(this.signUpForm.password === this.signUpForm.checkPassword);
         }, 1000);
       });
     },
@@ -75,9 +87,17 @@ export default {
       this.$router.push("/login");
     },
     //注册按钮
-    signup(){
-
-    }
+    async signup() {
+        const { data: res } = await this.$http.post("signUp", this.signUpForm);
+        //注册成功跳转到登录，失败则停留当前页面
+        if (res.status == 3021) return this.$toast.fail("用户名已存在！");
+        if (res.status !== 3024) {
+          this.$toast.fail("注册失败！");
+        } else {
+          this.$toast.success("注册成功！请登录！");
+          this.$router.push("/login");
+        }
+    },
   },
 };
 </script>
@@ -85,5 +105,17 @@ export default {
 <style lang="less" scoped>
 .van-field {
   margin-top: 20px;
+}
+.welcome {
+  margin-top: 5px;
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  background-image: url("~assets/beijing.png");
+  p {
+    text-align: center;
+    color: #eee;
+    margin: 0;
+  }
 }
 </style>
