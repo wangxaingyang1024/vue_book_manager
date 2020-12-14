@@ -30,10 +30,21 @@ const Home = () =>
   );
 
 const Books = () =>
-  import(/* webpackChunkName: "books_myBooks" */ "components/users/Books.vue");
+  import(
+    /* webpackChunkName: "books_myBooks" */ "components/users/book/Books.vue"
+  );
 const MyBooks = () =>
   import(
-    /* webpackChunkName: "books_myBooks" */ "components/users/MyBooks.vue"
+    /* webpackChunkName: "books_myBooks" */ "components/users/book/MyBooks.vue"
+  );
+
+const Profile = () =>
+  import(
+    /* webpackChunkName: "profile_admin" */ "components/users/personage/Profile.vue"
+  );
+const Admin = () =>
+  import(
+    /* webpackChunkName: "profile_admin" */ "components/users/personage/Admin.vue"
   );
 
 const User = () =>
@@ -84,6 +95,8 @@ const router = new Router({
       children: [
         { path: "/books", component: Books },
         { path: "/myBooks", component: MyBooks },
+        { path: "/profile", component: Profile },
+        { path: "/admin", component: Admin },
       ],
     },
     //管理员路由

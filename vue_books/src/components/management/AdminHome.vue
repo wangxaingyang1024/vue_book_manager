@@ -74,6 +74,7 @@
 export default {
   data() {
     return {
+      date: new Date().toLocaleTimeString(),
       active: "",
       nickName: window.sessionStorage.getItem("nickName"),
     };
@@ -103,10 +104,12 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .el-menu-item-group__title {
   padding: 0 !important;
 }
+</style>
+<style lang="less" scoped>
 .el-header {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
@@ -121,18 +124,15 @@ export default {
   }
 }
 .el-aside {
-  height: 350px;
+  height: calc(100vh - 92px);
   margin-top: 15px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 .el-main {
-  display: flex;
-  //实现垂直居中
-  align-items: center;
   //实现水平居中
   justify-content: center;
   //计算高度
-  min-height: calc(100vh - 80px);
+  max-height: calc(100vh - 95px);
   width: 100vh;
 }
 </style>

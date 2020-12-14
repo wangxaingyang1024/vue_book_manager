@@ -1,5 +1,6 @@
+<<<<<<< HEAD
 <template>
-  <el-card>
+  <el-card class="box-card">
     <el-row :gutter="20">
       <el-col :span="8">
         <div class="block">
@@ -35,7 +36,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button @click="all" v-if="list === 0">加载全部</el-button>
+    <el-button @click="getAllLog" v-if="all === true">加载全部</el-button>
+    <el-button @click="getLog" v-else>折叠</el-button>
   </el-card>
 </template>
 
@@ -44,12 +46,13 @@ export default {
   data() {
     return {
       loglist: [],
+      list: [],
       time: [],
       findTime: {
         startTime: "",
         endTime: "",
       },
-      list: 0,
+      all: false,
     };
   },
   created() {
@@ -57,6 +60,10 @@ export default {
   },
   methods: {
     async getLog() {
+      this.all = !this.all;
+      if (this.list.length !== 0) {
+        return (this.loglist = this.list.slice(0, 10));
+      }
       const { data: res } = await this.$http.get("log/admin/newLogs");
       console.log(res);
       if (res.status !== 200) {
@@ -64,25 +71,39 @@ export default {
       }
       this.loglist = res.data;
     },
-    async getLogByTime() {
-      console.log(this.findTime);
-      const { data: res } = await this.$http.post(
-        "log/admin/logT",
-        this.findTime
-      );
+    async getAllLog() {
+      this.all = !this.all;
+      if (this.list.length !== 0) {
+        return (this.loglist = this.list);
+      }
+      const { data: res } = await this.$http.get("log/admin/allLogs");
+      console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }
       this.loglist = res.data;
     },
-    all() {
-      this.list = 1;
-      this.getLog();
+    async getLogByTime() {
+      this.all = true;
+      console.log(this.findTime);
+      const { data: res } = await this.$http.post(
+        "log/admin/logT",
+        this.findTime
+      );
+      console.log(res);
+      if (res.status !== 200) {
+        return this.$message.error("获取借阅记录失败！");
+      }
+      this.list = res.data;
+      this.loglist = this.list.slice(0, 10);
+      console.log(this.list);
     },
   },
   watch: {
     time(val) {
       if (val === null) {
+        this.all = false;
+        this.list = [];
         return this.getLog();
       }
       this.findTime.startTime = val[0]
@@ -103,13 +124,13 @@ export default {
 <style lang="less" scoped>
 .el-card {
   width: 100%;
-  height: calc(100% - 2px);
+  min-height: calc(100% - 2px);
 }
 .el-table {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 .el-button {
-  width: 100%;
   margin-top: 15px;
+  width: 100%;
 }
 </style>
