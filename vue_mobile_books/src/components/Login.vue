@@ -3,7 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="用户登录">
       <template #left>
-        <img @click="home" src="../../assets/logo.jpg">
+        <img @click="home" src="~assets/logo.jpg" />
       </template>
     </van-nav-bar>
     <!-- 登录表单区域 -->
@@ -22,7 +22,7 @@
         label="密码"
         :rules="[
           { required: true, message: '请填写密码' },
-          { validator, message: '需包含大小写字母数字，不使用特殊字符8~15长度' },
+          { validator, message: '需包含大小写字母数字，不使用特殊字符8~15长度' }
         ]"
       />
       <div style="margin: 35px">
@@ -30,7 +30,7 @@
           登录
         </van-button>
       </div>
-      <p @click="signup">新用户注册</p>
+      <p @click="signUp">新用户注册</p>
     </van-form>
   </div>
 </template>
@@ -42,18 +42,18 @@ export default {
       //这是登录表单的数据绑定对象
       loginForm: {
         username: "zzz",
-        password: "Guo123456",
-      },
+        password: "Guo123456"
+      }
     };
   },
   methods: {
     //点击图片跳转到主页
-    home(){
-      this.$router.push('/home')
+    home() {
+      this.$router.push("/home");
     },
     //跳转到注册页面
-    signup() {
-      this.$router.push("/signup");
+    signUp() {
+      this.$router.push("/signUp");
       //window.sessionStorage.clear();
     },
     //登录
@@ -76,10 +76,12 @@ export default {
         //通过编程式导航跳转到后台主页，路由地址  /home
         //that.$router.push("/home");
       });*/
-      const { data:res } = await this.$http.post('login',this.loginForm)
-      console.log(res)
-      if(res.status === 3031) return this.$toast.fail("用户名不存在，请先注册!");
-       if (res.status === 3031) return this.$toast.fail("用户名不存在，请先注册!")
+      const { data: res } = await this.$http.post("login", this.loginForm);
+      console.log(res);
+      if (res.status === 3031)
+        return this.$toast.fail("用户名不存在，请先注册!");
+      if (res.status === 3031)
+        return this.$toast.fail("用户名不存在，请先注册!");
       this.$toast.success("登录成功!");
       //将登录成功的token保存到客户端的sessionStorage中
       //console.log(res.data);
@@ -87,13 +89,13 @@ export default {
       //将jobNumber保存到客户端的sessionStorage中
       window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
       window.sessionStorage.setItem("nickName", res.data.nickName);
-      this.$router.push('/home')
+      this.$router.push("/home");
     },
     //密码验证
     validator(val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -117,12 +119,12 @@ img {
 .van-field {
   margin-top: 20px;
 }
-.van-form{
+.van-form {
   p {
-  margin-right: 30px;
-  text-align: end;
-  font-size: 14px;
-  color: dodgerblue;
-}
+    margin-right: 30px;
+    text-align: end;
+    font-size: 14px;
+    color: dodgerblue;
+  }
 }
 </style>

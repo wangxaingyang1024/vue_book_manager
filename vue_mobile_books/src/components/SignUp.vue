@@ -3,12 +3,12 @@
     <!-- 导航区域 -->
     <van-nav-bar
       title="新用户注册"
-      left-text="返回登录"
+      right-text="返回登录"
       left-arrow
-      @click-left="onClickLeft"
+      @click-right="login"
     >
-      <template #right>
-        <img @click="home" src="~assets/logo.jpg">
+      <template #left>
+        <img @click="home" src="~assets/logo.jpg" />
       </template>
     </van-nav-bar>
     <!-- 注册表单区域 -->
@@ -23,7 +23,7 @@
         label="用户名"
         :rules="[
           { required: true, message: '请填写用户名' },
-          { pattern, message: '需以字母开头，字母数字组合3~10长度' },
+          { pattern, message: '需以字母开头，字母数字组合3~10长度' }
         ]"
       />
       <van-field
@@ -36,8 +36,8 @@
           { required: true, message: '请填写密码' },
           {
             validator,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
-          },
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+          }
         ]"
       />
       <van-field
@@ -48,7 +48,7 @@
         label="确认密码"
         :rules="[
           { required: true, message: '请再次填写密码' },
-          { validator: asyncValidator, message: '两次密码必须一致' },
+          { validator: asyncValidator, message: '两次密码必须一致' }
         ]"
       />
       <div style="margin: 35px">
@@ -67,16 +67,16 @@ export default {
       signUpForm: {
         username: "a11",
         password: "Explosion0",
-        checkPassword: "Explosion0",
+        checkPassword: "Explosion0"
       },
       //检验用户名规则
-      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
+      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/
     };
   },
   methods: {
     //点击图片跳转到主页
-    home(){
-      this.$router.push('/home')
+    home() {
+      this.$router.push("/home");
     },
     //检验密码规则
     validator(val) {
@@ -84,7 +84,7 @@ export default {
     },
     //检验两次密码是否一致
     asyncValidator(val) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         this.$toast.loading("验证中");
         setTimeout(() => {
           this.$toast.clear();
@@ -93,23 +93,23 @@ export default {
       });
     },
     //返回上一层
-    onClickLeft() {
+    login() {
       this.$router.push("/login");
     },
     //注册按钮
     async signup() {
-      if (this.signUpForm.checkPassword === "") return
+      if (this.signUpForm.checkPassword === "") return;
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
       //注册成功跳转到登录，失败则停留当前页面
-      if (res.status == 3021) return this.$toast.fail("用户名已存在！")
+      if (res.status == 3021) return this.$toast.fail("用户名已存在！");
       if (res.status !== 3024) {
         this.$toast.fail("注册失败！");
       } else {
         this.$toast.success("注册成功！请登录！");
         this.$router.push("/login");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

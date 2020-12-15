@@ -3,7 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="钧钧图书馆">
       <template #left>
-        <img src="../../assets/logo.jpg" />
+        <img src="~assets/logo.jpg" />
       </template>
       <template #right>
         <!-- <span v-if="jobNumber === null">
@@ -13,18 +13,23 @@
             name="https://b.yzcdn.cn/vant/icon-demo-1126.png"
           />
         </span> -->
-        <span class="Hi">
-          <van-popover
-            placement="bottom-end"
-            v-model="showPopover"
-            theme="dark"
-            :actions="actions"
-            trigger="click"
-            @select="onSelect"
+        <span v-if="jobNumber === null">
+          <van-button type="info" size="mini" @click="login">登录</van-button>
+          <van-button type="primary" size="mini" @click="signUp"
+            >注册</van-button
           >
-            <template #reference> <van-icon name="manager-o" /> Hi, </template>
-          </van-popover>
         </span>
+        <van-popover
+          placement="bottom-end"
+          v-model="showPopover"
+          theme="dark"
+          :actions="actions"
+          trigger="click"
+          @select="onSelect"
+          v-else
+        >
+          <template #reference> <van-icon name="manager-o" /> Hi,zzz </template>
+        </van-popover>
       </template>
     </van-nav-bar>
     <!-- 搜索 -->
@@ -37,10 +42,16 @@
       />
     </form>
     <!-- 书籍 -->
-    <van-collapse v-model="activeNames" v-for="item in bookList" :key="item.id" accordion>
-       <van-collapse-item :title="item.name" :name="item.id">{{item.isbn}}</van-collapse-item>
+    <van-collapse
+      v-model="activeNames"
+      v-for="item in bookList"
+      :key="item.id"
+      accordion
+    >
+      <van-collapse-item :title="item.name" :name="item.id">{{
+        item.isbn
+      }}</van-collapse-item>
     </van-collapse>
-    
   </div>
 </template>
 
@@ -49,21 +60,21 @@ export default {
   data() {
     return {
       //nickName: window.sessionStorage.getItem("nickName"),
-      //jobNumber: window.sessionStorage.getItem("jobNumber"),
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
       showPopover: false,
       actions: [
         { text: "我的书籍", icon: "newspaper-o" },
         { text: "个人中心", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
-        { text: "退出登录", icon: "down" },
+        { text: "退出登录", icon: "down" }
       ],
       value: "",
       activeNames: ["1"],
-      bookList:[
-        {id:'1',name:'aaa',isbn:1231231},
-        {id:'2',name:'bbb',isbn:1231231},
-        {id:'3',name:'ccc',isbn:1231231},
-        {id:'4',name:'ddd',isbn:1231231},
+      bookList: [
+        { id: "1", name: "aaa", isbn: 1231231 },
+        { id: "2", name: "bbb", isbn: 1231231 },
+        { id: "3", name: "ccc", isbn: 1231231 },
+        { id: "4", name: "ddd", isbn: 1231231 }
       ]
     };
   },
@@ -71,6 +82,10 @@ export default {
     //跳转到登录界面
     login() {
       this.$router.push("login");
+    },
+    signUp() {
+      this.$router.push("/signUp");
+      //window.sessionStorage.clear();
     },
     //点击选项按钮跳转
     onSelect(actions) {
@@ -96,17 +111,14 @@ export default {
     },
     onCancel(val) {
       this.val = "";
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 img {
   width: 60px;
   margin-top: 7px;
-}
-.Hi {
-  margin-top: px;
 }
 </style>
