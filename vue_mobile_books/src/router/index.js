@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/users/Login.vue'
 import SignUp from '../components/users/SignUp.vue'
+import Home from '../components/users/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -9,9 +10,10 @@ const router = new VueRouter({
     routes: [
         //用户路由
         //用户访问重定向到登录界面
-        { path: '/', redirect: '/login' },
+        { path: '/', redirect: '/home' },
         { path: '/login', component: Login },
         { path: '/signup', component: SignUp },
+        { path:'/home', component: Home }
     ]
 })
 
