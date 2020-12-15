@@ -18,11 +18,11 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8080/api/";
 
 //在request拦截器中，展示进度条
-// axios.interceptors.request.use((config) => {
-//   NProgress.start();
-//   //   config.headers.Authorization = window.sessionStorage.getItem("token");
-//   return config;
-// });
+axios.interceptors.request.use((config) => {
+  //   NProgress.start();
+  config.headers.Authorization = window.sessionStorage.getItem("token");
+  return config;
+});
 // //在request拦截器中，隐藏进度条
 // axios.interceptors.request.use((config) => {
 //   NProgress.done();
