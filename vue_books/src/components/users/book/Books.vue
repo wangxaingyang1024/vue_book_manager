@@ -95,11 +95,12 @@ export default {
       booklist: [],
       typeList: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
+      token: window.sessionStorage.getItem("token"),
     };
   },
   created() {
     this.getBookList();
-    console.log(this.jobNumber);
+    // console.log(this.jobNumber);
   },
   methods: {
     //监听 pageSize 改变的事件
@@ -139,7 +140,7 @@ export default {
       this.total = res.data.total;
     },
     async borrowBook(isbn) {
-      if (this.jobNumber === null) {
+      if (this.jobNumber === null || this.token === null) {
         return this.$message.warning("请先登录再进行此操作！");
       }
       const { data: res } = await this.$http.post("book/borrow", {

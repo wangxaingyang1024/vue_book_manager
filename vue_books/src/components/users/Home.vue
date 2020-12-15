@@ -116,7 +116,7 @@ export default {
   },
   beforeUpdate() {
     this.nickName = window.sessionStorage.getItem("nickName");
-    console.log(window.sessionStorage.getItem("nickName"));
+    // console.log(window.sessionStorage.getItem("nickName"));
     this.active = document.location.hash.substr(1);
     if (this.jobNumber !== window.sessionStorage.getItem("jobNumber")) {
       window.sessionStorage.clear();

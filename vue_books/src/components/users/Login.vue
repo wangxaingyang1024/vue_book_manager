@@ -114,7 +114,7 @@ export default {
         if (res.status !== 1000) return that.$message.error("登录失败!");
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
-        // console.log(res.data);
+        console.log(res);
         window.sessionStorage.setItem("token", res.data.token);
         //将jobNumber保存到客户端的sessionStorage中
         window.sessionStorage.setItem("jobNumber", res.data.jobNumber);

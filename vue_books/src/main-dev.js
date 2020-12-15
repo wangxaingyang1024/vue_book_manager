@@ -17,17 +17,10 @@ import axios from "axios";
 //配置请求根路径
 axios.defaults.baseURL = "http://localhost:8080/api/";
 
-//在request拦截器中，展示进度条
 axios.interceptors.request.use((config) => {
-  //   NProgress.start();
   config.headers.Authorization = window.sessionStorage.getItem("token");
   return config;
 });
-// //在request拦截器中，隐藏进度条
-// axios.interceptors.request.use((config) => {
-//   NProgress.done();
-//   return config;
-// });
 
 NProgress.inc(0.2);
 NProgress.configure({ easing: "ease", speed: 500, showSpinner: false });
