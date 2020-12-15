@@ -7,13 +7,17 @@
       left-arrow
       @click-left="onClickLeft"
     >
+      <template #right>
+        <img @click="home" src="~assets/logo.jpg">
+      </template>
     </van-nav-bar>
     <!-- 注册表单区域 -->
     <div class="welcome">
-      <p>欢迎注册中均图书</p>
+      <p>欢迎注册均均图书</p>
     </div>
     <van-form :model="signUpForm" ref="signUpFormRef">
       <van-field
+        clearable
         v-model="signUpForm.username"
         name="username"
         label="用户名"
@@ -23,6 +27,7 @@
         ]"
       />
       <van-field
+        clearable
         v-model="signUpForm.password"
         type="password"
         name="password"
@@ -36,6 +41,7 @@
         ]"
       />
       <van-field
+        clearable
         v-model="signUpForm.checkPassword"
         type="password"
         name="password"
@@ -61,13 +67,17 @@ export default {
       signUpForm: {
         username: "a11",
         password: "Explosion0",
-        checkPassword: "",
+        checkPassword: "Explosion0",
       },
       //检验用户名规则
       pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
     };
   },
   methods: {
+    //点击图片跳转到主页
+    home(){
+      this.$router.push('/home')
+    },
     //检验密码规则
     validator(val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
@@ -88,21 +98,26 @@ export default {
     },
     //注册按钮
     async signup() {
-        const { data: res } = await this.$http.post("signUp", this.signUpForm);
-        //注册成功跳转到登录，失败则停留当前页面
-        if (res.status == 3021) return this.$toast.fail("用户名已存在！");
-        if (res.status !== 3024) {
-          this.$toast.fail("注册失败！");
-        } else {
-          this.$toast.success("注册成功！请登录！");
-          this.$router.push("/login");
-        }
+      if (this.signUpForm.checkPassword === "") return
+      const { data: res } = await this.$http.post("signUp", this.signUpForm);
+      //注册成功跳转到登录，失败则停留当前页面
+      if (res.status == 3021) return this.$toast.fail("用户名已存在！")
+      if (res.status !== 3024) {
+        this.$toast.fail("注册失败！");
+      } else {
+        this.$toast.success("注册成功！请登录！");
+        this.$router.push("/login");
+      }
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+img {
+  width: 60px;
+  margin-top: 7px;
+}
 .van-field {
   margin-top: 20px;
 }
