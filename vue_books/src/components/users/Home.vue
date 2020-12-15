@@ -115,6 +115,8 @@ export default {
     },
   },
   beforeUpdate() {
+    this.nickName = window.sessionStorage.getItem("nickName");
+    console.log(window.sessionStorage.getItem("nickName"));
     this.active = document.location.hash.substr(1);
     if (this.jobNumber !== window.sessionStorage.getItem("jobNumber")) {
       window.sessionStorage.clear();
@@ -142,11 +144,9 @@ export default {
     color: orange;
   }
 }
-.el-container {
-  margin-top: 10px;
-}
 .el-aside {
-  height: calc(100vh - 92px);
+  margin-top: 20px;
+  height: calc(100vh - 97px);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 .el-main {

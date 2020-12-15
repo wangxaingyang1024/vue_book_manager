@@ -127,7 +127,6 @@ export default {
         //当前每页显示多少条数据
         pageSize: 5,
       },
-
       //数据总条数
       total: 0,
       booklist: [],

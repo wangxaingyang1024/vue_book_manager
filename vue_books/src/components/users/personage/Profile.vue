@@ -24,13 +24,13 @@
     </el-form-item>
     <!-- 性别 -->
     <el-form-item prop="gender">
-      <el-radio v-model="userForm.gender" label="1">男</el-radio>
-      <el-radio v-model="userForm.gender" label="0">女</el-radio>
+      <el-radio v-model="userForm.gender" :label="1">男</el-radio>
+      <el-radio v-model="userForm.gender" :label="0">女</el-radio>
     </el-form-item>
     <!-- 生日 -->
     <el-form-item prop="date">
       <el-date-picker
-        v-model="userForm.date"
+        v-model="userForm.birth"
         type="date"
         placeholder="请选择您的生日"
         format="yyyy 年 MM 月 dd 日"
@@ -46,15 +46,6 @@
         v-model="userForm.phone"
         prefix-icon="el-icon-phone-outline"
         placeholder="请输入您的电话"
-      ></el-input>
-    </el-form-item>
-    <!-- 年龄 -->
-    <el-form-item prop="age">
-      <el-input
-        v-model="userForm.age"
-        prefix-icon="el-icon-suitcase"
-        placeholder="请输入您的年龄"
-        disabled
       ></el-input>
     </el-form-item>
     <!-- 按钮区域 -->
@@ -80,21 +71,8 @@ export default {
       }
       callback(new Error("请输入合法手机号"));
     };
-
-    //验证年龄;
-    const checkAge = (rule, value, callback) => {
-      if (value === "") {
-        return callback();
-      }
-      const regAge = /^[0-9][0-9]{0,1}$/;
-
-      if (regAge.test(value)) {
-        return callback();
-      }
-
-      callback(new Error("请输入合法年龄"));
-    };
     return {
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
       userForm: {},
       editFormRules: {
         nickName: [
@@ -112,12 +90,6 @@ export default {
             trigger: "blur",
           },
         ],
-        age: [
-          {
-            validator: checkAge,
-            trigger: "blur",
-          },
-        ],
       },
       pickerOptions: {
         disabledDate(time) {
@@ -131,8 +103,10 @@ export default {
   },
   methods: {
     async getUserForm() {
-      const { data: res } = await this.$http.get();
-      if (res.status !== 6011) {
+      const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
+
+      console.log(res.data);
+      if (res.status !== 200) {
         return this.$message.error("获取个人信息失败！");
       }
       this.userForm = res.data;
@@ -147,22 +121,28 @@ export default {
           type: "warning",
         }).catch((err) => err);
         if (confirmResult === "confirm") {
-          const { data: res } = await this.$http.post("url", this.jobNumber);
-          if (res.status !== 3024) {
+          const { data: res } = await this.$http.put(
+            "upProfile",
+            this.userForm
+          );
+          if (res.status !== 3032) {
             return this.$message.error("修改失败！");
           } else {
-            this.getUserForm();
+            location.reload();
+            // this.getUserForm();
             this.$message.success("修改成功！");
+            console.log(this.userForm.nickName);
+            window.sessionStorage.setItem("nickName", this.userForm.nickName);
           }
         }
       });
     },
   },
-  watch: {
-    "userForm.date"(val) {
-      this.userForm.age = new Date().getFullYear() - +val.slice(0, 4);
-    },
-  },
+  // watch: {
+  //   "userForm.date"(val) {
+  //     this.userForm.age = new Date().getFullYear() - +val.slice(0, 4);
+  //   },
+  // },
 };
 </script>
 <style lang="less" scoped>

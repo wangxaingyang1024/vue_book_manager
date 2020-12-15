@@ -12,7 +12,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="phone" label="电话"> </el-table-column>
-      <el-table-column prop="age" label="年龄"> </el-table-column>
+      <el-table-column prop="birth" label="年龄">
+        <template slot-scope="scope">
+          {{ new Date().getFullYear() - scope.row.birth.slice(0, 4) + "岁" }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <!-- 删除按钮 -->
@@ -71,7 +75,6 @@ export default {
       const { data: res } = await this.$http.get(
         `admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
       );
-      console.log(res.data);
       if (res.status === 3023) {
         return (this.userlist = []);
       }
@@ -106,7 +109,6 @@ export default {
       if (res.status !== 3033) {
         return this.$message.error("删除用户失败");
       }
-
       this.$message.success("删除用户成功！");
       this.getUserList();
     },
