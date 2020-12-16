@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     //退出
     async logout() {

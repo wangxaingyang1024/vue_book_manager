@@ -93,13 +93,18 @@ const Borrowed = () =>
     /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */
     "components/management/book/Borrowed.vue"
   );
+const Public = () =>
+  import(
+    /* webpackChunkName: "public" */
+    "components/public/Public.vue"
+  );
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
     // 用户路由
-    { path: "/", redirect: "/books" },
+    { path: "/", redirect: "/public" },
     { path: "/login", component: Login },
     { path: "/signUp", component: SignUp },
     {
@@ -113,6 +118,8 @@ const router = new Router({
         { path: "/admin", component: Admin },
       ],
     },
+    //公共路由
+    { path: "/public", component: Public },
     //管理员路由
     { path: "/adminLogin", component: AdminLogin },
     {
@@ -141,7 +148,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === "/login") return next();
   if (to.path === "/signUp") return next();
   if (to.path === "/adminLogin") return next();
-  if (to.path === "/books") return next();
+  if (to.path === "/public") return next();
 
   if (
     (from.path === "/books" ||

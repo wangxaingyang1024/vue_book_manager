@@ -44,14 +44,7 @@
       <el-table-column label="书名" prop="name"> </el-table-column>
       <el-table-column label="作者" prop="author"> </el-table-column>
       <el-table-column label="编号" prop="isbn"> </el-table-column>
-      <el-table-column
-        prop="type"
-        label="类型"
-        :filters="typeList"
-        :filter-method="typeFilter"
-        filter-placement="bottom-end"
-      >
-      </el-table-column>
+      <el-table-column prop="type" label="类型"> </el-table-column>
       <el-table-column label="操作" prop="status">
         <template slot-scope="scope">
           <el-button
@@ -93,14 +86,14 @@ export default {
       //数据总条数
       total: 0,
       booklist: [],
-      typeList: [],
+      // typeList: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       token: window.sessionStorage.getItem("token"),
     };
   },
   created() {
     this.getBookList();
-    // console.log(this.jobNumber);
+    // this.getTypeList();
   },
   methods: {
     //监听 pageSize 改变的事件
@@ -114,29 +107,26 @@ export default {
       this.queryInfo.pageNum = newPage;
       this.getBookList();
     },
+    // async getTypeList() {
+    //   const { data: res } = await this.$http.get("book/sort");
+    //   if (res.status !== 200) {
+    //     return this.$message.error("获取图书分类列表失败！");
+    //   }
+    //   res.data.forEach((item) => {
+    //     const type = { text: item, value: item };
+    //     this.typeList.push(type);
+    //   });
+    //   // this.typeList = res.data;
+    //   // console.log(this.typeList);
+    // },
     async getBookList() {
-      this.booklist = [];
-      this.typeList = [];
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
-      res.data.list.forEach((item) => {
-        if (item.type !== null) {
-          this.booklist.push(item);
-        }
-      });
-      let list = [];
-      this.booklist.forEach((item) => {
-        list.push(item.type);
-      });
-      list = [...new Set(list)];
-      list.forEach((item) => {
-        const type = { text: item, value: item };
-        this.typeList.push(type);
-      });
+      this.booklist = res.data.list;
       this.total = res.data.total;
     },
     async borrowBook(isbn) {
@@ -154,9 +144,9 @@ export default {
       this.$message.success("借阅书籍成功!");
       this.getBookList();
     },
-    typeFilter(value, row) {
-      return row.type === value;
-    },
+    // typeFilter(value, row) {
+    //   return row.type === value;
+    // },
   },
   watch: {
     "queryInfo.name"(val) {

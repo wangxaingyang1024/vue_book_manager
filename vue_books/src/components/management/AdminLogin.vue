@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     checkout() {
       //跳转用户登录界面

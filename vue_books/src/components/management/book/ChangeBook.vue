@@ -19,14 +19,7 @@
       </el-table-column>
       <el-table-column prop="name" label="图书名"> </el-table-column>
       <el-table-column prop="author" label="作者"> </el-table-column>
-      <el-table-column
-        prop="type"
-        label="类型"
-        :filters="typeList"
-        :filter-method="typeFilter"
-        filter-placement="bottom-end"
-      >
-      </el-table-column>
+      <el-table-column prop="type" label="类型"> </el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag type="success" v-if="scope.row.status.toString() === 'true'"
@@ -215,20 +208,11 @@ export default {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data.list;
-      let list = [];
-      this.booklist.forEach((item) => {
-        list.push(item.type);
-      });
-      list = [...new Set(list)];
-      list.forEach((item) => {
-        const type = { text: item, value: item };
-        this.typeList.push(type);
-      });
       this.total = res.data.total;
     },
-    typeFilter(value, row) {
-      return row.type === value;
-    },
+    // typeFilter(value, row) {
+    //   return row.type === value;
+    // },
     //监听修改书籍对话框的开启事件
     showEditDialog(data) {
       this.getTypeList();

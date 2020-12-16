@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     checkout() {
       //跳转管理员登录界面

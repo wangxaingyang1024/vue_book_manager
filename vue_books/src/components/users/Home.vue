@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     login() {
       //跳转登录界面
