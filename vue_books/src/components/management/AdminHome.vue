@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" />
+          <img src="~assets/logo.jpg" />
         </el-col>
         <el-col :span="14">
           <span class="topText">钧钧图书馆</span>
@@ -83,9 +83,6 @@ export default {
     this.active = document.location.hash.substr(1);
   },
   methods: {
-    home() {
-      this.$router.push("/public");
-    },
     //退出
     async logout() {
       //弹框询问用户是否删除数据

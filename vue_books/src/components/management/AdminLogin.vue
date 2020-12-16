@@ -112,7 +112,7 @@ export default {
         //if (res.data.role !== 2)return that.$message.error("您没有权限登录！")
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
-        // console.log(res.data);
+        console.log(res.data);
         window.sessionStorage.setItem("token", res.data.token);
         window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
         window.sessionStorage.setItem("nickName", res.data.nickName);
