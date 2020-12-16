@@ -115,7 +115,7 @@ export default {
         that.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         console.log(res);
-        window.sessionStorage.setItem("token", res.data.token);
+        //window.sessionStorage.setItem("token", res.data.token);
         //将jobNumber保存到客户端的sessionStorage中
         window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
         window.sessionStorage.setItem("nickName", res.data.nickName);
