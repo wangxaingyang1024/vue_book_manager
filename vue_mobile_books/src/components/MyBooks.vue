@@ -1,0 +1,117 @@
+<template>
+  <div>
+    <!-- 顶部导航栏 -->
+    <van-nav-bar title="我的书籍" left-text="返回" @click-left="onClickLeft">
+    </van-nav-bar>
+    <!-- 我的书籍 -->
+    <van-swipe-cell v-for="item in booklist" :key="item.isbn">
+      <van-collapse v-model="activeNames" accordion>
+        <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
+          <van-row type="flex" justify="space-between">
+            <van-col span="8">作者: {{ item.author }}</van-col>
+            <van-col span="10">编号: {{ item.isbn }}</van-col>
+          </van-row>
+          <van-row class="row1" type="flex" justify="space-between">
+            <van-col span="8">类型: {{ item.type }}</van-col>
+            <van-col span="10">简介: {{ item.synopsis }}</van-col>
+          </van-row>
+          <!-- 还书按钮 -->
+          <!-- <van-row class="row2" type="flex" justify="space-between">
+            <van-col span="8"></van-col>
+            <van-col span="8">
+              <van-button type="primary" size="mini" @click="returnBook(item.isbn)">归还</van-button>
+            </van-col>
+          </van-row> -->
+        </van-collapse-item>
+      </van-collapse>
+      <!-- 左滑还书 -->
+      <template #right>
+        <van-button square text="归还" type="primary" class="delete-button" @click="returnBook(item.isbn)" />
+      </template>
+    </van-swipe-cell>
+  </div>
+</template>
+
+<script>
+export default {
+  //生命周期函数
+  created () {
+    //this.getBookList();
+  },
+  data () {
+    return {
+      booklist: [
+        { name: 'asda', author: 'adasd', isbn: '566555', type: 'asdasd', synopsis: 'sadasd' },
+        { name: 'asda', author: 'adasd', isbn: '1231232', type: 'asdasd', synopsis: 'sadasd' },
+        { name: 'asda', author: 'adasd', isbn: '5665125', type: 'asdasd', synopsis: 'sadasd' },
+      ],
+      jobNumber: window.sessionStorage.getItem("jobNumber"),
+      activeNames: ["566555"],
+    };
+  },
+  methods: {
+    //获取书籍列表
+    async getBookList () {
+      const { data: res } = await this.$http.get(
+        "book/findOne/" + this.jobNumber
+      );
+      console.log(res);
+      if (res.status !== 200) {
+        return this.$toast.fail("获取图书失败！");
+      }
+      this.booklist = res.data;
+      console.log(res.status);
+    },
+    //归还书籍
+    async returnBook (isbn) {
+      console.log(isbn);
+      const confirmResult = await this.$dialog.confirm({
+        message: '确定要归还吗？',
+        confirmButtonColor: 'red'
+      }).catch((err) => err)
+      //console.log(confirmResult)
+      //用户确认删除 返回字符串confirm
+      //用户取消删除 返回字符串cancel
+      if (confirmResult !== 'confirm') {
+        console.log('用户取消了归还')
+      } else {
+        const { data: res } = await this.$http.post("book/return", {
+          jobNumber: this.jobNumber,
+          isbn: isbn,
+        });
+        if (res.status !== 6008) {
+          //return this.$toast.fail("归还书籍失败！");
+          console.log("还书失败")
+        }
+        this.$toast.success("归还书籍成功!");
+        this.getBookList();
+      }
+    },
+    //点击返回返回home
+    onClickLeft () {
+      this.$router.push('/home')
+    }
+  }
+};
+</script>
+
+<style lang='less' scoped>
+.van-row {
+  margin-left: 20px;
+  margin-right: 60px;
+}
+.row1 {
+  margin-top: 30px;
+}
+/*.row2 {
+  margin-top: 30px;
+  margin-right: -50px;
+}
+.van-button {
+  margin-right: 10px;
+}*/
+.delete-button {
+  height: 44px;
+  margin-right: 0px;
+}
+</style>

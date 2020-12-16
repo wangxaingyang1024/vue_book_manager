@@ -11,20 +11,11 @@
       <p>欢迎登录均均图书</p>
     </div>
     <van-form :model="loginForm" ref="loginFormRef">
-      <van-field
-        v-model="loginForm.username"
-        label="用户名"
-        :rules="[{ required: true, message: '请填写用户名' }]"
-      />
-      <van-field
-        v-model="loginForm.password"
-        type="password"
-        label="密码"
-        :rules="[
+      <van-field v-model="loginForm.username" label="用户名" :rules="[{ required: true, message: '请填写用户名' }]" />
+      <van-field v-model="loginForm.password" type="password" label="密码" :rules="[
           { required: true, message: '请填写密码' },
           { validator, message: '需包含大小写字母数字，不使用特殊字符8~15长度' }
-        ]"
-      />
+        ]" />
       <div style="margin: 35px">
         <van-button round block type="primary" @click="login">
           登录
@@ -37,7 +28,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
@@ -48,16 +39,16 @@ export default {
   },
   methods: {
     //点击图片跳转到主页
-    home() {
+    home () {
       this.$router.push("/home");
     },
     //跳转到注册页面
-    signUp() {
+    signUp () {
       this.$router.push("/signUp");
       //window.sessionStorage.clear();
     },
     //登录
-    async login() {
+    async login () {
       /*let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
@@ -82,7 +73,7 @@ export default {
         return this.$toast.fail("用户名不存在，请先注册!");
       if (res.status === 3031)
         return this.$toast.fail("用户名不存在，请先注册!");
-      this.$toast.success("登录成功!");
+      this.$toast.success("登录成功")
       //将登录成功的token保存到客户端的sessionStorage中
       //console.log(res.data);
       //window.sessionStorage.setItem("token", res.data.token);
@@ -92,7 +83,7 @@ export default {
       this.$router.push("/home");
     },
     //密码验证
-    validator(val) {
+    validator (val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
     }
   }

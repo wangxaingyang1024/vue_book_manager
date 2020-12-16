@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../components/Login.vue";
 import SignUp from "../components/SignUp.vue";
 import Home from "../components/Home.vue";
+import MyBooks from '../components/MyBooks.vue'
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,8 @@ const router = new VueRouter({
     { path: "/", redirect: "/home" },
     { path: "/login", component: Login },
     { path: "/signUp", component: SignUp },
-    { path: "/home", component: Home }
+    { path: "/home", component: Home },
+    { path: "/mybooks", component: MyBooks },
   ]
 });
 
