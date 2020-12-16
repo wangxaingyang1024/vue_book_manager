@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Login from "../components/Login.vue";
 import SignUp from "../components/SignUp.vue";
 import Home from "../components/Home.vue";
-import MyBooks from '../components/MyBooks.vue'
+import Admin from '../components/personage/Admin.vue';
+import Profile from '../components/personage/Profile.vue';
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,8 @@ const router = new VueRouter({
     { path: "/login", component: Login },
     { path: "/signUp", component: SignUp },
     { path: "/home", component: Home },
-    { path: "/mybooks", component: MyBooks },
+    { path: '/admin', component: Admin },
+    { path: '/profile', component: Profile },
   ]
 });
 

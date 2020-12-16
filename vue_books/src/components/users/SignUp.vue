@@ -142,7 +142,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     //点击按钮提交表单
     addUser() {

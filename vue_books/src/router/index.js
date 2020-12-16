@@ -18,33 +18,40 @@ import Router from "vue-router";
 //更改为懒加载
 const Login = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "components/users/Login.vue"
+    /* webpackChunkName: "login_signUp_home" */
+    "components/users/Login.vue"
   );
 const SignUp = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "components/users/SignUp.vue"
+    /* webpackChunkName: "login_signUp_home" */
+    "components/users/SignUp.vue"
   );
 const Home = () =>
   import(
-    /* webpackChunkName: "login_signUp_home" */ "components/users/Home.vue"
+    /* webpackChunkName: "login_signUp_home" */
+    "components/users/Home.vue"
   );
 
 const Books = () =>
   import(
-    /* webpackChunkName: "books_myBooks" */ "components/users/book/Books.vue"
+    /* webpackChunkName: "books_myBooks" */
+    "components/users/book/Books.vue"
   );
 const MyBooks = () =>
   import(
-    /* webpackChunkName: "books_myBooks" */ "components/users/book/MyBooks.vue"
+    /* webpackChunkName: "books_myBooks" */
+    "components/users/book/MyBooks.vue"
   );
 
 const Profile = () =>
   import(
-    /* webpackChunkName: "profile_admin" */ "components/users/personage/Profile.vue"
+    /* webpackChunkName: "profile_admin" */
+    "components/users/personage/Profile.vue"
   );
 const Admin = () =>
   import(
-    /* webpackChunkName: "profile_admin" */ "components/users/personage/Admin.vue"
+    /* webpackChunkName: "profile_admin" */
+    "components/users/personage/Admin.vue"
   );
 
 const User = () =>
@@ -52,32 +59,44 @@ const User = () =>
 
 const Welcome = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/Welcome.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */
+    "components/management/Welcome.vue"
   );
 const AdminHome = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/AdminHome.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */
+    "components/management/AdminHome.vue"
   );
 const AdminLogin = () =>
   import(
-    /* webpackChunkName: "welcome_adminHome_adminLogin" */ "components/management/AdminLogin.vue"
+    /* webpackChunkName: "welcome_adminHome_adminLogin" */
+    "components/management/AdminLogin.vue"
   );
 
 const AddBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/AddBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */
+    "components/management/book/AddBook.vue"
   );
 const ChangeBook = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/ChangeBook.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */
+    "components/management/book/ChangeBook.vue"
   );
 const Attributes = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/Attributes.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */
+    "components/management/book/Attributes.vue"
   );
 const Borrowed = () =>
   import(
-    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */ "components/management/book/Borrowed.vue"
+    /* webpackChunkName: "addBook_changeBook_attributes_borrowed" */
+    "components/management/book/Borrowed.vue"
+  );
+const Public = () =>
+  import(
+    /* webpackChunkName: "public" */
+    "components/public/Public.vue"
   );
 
 Vue.use(Router);
@@ -85,7 +104,7 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     // 用户路由
-    { path: "/", redirect: "/books" },
+    { path: "/", redirect: "/public" },
     { path: "/login", component: Login },
     { path: "/signUp", component: SignUp },
     {
@@ -99,6 +118,8 @@ const router = new Router({
         { path: "/admin", component: Admin },
       ],
     },
+    //公共路由
+    { path: "/public", component: Public },
     //管理员路由
     { path: "/adminLogin", component: AdminLogin },
     {
@@ -127,7 +148,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === "/login") return next();
   if (to.path === "/signUp") return next();
   if (to.path === "/adminLogin") return next();
-  if (to.path === "/books") return next();
+  if (to.path === "/public") return next();
 
   if (
     (from.path === "/books" ||

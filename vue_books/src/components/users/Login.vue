@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push("/books");
+      this.$router.push("/public");
     },
     checkout() {
       //跳转管理员登录界面
@@ -105,14 +105,13 @@ export default {
       this.$router.push("/signUp");
     },
     login() {
-      let that = this;
-      that.$refs.loginFormRef.validate(async (valid) => {
+      this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await that.$http.post("login", that.loginForm);
+        const { data: res } = await this.$http.post("login", this.loginForm);
         if (res.status === 3031)
-          return that.$message.error("用户名不存在，请先注册!");
-        if (res.status !== 1000) return that.$message.error("登录失败!");
-        that.$message.success("登录成功!");
+          return this.$message.error("用户名不存在，请先注册!");
+        if (res.status !== 1000) return this.$message.error("登录失败!");
+        this.$message.success("登录成功!");
         //将登录成功的token保存到客户端的sessionStorage中
         console.log(res);
         window.sessionStorage.setItem("token", res.data.token);
@@ -122,7 +121,7 @@ export default {
         window.sessionStorage.setItem("username", res.data.username);
         // console.log(res.data.jobNumber);
         //通过编程式导航跳转到后台主页，路由地址  /home
-        that.$router.push("/home");
+        this.$router.push("/home");
       });
     },
   },

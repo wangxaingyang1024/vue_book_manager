@@ -15,44 +15,48 @@
     <div class="welcome">
       <p>欢迎注册均均图书</p>
     </div>
-    <van-form :model="signUpForm" ref="signUpFormRef">
+    <van-form @submit="signUp">
       <van-field
+        placeholder="请输入用户名"
         clearable
         v-model="signUpForm.username"
-        name="username"
         label="用户名"
         :rules="[
-          { required: true, message: '请填写用户名' },
+          { required: true },
           { pattern, message: '需以字母开头，字母数字组合3~10长度' }
         ]"
       />
       <van-field
+        placeholder="请输入密码"
         clearable
         v-model="signUpForm.password"
         type="password"
-        name="password"
         label="密码"
         :rules="[
-          { required: true, message: '请填写密码' },
+          { required: true },
           {
-            validator,
+            validator: psw,
             message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           }
         ]"
       />
       <van-field
+        placeholder="请再次输入密码"
         clearable
         v-model="signUpForm.checkPassword"
         type="password"
-        name="password"
         label="确认密码"
         :rules="[
-          { required: true, message: '请再次填写密码' },
-          { validator: asyncValidator, message: '两次密码必须一致' }
+          { required: true },
+          {
+            validator: psw,
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+          },
+          { validator: rePsw, message: '两次密码必须一致' }
         ]"
       />
       <div style="margin: 35px">
-        <van-button round block type="primary" @click="signup">
+        <van-button round block type="primary" native-type="submit">
           注册
         </van-button>
       </div>
@@ -65,9 +69,9 @@ export default {
   data() {
     return {
       signUpForm: {
-        username: "a11",
-        password: "Explosion0",
-        checkPassword: "Explosion0"
+        username: "",
+        password: "",
+        checkPassword: ""
       },
       //检验用户名规则
       pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/
@@ -79,26 +83,21 @@ export default {
       this.$router.push("/home");
     },
     //检验密码规则
-    validator(val) {
+    psw(val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
     },
-    //检验两次密码是否一致
-    asyncValidator(val) {
-      return new Promise(resolve => {
-        this.$toast.loading("验证中");
-        setTimeout(() => {
-          this.$toast.clear();
-          resolve(this.signUpForm.password === this.signUpForm.checkPassword);
-        }, 1000);
-      });
+    rePsw(val) {
+      if (val === this.signUpForm.password) {
+        return true;
+      }
+      return false;
     },
     //返回上一层
     login() {
       this.$router.push("/login");
     },
     //注册按钮
-    async signup() {
-      if (this.signUpForm.checkPassword === "") return;
+    async signUp() {
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
       //注册成功跳转到登录，失败则停留当前页面
       if (res.status == 3021) return this.$toast.fail("用户名已存在！");
