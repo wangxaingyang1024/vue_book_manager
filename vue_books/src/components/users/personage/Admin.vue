@@ -12,17 +12,7 @@
         v-model="userForm.oldPsw"
         prefix-icon="el-icon-lock"
         type="password"
-        placeholder="设置您的登录密码"
-      ></el-input>
-    </el-form-item>
-    <!-- 二次验证密码 -->
-    <el-form-item prop="checkPsw">
-      <el-input
-        type="password"
-        v-model="userForm.checkPsw"
-        autocomplete="off"
-        prefix-icon="el-icon-edit"
-        placeholder="请再次输入您的密码"
+        placeholder="请输入您的旧密码"
       ></el-input>
     </el-form-item>
     <!-- 新密码 -->
@@ -32,9 +22,20 @@
         v-model="userForm.newPsw"
         autocomplete="off"
         prefix-icon="el-icon-edit"
-        placeholder="请输入要修改的密码"
+        placeholder="请输入您的新密码"
       ></el-input>
     </el-form-item>
+    <!-- 二次验证密码 -->
+    <el-form-item prop="checkPsw">
+      <el-input
+        type="password"
+        v-model="userForm.checkPsw"
+        autocomplete="off"
+        prefix-icon="el-icon-edit"
+        placeholder="请再次输入您的新密码"
+      ></el-input>
+    </el-form-item>
+
     <el-form-item>
       <el-button type="primary" round @click="editUser">提交</el-button>
     </el-form-item>
@@ -54,9 +55,9 @@ export default {
         );
       }
       if (
-        this.userForm.oldPsw !== "" &&
+        this.userForm.newPsw !== "" &&
         this.userForm.checkPsw !== "" &&
-        this.userForm.oldPsw !== this.userForm.checkPsw
+        this.userForm.newPsw !== this.userForm.checkPsw
       ) {
         return callback(new Error("两次输入密码不一致"));
       }
@@ -68,15 +69,26 @@ export default {
     return {
       userForm: {
         oldPsw: "",
-        checkPsw: "",
         newPsw: "",
+        checkPsw: "",
         username: window.sessionStorage.getItem("username"),
       },
       editFormRules: {
         oldPsw: [
           {
             required: true,
-            message: "请输入密码",
+            message: "请输入旧的密码",
+            trigger: "blur",
+          },
+          {
+            validator: validatePassword,
+            trigger: "blur",
+          },
+        ],
+        newPsw: [
+          {
+            required: true,
+            message: "请输入新的的密码",
             trigger: "blur",
           },
           {
@@ -88,17 +100,6 @@ export default {
           {
             required: true,
             message: "请再次输入密码",
-            trigger: "blur",
-          },
-          {
-            validator: validatePassword,
-            trigger: "blur",
-          },
-        ],
-        newPsw: [
-          {
-            required: true,
-            message: "请输入要修改的密码",
             trigger: "blur",
           },
           {

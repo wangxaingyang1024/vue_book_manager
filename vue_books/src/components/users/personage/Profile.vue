@@ -58,19 +58,6 @@
 <script>
 export default {
   data() {
-    //验证手机规则
-    const checkPhone = (rule, value, callback) => {
-      if (value === "") {
-        return callback();
-      }
-      const regPhone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-
-      if (regPhone.test(value)) {
-        //合法手机
-        return callback();
-      }
-      callback(new Error("请输入合法手机号"));
-    };
     return {
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       userForm: {},
@@ -102,6 +89,10 @@ export default {
     this.getUserForm();
   },
   methods: {
+    //检验手机规则
+    validator(val) {
+      return /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(val);
+    },
     async getUserForm() {
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
 
