@@ -96,11 +96,11 @@ export default {
           break;
         case "个人中心":
           //
-          this.$toast.success("2");
+          this.$router.push('/profile')
           break;
         case "密码设置":
           //
-          this.$toast.success("3");
+          this.$router.push('/admin')
           break;
         case "退出登录":
           //this.$toast.success("4");
