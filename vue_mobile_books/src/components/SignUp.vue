@@ -97,7 +97,7 @@ export default {
       this.$router.push("/login");
     },
     //注册按钮
-    signUp() {
+    async signUp() {
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
       //注册成功跳转到登录，失败则停留当前页面
       if (res.status == 3021) return this.$toast.fail("用户名已存在！");
