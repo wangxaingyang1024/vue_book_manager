@@ -16,16 +16,15 @@
         v-model="loginForm.username"
         label="用户名"
         :rules="[{ required: true }]"
+        clearable
       />
       <van-field
         placeholder="请输入密码"
         v-model="loginForm.password"
         type="password"
         label="密码"
-        :rules="[
-          { required: true },
-          { pattern, message: '需包含大小写字母数字，不使用特殊字符8~15长度' }
-        ]"
+        :rules="[{ required: true }]"
+        clearable
       />
       <div style="margin: 35px">
         <van-button round block type="primary" native-type="submit">
@@ -45,9 +44,7 @@ export default {
       loginForm: {
         username: "zzz",
         password: "Guo123456"
-      },
-      //密码验证
-      pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/
+      }
     };
   },
   methods: {
