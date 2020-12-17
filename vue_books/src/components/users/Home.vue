@@ -6,7 +6,7 @@
           <img src="~assets/logo.jpg" @click="home" />
         </el-col>
         <el-col :span="14">
-          <span class="topText">钧钧图书馆</span>
+          <span class="topText">明日图书馆</span>
         </el-col>
         <span v-if="jobNumber === null">
           <el-col :span="2">

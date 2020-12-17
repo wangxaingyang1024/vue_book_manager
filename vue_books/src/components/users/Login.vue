@@ -1,4 +1,3 @@
-//TODO 普通用户登录后，url跳转管理员路由，拦截权限
 <template>
   <el-container>
     <el-header>
