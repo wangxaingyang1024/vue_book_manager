@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- 顶部导航栏 -->
-    <van-nav-bar title="我的书籍" left-text="返回" @click-left="onClickLeft">
-    </van-nav-bar>
     <!-- 我的书籍 -->
     <van-swipe-cell v-for="item in booklist" :key="item.isbn">
       <van-collapse v-model="activeNames" accordion>
@@ -40,11 +37,8 @@ export default {
   },
   data () {
     return {
-      booklist: [
-        { name: 'asda', author: 'adasd', isbn: '566555', type: 'asdasd', synopsis: 'sadasd' },
-        { name: 'asda', author: 'adasd', isbn: '1231232', type: 'asdasd', synopsis: 'sadasd' },
-        { name: 'asda', author: 'adasd', isbn: '5665125', type: 'asdasd', synopsis: 'sadasd' },
-      ],
+      booklist: [],
+        
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       activeNames: ["566555"],
     };
@@ -87,10 +81,6 @@ export default {
         this.getBookList();
       }
     },
-    //点击返回返回home
-    onClickLeft () {
-      this.$router.push('/home')
-    }
   }
 };
 </script>

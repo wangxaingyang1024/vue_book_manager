@@ -26,14 +26,14 @@
         </van-popover>
       </template>
     </van-nav-bar>
-
+    <!-- 路由占位符 -->
     <router-view></router-view>
-    <van-tabbar v-model="active">
-      <van-tabbar-item name="books" icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item name="friends" icon="todo-list-o"
+    <van-tabbar route>
+      <van-tabbar-item replace to='/books' icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item replace to='/mybooks' icon="todo-list-o"
         >我的借阅</van-tabbar-item
       >
-      <van-tabbar-item name="setting" icon="user-circle-o"
+      <van-tabbar-item replace to='/person' icon="user-circle-o"
         >个人中心</van-tabbar-item
       >
     </van-tabbar>
@@ -52,12 +52,11 @@ export default {
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       showPopover: false,
       actions: [
-        { text: "我的书籍", icon: "newspaper-o" },
-        { text: "个人中心", icon: "user-o" },
+        { text: "信息编辑", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
         { text: "退出登录", icon: "down" }
       ],
-      active: "books"
+      //active: "books"
     };
   },
   methods: {
@@ -72,10 +71,7 @@ export default {
     //点击选项按钮跳转
     onSelect(actions) {
       switch (actions.text) {
-        case "我的书籍":
-          this.$router.push("/myBooks");
-          break;
-        case "个人中心":
+        case "信息编辑":
           //
           this.$router.push("/profile");
           break;

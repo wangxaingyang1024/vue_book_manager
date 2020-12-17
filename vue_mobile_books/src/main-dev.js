@@ -11,6 +11,7 @@ axios.defaults.baseURL = "http://localhost:8081/api/";
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
+
 new Vue({
     el: "#app",
     router,

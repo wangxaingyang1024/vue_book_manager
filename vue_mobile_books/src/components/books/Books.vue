@@ -3,7 +3,7 @@
     <!-- 搜索 -->
     <form action="/">
       <van-search
-        v-model="value"
+        v-model="queryInfo.name"
         show-action
         placeholder="请输入搜索关键词"
         @cancel="onCancel"
@@ -18,17 +18,17 @@
       accordion
     >
       <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
-        <div>作者: {{ item.author }}</div>
-        <div>编号: {{ item.isbn }}</div>
-        <div>
+        <div class="div">作者: {{ item.author }}</div>
+        <div class="div">编号: {{ item.isbn }}</div>
+        <div class="div">
           状态:
           <van-tag type="success" v-if="item.status.toString() === 'true'"
             >未借出</van-tag
           >
           <van-tag v-else>已借出</van-tag>
         </div>
-        <div>简介: {{ item.synopsis }}</div>
-        <div>类型: {{ item.type }}</div>
+        <div class="div">简介: {{ item.synopsis }}</div>
+        <div class="div">类型: {{ item.type }}</div>
         <div>
           <van-button
             type="primary"
@@ -50,8 +50,6 @@ export default {
     return {
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       token: window.sessionStorage.getItem("token"),
-
-      value: "",
       activeNames: ["741852963"],
       booklist: [],
       typeList: [],
@@ -107,19 +105,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-row {
-  margin-left: 20px;
-  margin-right: 60px;
+.van-button{
+  float:right;
+  margin-bottom: 10px;
 }
-.row1 {
-  margin-top: 30px;
-}
-.row2 {
-  margin-top: 30px;
-  margin-right: -50px;
-}
-.van-button {
-  margin-right: 10px;
+.div{
+  margin-bottom:10px;
 }
 /*p{
   margin-left: 10px;

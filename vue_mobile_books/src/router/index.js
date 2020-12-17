@@ -5,8 +5,10 @@ import SignUp from "../components/SignUp.vue";
 import Home from "../components/Home.vue";
 import Admin from "../components/personage/Admin.vue";
 import Profile from "../components/personage/Profile.vue";
+import Person from "../components/personage/Person.vue";
 import MyBooks from "../components/books/MyBooks.vue";
 import Books from "../components/books/Books.vue";
+
 
 Vue.use(VueRouter);
 
@@ -25,7 +27,8 @@ const router = new VueRouter({
         { path: "/admin", component: Admin },
         { path: "/profile", component: Profile },
         { path: "/myBooks", component: MyBooks },
-        { path: "/books", component: Books }
+        { path: "/books", component: Books },
+        { path: "/person", component: Person },
       ]
     }
   ]
