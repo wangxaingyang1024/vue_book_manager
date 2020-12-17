@@ -29,11 +29,11 @@
 
     <router-view></router-view>
     <van-tabbar v-model="active">
-      <van-tabbar-item name="books" icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item name="friends" icon="todo-list-o"
+      <van-tabbar-item name="books" icon="home-o" @click='goBooks'>主页</van-tabbar-item>
+      <van-tabbar-item name="friends" icon="todo-list-o" @click="goMyBooks"
         >我的借阅</van-tabbar-item
       >
-      <van-tabbar-item name="setting" icon="user-circle-o"
+      <van-tabbar-item name="setting" icon="user-circle-o" @click="goProfile"
         >个人中心</van-tabbar-item
       >
     </van-tabbar>
@@ -55,9 +55,9 @@ export default {
         { text: "我的书籍", icon: "newspaper-o" },
         { text: "个人中心", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
-        { text: "退出登录", icon: "down" }
+        { text: "退出登录", icon: "down" },
       ],
-      active: "books"
+      active: "books",
     };
   },
   methods: {
@@ -68,6 +68,15 @@ export default {
     signUp() {
       this.$router.push("/signUp");
       window.sessionStorage.clear();
+    },
+    goMyBooks() {
+      this.$router.push("myBooks");
+    },
+    goProfile() {
+      this.$router.push("profile");
+    },
+    goBooks() {
+      this.$router.push("books");
     },
     //点击选项按钮跳转
     onSelect(actions) {
@@ -87,7 +96,7 @@ export default {
           this.$dialog
             .confirm({
               message: "确定要退出吗？",
-              confirmButtonColor: "red"
+              confirmButtonColor: "red",
             })
             .then(() => {
               this.$router.push("/login");
@@ -98,8 +107,8 @@ export default {
             });
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
