@@ -121,7 +121,8 @@ img {
   width: 100%;
   height: 80px;
   line-height: 80px;
-  background-image: url("https://github.com/wangxaingyang1024/vue_book_manager/blob/master/vue_mobile_books/src/assets/beijing.png?raw=true");
+  background-image: url("https://ss1.baidu.com/6ON1bjeh1BF3odCf/it/u=2816492195,455116796&fm=15&gp=0.jpg");
+  background-size:100% 100%;
   p {
     text-align: center;
     color: #eee;
