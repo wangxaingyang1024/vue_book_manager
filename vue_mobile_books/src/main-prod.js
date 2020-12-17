@@ -7,7 +7,7 @@ import "./assets/css/global.css";
 import axios from "axios";
 
 //配置请求根路径
-axios.defaults.baseURL = "http://localhost:8081/api/";
+axios.defaults.baseURL = "http://182.92.77.213:8899/api/";
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 

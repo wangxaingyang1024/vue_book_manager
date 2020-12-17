@@ -16,7 +16,7 @@
         <template #input>
           <van-radio-group v-model="userForm.gender" direction="horizontal">
             <van-radio size="mini" name="1">男</van-radio>
-            <van-radio name="2">女</van-radio>
+            <van-radio name="0">女</van-radio>
           </van-radio-group>
         </template>
       </van-field>

@@ -121,7 +121,7 @@ img {
   width: 100%;
   height: 80px;
   line-height: 80px;
-  background-image: url("~assets/beijing.png");
+  background-image: url("https://github.com/wangxaingyang1024/vue_book_manager/blob/master/vue_mobile_books/src/assets/beijing.png?raw=true");
   p {
     text-align: center;
     color: #eee;
