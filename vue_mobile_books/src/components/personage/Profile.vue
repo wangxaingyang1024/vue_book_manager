@@ -1,55 +1,60 @@
 <template>
-  <van-form @submit="editUser">
-    <van-field v-model="userForm.username" label="用户名" disabled />
-    <van-field
-      v-model="userForm.nickName"
-      label="昵称"
-      placeholder="请设置您的昵称"
-      clearable
-      :rules="[{ validator: nickNameRule, message: '长度为3-10位' }]"
-    />
-    <van-field label="性别">
-      <template #input>
-        <van-radio-group v-model="userForm.gender" direction="horizontal">
-          <van-radio size="mini" name="1">男</van-radio>
-          <van-radio name="2">女</van-radio>
-        </van-radio-group>
-      </template>
-    </van-field>
-    <van-cell
-      title="生日"
-      title-class="van-field__label"
-      is-link
-      :value="userForm.birth"
-      value-class="van-field__control"
-      @click="showPopup"
-    ></van-cell>
-    <van-popup v-model="show" position="bottom" round>
-      <van-datetime-picker
-        v-model="currentDate"
-        type="date"
-        title="选择年月日"
-        :min-date="minDate"
-        :max-date="maxDate"
-        :loading="isLoadingShow"
-        @cancel="show = false"
-        @confirm="confirmPicker"
+  <div>
+    <!-- 顶部导航区域 -->
+    <van-nav-bar title="个人信息设置" left-text="返回" @click-left="onClickLeft">
+    </van-nav-bar>
+    <van-form @submit="editUser">
+      <van-field v-model="userForm.username" label="用户名" disabled />
+      <van-field
+        v-model="userForm.nickName"
+        label="昵称"
+        placeholder="请设置您的昵称"
+        clearable
+        :rules="[{ validator: nickNameRule, message: '长度为3-10位' }]"
       />
-    </van-popup>
-    <van-field
-      v-model="userForm.phone"
-      label="手机"
-      placeholder="输入您的手机号"
-      type="tel"
-      clearable
-      :rules="[{ validator: phoneRule, message: '请输入正确手机号' }]"
-    />
-    <div style="margin: 16px">
-      <van-button round block type="info" native-type="submit">
-        提交
-      </van-button>
-    </div>
-  </van-form>
+      <van-field label="性别">
+        <template #input>
+          <van-radio-group v-model="userForm.gender" direction="horizontal">
+            <van-radio size="mini" name="1">男</van-radio>
+            <van-radio name="2">女</van-radio>
+          </van-radio-group>
+        </template>
+      </van-field>
+      <van-cell
+        title="生日"
+        title-class="van-field__label"
+        is-link
+        :value="userForm.birth"
+        value-class="van-field__control"
+        @click="showPopup"
+      ></van-cell>
+      <van-popup v-model="show" position="bottom" round>
+        <van-datetime-picker
+          v-model="currentDate"
+          type="date"
+          title="选择年月日"
+          :min-date="minDate"
+          :max-date="maxDate"
+          :loading="isLoadingShow"
+          @cancel="show = false"
+          @confirm="confirmPicker"
+        />
+      </van-popup>
+      <van-field
+        v-model="userForm.phone"
+        label="手机"
+        placeholder="输入您的手机号"
+        type="tel"
+        clearable
+        :rules="[{ validator: phoneRule, message: '请输入正确手机号' }]"
+      />
+      <div style="margin: 16px">
+        <van-button round block type="info" native-type="submit">
+          提交
+        </van-button>
+      </div>
+    </van-form>
+  </div>
 </template>
 
 <script>
@@ -144,6 +149,9 @@ export default {
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
     },
+    onClickLeft(){
+      this.$router.push('/setting')
+    }
   },
 };
 </script>

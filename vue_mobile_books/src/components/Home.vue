@@ -95,7 +95,7 @@ export default {
               confirmButtonColor: "red",
             })
             .then(() => {
-              this.$router.push("/login");
+              this.$router.push("/books");
               window.sessionStorage.clear();
             })
             .catch(() => {

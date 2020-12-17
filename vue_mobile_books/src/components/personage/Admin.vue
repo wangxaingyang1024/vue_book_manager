@@ -1,53 +1,60 @@
 <template>
-  <van-form @submit="editUser">
-    <van-field
-      v-model="userForm.oldPsw"
-      type="password"
-      label="旧密码"
-      placeholder="请输入旧密码"
-      clearable
-      :rules="[
-        { required: true },
-        {
-          validator: psw,
-          message: '需包含大小写字母数字，不使用特殊字符8~15长度'
-        }
-      ]"
-    />
-    <van-field
-      v-model="userForm.newPsw"
-      type="password"
-      label="新密码"
-      placeholder="请输入新密码"
-      clearable
-      :rules="[
-        { required: true },
-        {
-          validator: psw,
-          message: '需包含大小写字母数字，不使用特殊字符8~15长度'
-        },
-        { validator: newPsw, message: '新密码不能与旧密码相同' }
-      ]"
-    />
-    <van-field
-      v-model="userForm.checkPsw"
-      type="password"
-      label="新密码"
-      placeholder="请再次输入新密码"
-      clearable
-      :rules="[
-        { required: true },
-        {
-          validator: psw,
-          message: '需包含大小写字母数字，不使用特殊字符8~15长度'
-        },
-        { validator: reNewPsw, message: '两次密码不一致' }
-      ]"
-    />
-    <div style="margin: 16px">
-      <van-button round block type="info" @click="editUser"> 提交 </van-button>
-    </div>
-  </van-form>
+  <div>
+    <!-- 顶部导航区域 -->
+    <van-nav-bar title="密码设置" left-text="返回" @click-left="onClickLeft">
+    </van-nav-bar>
+    <van-form @submit="editUser">
+      <van-field
+        v-model="userForm.oldPsw"
+        type="password"
+        label="旧密码"
+        placeholder="请输入旧密码"
+        clearable
+        :rules="[
+          { required: true },
+          {
+            validator: psw,
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
+        ]"
+      />
+      <van-field
+        v-model="userForm.newPsw"
+        type="password"
+        label="新密码"
+        placeholder="请输入新密码"
+        clearable
+        :rules="[
+          { required: true },
+          {
+            validator: psw,
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
+          { validator: newPsw, message: '新密码不能与旧密码相同' },
+        ]"
+      />
+      <van-field
+        v-model="userForm.checkPsw"
+        type="password"
+        label="新密码"
+        placeholder="请再次输入新密码"
+        clearable
+        :rules="[
+          { required: true },
+          {
+            validator: psw,
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
+          { validator: reNewPsw, message: '两次密码不一致' },
+        ]"
+      />
+      <div style="margin: 16px">
+        <van-button round block type="info" @click="editUser">
+          提交
+        </van-button>
+      </div>
+    </van-form>
+  </div>
 </template>
 
 <script>
@@ -58,8 +65,8 @@ export default {
         oldPsw: "",
         newPsw: "",
         checkPsw: "",
-        username: window.sessionStorage.getItem("username")
-      }
+        username: window.sessionStorage.getItem("username"),
+      },
     };
   },
   methods: {
@@ -103,8 +110,11 @@ export default {
       this.$toast.success("修改成功！");
       window.sessionStorage.clear();
       return this.$router.push("/login");
+    },
+    onClickLeft(){
+      this.$router.push('/setting')
     }
-  }
+  },
 };
 </script>
 
