@@ -16,6 +16,7 @@
         </van-radio-group>
       </template>
     </van-field>
+    {{ userForm.birth }}
     <van-cell
       title="生日"
       title-class="van-field__label"

@@ -173,8 +173,7 @@ export default {
           type: "warning",
         }
       ).catch((err) => err);
-      if (confirmResult !== "confirm")
-        return this.$message.info("已取消删除！");
+      if (confirmResult !== "confirm") return;
       const { data: res } = await this.$http.post("admin/bookType/remove", {
         cid: cid.join(","),
         level: row.level,

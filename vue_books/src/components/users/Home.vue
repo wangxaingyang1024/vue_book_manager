@@ -46,7 +46,7 @@
               >
             </el-menu-item-group>
             <el-menu-item index="/myBooks"
-              ><i class="el-icon-goods"></i>我的书籍</el-menu-item
+              ><i class="el-icon-goods"></i>我的借阅</el-menu-item
             >
           </el-submenu>
           <el-submenu index="2">
