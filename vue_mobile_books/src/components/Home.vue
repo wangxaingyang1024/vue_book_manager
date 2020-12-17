@@ -110,4 +110,9 @@ img {
   width: 60px;
   margin-top: 7px;
 }
+.van-nav-bar{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 </style>

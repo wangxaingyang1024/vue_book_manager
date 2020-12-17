@@ -120,7 +120,7 @@ export default {
 <style lang="less" scoped>
 .van-search {
   position: sticky;
-  top: 0;
+  top: 46px;
   z-index: 1000;
 }
 .van-button {
