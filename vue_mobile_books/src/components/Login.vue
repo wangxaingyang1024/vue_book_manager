@@ -11,8 +11,21 @@
       <p>欢迎登录均均图书</p>
     </div>
     <van-form @submit="login">
-      <van-field placeholder="请输入用户名" v-model="loginForm.username" label="用户名" :rules="[{ required: true }]" clearable />
-      <van-field placeholder="请输入密码" v-model="loginForm.password" type="password" label="密码" :rules="[{ required: true }]" clearable />
+      <van-field
+        placeholder="请输入用户名"
+        v-model="loginForm.username"
+        label="用户名"
+        :rules="[{ required: true }]"
+        clearable
+      />
+      <van-field
+        placeholder="请输入密码"
+        v-model="loginForm.password"
+        type="password"
+        label="密码"
+        :rules="[{ required: true }]"
+        clearable
+      />
       <div style="margin: 35px">
         <van-button round block type="primary" native-type="submit">
           登录
@@ -25,7 +38,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
@@ -36,15 +49,15 @@ export default {
   },
   methods: {
     //点击图片跳转到主页
-    home () {
+    home() {
       this.$router.push("/home");
     },
     //跳转到注册页面
-    signUp () {
+    signUp() {
       this.$router.push("/signUp");
     },
     //登录
-    async login () {
+    async login() {
       const { data: res } = await this.$http.post("login", this.loginForm);
       if (res.status === 3031)
         return this.$toast.fail("用户名不存在，请先注册!");
