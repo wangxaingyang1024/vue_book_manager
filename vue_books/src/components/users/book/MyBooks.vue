@@ -69,6 +69,16 @@ export default {
       console.log(res.status);
     },
     async returnBook(isbn) {
+      const confirmResult = await this.$confirm("是否确认归还?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).catch((err) => err);
+      //如果用户确认还书,则返回值为字符串confirm
+      //如果用户取消还书，则返回值为字符串cancel
+      if (confirmResult === "cancel") {
+        return;
+      }
       const { data: res } = await this.$http.post("book/return", {
         jobNumber: this.jobNumber,
         isbn: isbn,
@@ -87,5 +97,17 @@ export default {
 .el-card {
   width: 100%;
   min-height: calc(100% - 2px);
+}
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
 }
 </style>

@@ -20,7 +20,7 @@
       title="生日"
       title-class="van-field__label"
       is-link
-      :value="userForm.brith"
+      :value="userForm.birth"
       value-class="van-field__control"
       @click="showPopup"
     ></van-cell>
@@ -63,8 +63,8 @@ export default {
       currentDate: new Date(),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       userForm: {
-        brith: ""
-      }
+        birth: "",
+      },
     };
   },
   created() {
@@ -79,6 +79,8 @@ export default {
         return this.$toast.fail("获取个人信息失败！");
       }
       this.userForm = res.data;
+      this.userForm.birth = this.userForm.birth.slice(0, 10);
+      this.userForm.gender = this.userForm.gender + "";
     },
     nickNameRule(val) {
       if (val === "") {
@@ -113,9 +115,10 @@ export default {
       if (day >= 1 && day <= 9) {
         day = `0${day}`;
       }
-      this.userForm.brith = `${year}-${month}-${day}`;
+      this.userForm.birth = `${year}-${month}-${day}`;
       this.show = false;
     },
+
     //点击按钮提交表单
     async editUser() {
       if (
@@ -140,8 +143,8 @@ export default {
         console.log(this.userForm.nickName);
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

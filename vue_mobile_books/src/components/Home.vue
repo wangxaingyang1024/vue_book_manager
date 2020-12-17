@@ -54,7 +54,7 @@ export default {
       actions: [
         { text: "信息编辑", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
-        { text: "退出登录", icon: "down" }
+        { text: "退出登录", icon: "down" },
       ],
       //active: "books"
     };
@@ -67,6 +67,15 @@ export default {
     signUp() {
       this.$router.push("/signUp");
       window.sessionStorage.clear();
+    },
+    goMyBooks() {
+      this.$router.push("myBooks");
+    },
+    goProfile() {
+      this.$router.push("profile");
+    },
+    goBooks() {
+      this.$router.push("books");
     },
     //点击选项按钮跳转
     onSelect(actions) {
@@ -83,7 +92,7 @@ export default {
           this.$dialog
             .confirm({
               message: "确定要退出吗？",
-              confirmButtonColor: "red"
+              confirmButtonColor: "red",
             })
             .then(() => {
               this.$router.push("/login");
@@ -94,8 +103,8 @@ export default {
             });
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

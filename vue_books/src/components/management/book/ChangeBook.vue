@@ -274,7 +274,7 @@ export default {
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
-        return this.$message.info("已取消删除");
+        return;
       }
       // console.log(typeof isbn);
       const { data: res } = await this.$http.post(
