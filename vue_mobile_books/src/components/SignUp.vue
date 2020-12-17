@@ -5,7 +5,7 @@
     </van-nav-bar>
     <!-- 注册表单区域 -->
     <div class="welcome">
-      <p>欢迎注册均均图书</p>
+      <p>欢迎注册明日图书馆</p>
     </div>
     <van-form @submit="signUp">
       <van-field

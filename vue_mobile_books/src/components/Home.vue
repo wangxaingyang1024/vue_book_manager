@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="钧钧图书馆">
+    <van-nav-bar title="明日图书馆">
       <template #left>
         <img src="~assets/logo.jpg" />
       </template>

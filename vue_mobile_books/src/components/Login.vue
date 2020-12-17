@@ -4,7 +4,7 @@
     <van-nav-bar title="用户登录" left-arrow @click-left="home"> </van-nav-bar>
     <!-- 登录表单区域 -->
     <div class="welcome">
-      <p>欢迎登录均均图书</p>
+      <p>欢迎登录明日图书馆</p>
     </div>
     <van-form @submit="login">
       <van-field
