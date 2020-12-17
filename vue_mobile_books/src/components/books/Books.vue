@@ -1,14 +1,7 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <form action="/">
-      <van-search
-        v-model="value"
-        show-action
-        placeholder="请输入搜索关键词"
-        @cancel="onCancel"
-      />
-    </form>
+    <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" />
     <!-- <p>图书列表</p> -->
     <van-list
       v-model="loading"
@@ -112,6 +105,13 @@ export default {
       }
       this.$toast.success("借阅成功!");
       location.reload();
+    }
+  },
+  watch: {
+    "queryInfo.name"(val) {
+      this.queryInfo.pageNum = 1;
+      this.booklist = [];
+      this.getBookList();
     }
   }
 };
