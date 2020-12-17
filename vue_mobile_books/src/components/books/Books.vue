@@ -16,7 +16,7 @@
         :key="item.isbn"
         accordion
       >
-        <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
+        <van-collapse-item :title="'《' + item.name + '》'">
           <div>作者: {{ item.author }}</div>
           <div>编号: {{ item.isbn }}</div>
           <div>
@@ -118,12 +118,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-button{
-  float:right;
+.van-button {
+  float: right;
   margin-bottom: 10px;
 }
-.div{
-  margin-bottom:10px;
+.div {
+  margin-bottom: 10px;
 }
 /*p{
   margin-left: 10px;

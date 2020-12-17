@@ -3,27 +3,23 @@
     <!-- 我的书籍 -->
     <van-swipe-cell v-for="item in booklist" :key="item.isbn">
       <van-collapse v-model="activeNames" accordion>
-        <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
-          <van-row type="flex" justify="space-between">
-            <van-col span="8">作者: {{ item.author }}</van-col>
-            <van-col span="10">编号: {{ item.isbn }}</van-col>
-          </van-row>
-          <van-row class="row1" type="flex" justify="space-between">
-            <van-col span="8">类型: {{ item.type }}</van-col>
-            <van-col span="10">简介: {{ item.synopsis }}</van-col>
-          </van-row>
-          <!-- 还书按钮 -->
-          <!-- <van-row class="row2" type="flex" justify="space-between">
-            <van-col span="8"></van-col>
-            <van-col span="8">
-              <van-button type="primary" size="mini" @click="returnBook(item.isbn)">归还</van-button>
-            </van-col>
-          </van-row> -->
+        <van-collapse-item :title="'《' + item.name + '》'">
+          <div>作者: {{ item.author }}</div>
+          <div>编号: {{ item.isbn }}</div>
+          <div>简介: {{ item.synopsis }}</div>
+          <div>类型: {{ item.type }}</div>
         </van-collapse-item>
       </van-collapse>
       <!-- 左滑还书 -->
       <template #right>
-        <van-button square text="归还" type="primary" class="delete-button" @click="returnBook(item.isbn)" />
+        <van-button
+          round
+          text="归还"
+          type="primary"
+          size="mini"
+          class="delete-button"
+          @click="returnBook(item.isbn)"
+        />
       </template>
     </van-swipe-cell>
   </div>
@@ -32,20 +28,20 @@
 <script>
 export default {
   //生命周期函数
-  created () {
-    //this.getBookList();
+  created() {
+    this.getBookList();
   },
-  data () {
+  data() {
     return {
       booklist: [],
-        
+
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      activeNames: ["566555"],
+      activeNames: ["566555"]
     };
   },
   methods: {
     //获取书籍列表
-    async getBookList () {
+    async getBookList() {
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
@@ -57,35 +53,37 @@ export default {
       console.log(res.status);
     },
     //归还书籍
-    async returnBook (isbn) {
+    async returnBook(isbn) {
       console.log(isbn);
-      const confirmResult = await this.$dialog.confirm({
-        message: '确定要归还吗？',
-        confirmButtonColor: 'red'
-      }).catch((err) => err)
+      const confirmResult = await this.$dialog
+        .confirm({
+          message: "确定要归还吗？",
+          confirmButtonColor: "red"
+        })
+        .catch(err => err);
       //console.log(confirmResult)
       //用户确认删除 返回字符串confirm
       //用户取消删除 返回字符串cancel
-      if (confirmResult !== 'confirm') {
-        console.log('用户取消了归还')
+      if (confirmResult !== "confirm") {
+        console.log("用户取消了归还");
       } else {
         const { data: res } = await this.$http.post("book/return", {
           jobNumber: this.jobNumber,
-          isbn: isbn,
+          isbn: isbn
         });
         if (res.status !== 6008) {
           //return this.$toast.fail("归还书籍失败！");
-          console.log("还书失败")
+          console.log("还书失败");
         }
         this.$toast.success("归还书籍成功!");
         this.getBookList();
       }
-    },
+    }
   }
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .van-row {
   margin-left: 20px;
   margin-right: 60px;
@@ -101,7 +99,6 @@ export default {
   margin-right: 10px;
 }*/
 .delete-button {
-  height: 44px;
-  margin-right: 0px;
+  margin: 7px;
 }
 </style>
