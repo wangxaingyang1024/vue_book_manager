@@ -18,7 +18,8 @@
         :rules="[{ required: true }]"
         clearable
       />
-      <van-field
+      <van-field 
+        class="field"
         placeholder="请输入密码"
         v-model="loginForm.password"
         type="password"
@@ -92,7 +93,7 @@ img {
     margin: 0;
   }
 }
-.van-field {
+.field{
   margin-top: 20px;
 }
 .van-form {

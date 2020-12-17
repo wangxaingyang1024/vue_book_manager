@@ -16,7 +16,7 @@
       <p>欢迎注册均均图书</p>
     </div>
     <van-form @submit="signUp">
-      <van-field
+      <van-field class="field"
         placeholder="请输入用户名"
         clearable
         v-model="signUpForm.username"
@@ -119,6 +119,9 @@ img {
 }
 .van-field {
   margin-top: 20px;
+}
+.field{
+  margin-top: 0px;
 }
 .welcome {
   margin-top: 5px;
