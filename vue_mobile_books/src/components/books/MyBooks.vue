@@ -2,12 +2,12 @@
   <div>
     <!-- 我的书籍 -->
     <van-swipe-cell v-for="item in booklist" :key="item.isbn">
-      <van-collapse v-model="activeNames" accordion>
-        <van-collapse-item :title="'《' + item.name + '》'">
-          <div>作者: {{ item.author }}</div>
-          <div>编号: {{ item.isbn }}</div>
-          <div>简介: {{ item.synopsis }}</div>
-          <div>类型: {{ item.type }}</div>
+      <van-collapse v-model="activeName" accordion>
+        <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
+          <div><span class="title">作者:</span> {{ item.author }}</div>
+          <div><span class="title">编号:</span> {{ item.isbn }}</div>
+          <div><span class="title">简介:</span> {{ item.synopsis }}</div>
+          <div><span class="title">类型:</span> {{ item.type }}</div>
         </van-collapse-item>
       </van-collapse>
       <!-- 左滑还书 -->
@@ -34,9 +34,8 @@ export default {
   data() {
     return {
       booklist: [],
-
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      activeNames: ["566555"]
+      activeName: ""
     };
   },
   methods: {
@@ -100,5 +99,8 @@ export default {
 }*/
 .delete-button {
   margin: 7px;
+}
+.title {
+  color: rgb(138, 197, 224);
 }
 </style>

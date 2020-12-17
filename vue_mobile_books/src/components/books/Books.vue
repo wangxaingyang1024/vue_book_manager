@@ -11,21 +11,21 @@
     >
       <!-- 书籍 -->
       <van-collapse
-        v-model="activeNames"
+        v-model="activeName"
         v-for="item in booklist"
         :key="item.isbn"
         accordion
       >
-        <van-collapse-item :title="'《' + item.name + '》'">
-          <div>作者: {{ item.author }}</div>
-          <div>编号: {{ item.isbn }}</div>
+        <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
+          <div><span class="title">作者:</span> {{ item.author }}</div>
+          <div><span class="title">编号:</span> {{ item.isbn }}</div>
           <div>
-            状态:
+            <span class="title">状态: </span>
             <van-tag type="success" v-if="item.status === true">未借出</van-tag>
             <van-tag v-else>已借出</van-tag>
           </div>
-          <div>简介: {{ item.synopsis }}</div>
-          <div>类型: {{ item.type }}</div>
+          <div><span class="title">简介:</span> {{ item.synopsis }}</div>
+          <div><span class="title">类型:</span> {{ item.type }}</div>
           <div>
             <van-button
               type="primary"
@@ -51,7 +51,7 @@ export default {
       loading: false,
       finished: false,
       value: "",
-      activeNames: [],
+      activeName: "",
       booklist: [],
       typeList: [],
       queryInfo: {
@@ -122,8 +122,8 @@ export default {
   float: right;
   margin-bottom: 10px;
 }
-.div {
-  margin-bottom: 10px;
+.title {
+  color: rgb(138, 197, 224);
 }
 /*p{
   margin-left: 10px;
