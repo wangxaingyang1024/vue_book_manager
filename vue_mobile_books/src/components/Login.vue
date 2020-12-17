@@ -1,11 +1,7 @@
 <template>
-  <div>
+  <div class="bg">
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="用户登录">
-      <template #left>
-        <img @click="home" src="~assets/logo.jpg" />
-      </template>
-    </van-nav-bar>
+    <van-nav-bar title="用户登录" left-arrow @click-left="home"> </van-nav-bar>
     <!-- 登录表单区域 -->
     <div class="welcome">
       <p>欢迎登录均均图书</p>
@@ -18,8 +14,7 @@
         :rules="[{ required: true }]"
         clearable
       />
-      <van-field 
-        class="field"
+      <van-field
         placeholder="请输入密码"
         v-model="loginForm.password"
         type="password"
@@ -77,6 +72,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.bg {
+  background: #fff;
+  min-height: 100vh;
+}
 img {
   width: 60px;
   margin-top: 7px;
@@ -93,9 +92,6 @@ img {
     margin: 0;
   }
 }
-.field{
-  margin-top: 20px;
-}
 .van-form {
   p {
     margin-right: 30px;
@@ -103,5 +99,8 @@ img {
     font-size: 14px;
     color: dodgerblue;
   }
+}
+.van-field {
+  margin-top: 20px;
 }
 </style>

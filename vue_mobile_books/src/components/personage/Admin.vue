@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="密码设置" left-text="返回" @click-left="onClickLeft">
+    <van-nav-bar title="密码设置" left-arrow @click-left="onClickLeft">
     </van-nav-bar>
     <van-form @submit="editUser">
       <van-field
@@ -14,8 +14,8 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
-          },
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+          }
         ]"
       />
       <van-field
@@ -28,9 +28,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           },
-          { validator: newPsw, message: '新密码不能与旧密码相同' },
+          { validator: newPsw, message: '新密码不能与旧密码相同' }
         ]"
       />
       <van-field
@@ -43,9 +43,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           },
-          { validator: reNewPsw, message: '两次密码不一致' },
+          { validator: reNewPsw, message: '两次密码不一致' }
         ]"
       />
       <div style="margin: 16px">
@@ -65,8 +65,8 @@ export default {
         oldPsw: "",
         newPsw: "",
         checkPsw: "",
-        username: window.sessionStorage.getItem("username"),
-      },
+        username: window.sessionStorage.getItem("username")
+      }
     };
   },
   methods: {
@@ -111,10 +111,10 @@ export default {
       window.sessionStorage.clear();
       return this.$router.push("/login");
     },
-    onClickLeft(){
-      this.$router.push('/setting')
+    onClickLeft() {
+      this.$router.push("/setting");
     }
-  },
+  }
 };
 </script>
 

@@ -118,12 +118,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.van-search {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 .van-button {
+  top: -20px;
   float: right;
-  margin-bottom: 10px;
 }
 .title {
   color: rgb(138, 197, 224);
+}
+.van-collapse-item {
+  background: #fff;
 }
 /*p{
   margin-left: 10px;

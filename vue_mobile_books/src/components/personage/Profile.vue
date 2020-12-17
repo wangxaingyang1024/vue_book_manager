@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="个人信息设置" left-text="返回" @click-left="onClickLeft">
+    <van-nav-bar title="个人信息设置" left-arrow @click-left="onClickLeft">
     </van-nav-bar>
     <van-form @submit="editUser">
       <van-field v-model="userForm.username" label="用户名" disabled />
@@ -67,9 +67,7 @@ export default {
       maxDate: new Date(2020, 12, 31),
       currentDate: new Date(),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      userForm: {
-        birth: "",
-      },
+      userForm: {}
     };
   },
   created() {
@@ -149,10 +147,10 @@ export default {
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
     },
-    onClickLeft(){
-      this.$router.push('/setting')
+    onClickLeft() {
+      this.$router.push("/setting");
     }
-  },
+  }
 };
 </script>
 

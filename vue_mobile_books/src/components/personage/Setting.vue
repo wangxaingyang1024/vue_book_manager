@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="设置" left-text="返回" @click-left="onClickLeft">
+    <van-nav-bar title="设置">
+      <template #left>
+        <van-icon name="arrow-left" @click="onClickLeft" />
+      </template>
     </van-nav-bar>
     <!-- 主体内容 -->
     <van-cell-group border>
@@ -29,7 +32,7 @@ export default {
       this.$dialog
         .confirm({
           message: "确定要退出吗？",
-          confirmButtonColor: "red",
+          confirmButtonColor: "red"
         })
         .then(() => {
           this.$router.push("/books");
@@ -39,10 +42,10 @@ export default {
           console.log("点击了取消");
         });
     },
-    exitLogin(){
-        this.$router.push('/login')
+    exitLogin() {
+      this.$router.push("/login");
     }
-  },
+  }
 };
 </script>
 

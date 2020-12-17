@@ -29,11 +29,11 @@
     <!-- 路由占位符 -->
     <router-view></router-view>
     <van-tabbar route>
-      <van-tabbar-item replace to='/books' icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item replace to='/mybooks' icon="todo-list-o"
+      <van-tabbar-item replace to="/books" icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item replace to="/mybooks" icon="todo-list-o"
         >我的借阅</van-tabbar-item
       >
-      <van-tabbar-item replace to='/person' icon="user-circle-o"
+      <van-tabbar-item replace to="/person" icon="user-circle-o"
         >个人中心</van-tabbar-item
       >
     </van-tabbar>
@@ -42,10 +42,6 @@
 
 <script>
 export default {
-  //生命周期函数获取书籍列表
-  created() {
-    //this.getBookList();
-  },
   data() {
     return {
       nickName: window.sessionStorage.getItem("nickName"),
@@ -54,8 +50,8 @@ export default {
       actions: [
         { text: "信息编辑", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
-        { text: "退出登录", icon: "down" },
-      ],
+        { text: "退出登录", icon: "down" }
+      ]
       //active: "books"
     };
   },
@@ -92,19 +88,20 @@ export default {
           this.$dialog
             .confirm({
               message: "确定要退出吗？",
-              confirmButtonColor: "red",
+              confirmButtonColor: "red"
             })
             .then(() => {
-              this.$router.push("/books");
               window.sessionStorage.clear();
+              this.$router.push("/books");
+              location.reload();
             })
             .catch(() => {
               console.log("点击了取消");
             });
           break;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

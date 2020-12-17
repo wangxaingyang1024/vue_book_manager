@@ -45,11 +45,19 @@ export default {
         "book/findOne/" + this.jobNumber
       );
       console.log(res);
+      if (res.status === 402) {
+        return this.$toast.fail("请先登录！");
+      }
       if (res.status !== 200) {
         return this.$toast.fail("获取图书失败！");
       }
       this.booklist = res.data;
       console.log(res.status);
+      this.$toast({
+        message: "左滑还书",
+        position: "center",
+        className: "toast"
+      });
     },
     //归还书籍
     async returnBook(isbn) {
@@ -71,8 +79,8 @@ export default {
           isbn: isbn
         });
         if (res.status !== 6008) {
-          //return this.$toast.fail("归还书籍失败！");
-          console.log("还书失败");
+          return this.$toast.fail("归还书籍失败！");
+          // console.log("还书失败");
         }
         this.$toast.success("归还书籍成功!");
         this.getBookList();
@@ -81,7 +89,14 @@ export default {
   }
 };
 </script>
-
+<style lang="less">
+.van-swipe-cell__right {
+  background: #fff;
+}
+.toast {
+  background: rgba(75, 76, 76, 0.456);
+}
+</style>
 <style lang="less" scoped>
 .van-row {
   margin-left: 20px;
@@ -98,7 +113,7 @@ export default {
   margin-right: 10px;
 }*/
 .delete-button {
-  margin: 7px;
+  margin: 10px;
 }
 .title {
   color: rgb(138, 197, 224);

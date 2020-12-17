@@ -1,22 +1,14 @@
 <template>
-  <div>
+  <div class="bg">
     <!-- 导航区域 -->
-    <van-nav-bar
-      title="新用户注册"
-      right-text="返回登录"
-      left-arrow
-      @click-right="login"
-    >
-      <template #left>
-        <img @click="home" src="~assets/logo.jpg" />
-      </template>
+    <van-nav-bar title="新用户注册" left-arrow @click-left="login">
     </van-nav-bar>
     <!-- 注册表单区域 -->
     <div class="welcome">
       <p>欢迎注册均均图书</p>
     </div>
     <van-form @submit="signUp">
-      <van-field class="field"
+      <van-field
         placeholder="请输入用户名"
         clearable
         v-model="signUpForm.username"
@@ -113,15 +105,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.bg {
+  background: #fff;
+  min-height: 100vh;
+}
 img {
   width: 60px;
   margin-top: 7px;
 }
 .van-field {
   margin-top: 20px;
-}
-.field{
-  margin-top: 0px;
 }
 .welcome {
   margin-top: 5px;

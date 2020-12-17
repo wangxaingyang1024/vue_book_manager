@@ -8,15 +8,15 @@
         </div>
       </template>
       <template #title>
-        <p>{{ nickName }}</p>
+        <p>{{ userForm.nickName }}</p>
         <br />
       </template>
       <template #desc>
         用户名:
-        <span class="desc">{{ username }}</span
+        <span class="desc">{{ userForm.username }}</span
         ><br /><br />
         工号:
-        <span class="desc">{{ jobNumber }}</span
+        <span class="desc">{{ userForm.jobNumber }}</span
         ><br /><br />
       </template>
       <template #footer>
@@ -31,9 +31,12 @@
       <template #price>
         <div v-show="msg">
           生日:
-          <span class="desc">1999-04-12</span><br /><br />
-          手机号:
-          <span class="desc">15594984139</span>
+          <span class="desc">{{ userForm.birth }}</span
+          ><br />
+          <span class="descc">
+            手机号:
+            <span class="desc">{{ userForm.phone }}</span></span
+          >
         </div>
       </template>
     </van-card>
@@ -44,10 +47,10 @@
     </van-cell-group> -->
     <!-- 用户操作栏 -->
     <div class="separated"></div>
-    <van-cell title="我的收藏" is-link to="index" icon="star-o" />
-    <van-cell title="我的评论" is-link to="index" icon="comment-o" />
+    <van-cell title="我的收藏" is-link to="" icon="star-o" />
+    <van-cell title="我的评论" is-link to="" icon="comment-o" />
     <div class="separated"></div>
-    <van-cell title="设置" is-link to="/setting" icon="setting-o" />
+    <van-cell title="设置" is-link icon="setting-o" @click="toSetting" />
   </div>
 </template>
 
@@ -57,21 +60,44 @@ export default {
     return {
       nickName: window.sessionStorage.getItem("nickName"),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
+      imgNickName: "",
       msg: false,
-      username: "bbbb",
+      userForm: {}
     };
   },
   created() {
-    this.imgNickName = this.nickName.slice(-2);
+    this.getUserForm();
+    if (this.nickName !== null) {
+      this.imgNickName = this.nickName.slice(-2);
+    }
   },
   methods: {
+    async getUserForm() {
+      const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
+
+      console.log(res);
+      if (res.status === 402) {
+        return this.$toast.fail("请先登录！");
+      }
+      if (res.status !== 200) {
+        return this.$toast.fail("获取个人信息失败！");
+      }
+      this.userForm = res.data;
+      this.userForm.birth = this.userForm.birth.slice(0, 10);
+    },
     //判断是否点击了下拉按钮
     show(e) {
       if (e.currentTarget === e.target) {
         this.msg = !this.msg;
       }
     },
-  },
+    toSetting() {
+      if (this.nickName === null) {
+        return this.$toast.fail("请先登录！");
+      }
+      this.$router.push("/setting");
+    }
+  }
 };
 </script>
 
@@ -88,6 +114,9 @@ p {
 .desc {
   font-size: 11px;
   padding: 8px;
+}
+.descc {
+  line-height: 40px;
 }
 .img {
   width: 75px;
