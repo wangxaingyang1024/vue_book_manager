@@ -7,11 +7,12 @@
           clearable
           v-model="queryInfo.name"
           prefix-icon="el-icon-search"
+          id="search"
         >
         </el-input>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" @click="goAddBook">添加书籍</el-button>
+        <el-button type="primary" @click="goAddBook" id="goAddBook">添加书籍</el-button>
       </el-col>
     </el-row>
     <el-table :data="booklist" border stripe>
@@ -41,6 +42,7 @@
             circle
             @click="showEditDialog(scope.row)"
             v-if="scope.row.status.toString() === 'true'"
+            id="showEditDialog"
           ></el-button>
           <!-- 删除按钮 -->
           <el-button
@@ -50,6 +52,7 @@
             circle
             @click="removeBook(scope.row.isbn)"
             v-if="scope.row.status.toString() === 'true'"
+            id="removeBook"
           ></el-button>
           <el-tag type="info" v-else>禁止修改</el-tag>
         </template>
@@ -64,6 +67,7 @@
       :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      id="pagination"
     ></el-pagination>
     <!-- 修改书籍对话框 -->
     <el-dialog
@@ -101,7 +105,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button @click="editDialogVisible = false" id="">取 消</el-button>
         <el-button type="primary" @click="editBookInfo">确 定</el-button>
       </span>
     </el-dialog>

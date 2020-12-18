@@ -6,6 +6,7 @@
         clearable
         v-model="queryInfo.name"
         prefix-icon="el-icon-search"
+        id="search"
       >
       </el-input
     ></el-col>
@@ -52,6 +53,7 @@
             size="mini"
             @click="borrowBook(scope.row.isbn)"
             v-if="scope.row.status.toString() === 'true'"
+            id="borrowBook"
             >借阅此书</el-button
           >
           <el-button type="" size="mini" disabled v-else>借阅此书</el-button>
@@ -67,6 +69,7 @@
       :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      id="pagination"
     ></el-pagination>
   </el-card>
 </template>

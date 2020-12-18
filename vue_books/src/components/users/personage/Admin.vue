@@ -13,6 +13,7 @@
         prefix-icon="el-icon-lock"
         type="password"
         placeholder="请输入您的旧密码"
+        id="oldPsw"
       ></el-input>
     </el-form-item>
     <!-- 新密码 -->
@@ -23,6 +24,7 @@
         autocomplete="off"
         prefix-icon="el-icon-edit"
         placeholder="请输入您的新密码"
+        id="newPsw"
       ></el-input>
     </el-form-item>
     <!-- 二次验证密码 -->
@@ -33,11 +35,12 @@
         autocomplete="off"
         prefix-icon="el-icon-edit"
         placeholder="请再次输入您的新密码"
+        id="checkPsw"
       ></el-input>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" round @click="editUser">提交</el-button>
+      <el-button type="primary" round @click="editUser" id="editUser">提交</el-button>
     </el-form-item>
   </el-form>
 </template>

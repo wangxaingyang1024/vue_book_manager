@@ -32,6 +32,7 @@
             type="success"
             size="mini"
             @click="returnBook(scope.row.isbn)"
+            id="returnBook"
             >归还</el-button
           >
         </template>

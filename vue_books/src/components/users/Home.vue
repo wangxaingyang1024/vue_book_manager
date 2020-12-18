@@ -3,19 +3,19 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" />
+          <img src="~assets/logo.jpg" @click="home" id="home"/>
         </el-col>
         <el-col :span="14">
           <span class="topText">明日图书馆</span>
         </el-col>
         <span v-if="jobNumber === null">
           <el-col :span="2">
-            <el-button type="primary" round @click="login" class="logout"
+            <el-button type="primary" round @click="login" class="logout" id="login"
               >登录</el-button
             >
           </el-col>
           <el-col :span="2">
-            <el-button type="success" round @click="signUp" class="logout"
+            <el-button type="success" round @click="signUp" class="logout" id="signUp"
               >注册</el-button
             >
           </el-col>
@@ -26,7 +26,7 @@
             Hi, {{ this.nickName }}
           </el-col>
           <el-col :span="3">
-            <el-button type="info" round @click="logout" class="logout"
+            <el-button type="info" round @click="logout" class="logout" id="logout"
               >退出</el-button
             >
           </el-col>
@@ -36,29 +36,29 @@
     <el-container>
       <el-aside width="200px" v-if="jobNumber !== null">
         <el-menu unique-opened :default-active="active" router>
-          <el-submenu index="1">
+          <el-submenu index="1" id="bookList">
             <template slot="title"
               ><i class="el-icon-star-on"></i>书籍查询</template
             >
             <el-menu-item-group>
-              <el-menu-item index="/books"
+              <el-menu-item index="/books" id="books"
                 ><i class="el-icon-tickets"></i>书籍列表</el-menu-item
               >
             </el-menu-item-group>
-            <el-menu-item index="/myBooks"
+            <el-menu-item index="/myBooks" id="myBooks"
               ><i class="el-icon-goods"></i>我的借阅</el-menu-item
             >
           </el-submenu>
-          <el-submenu index="2">
+          <el-submenu index="2" id="personage"> 
             <template slot="title"
               ><i class="el-icon-star-on"></i>账户管理</template
             >
             <el-menu-item-group>
-              <el-menu-item index="/profile"
+              <el-menu-item index="/profile" id="profile"
                 ><i class="el-icon-tickets"></i>个人信息</el-menu-item
               >
             </el-menu-item-group>
-            <el-menu-item index="/admin"
+            <el-menu-item index="/admin" id="admin"
               ><i class="el-icon-goods"></i>密码管理</el-menu-item
             >
           </el-submenu>
