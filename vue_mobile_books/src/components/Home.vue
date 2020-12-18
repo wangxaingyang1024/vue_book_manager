@@ -96,7 +96,8 @@ export default {
             })
             .then(() => {
               window.sessionStorage.clear();
-              this.$router.push("/books");
+              location.reload();
+              // this.$router.push("/home");
             })
             .catch(() => {
               console.log("点击了取消");
