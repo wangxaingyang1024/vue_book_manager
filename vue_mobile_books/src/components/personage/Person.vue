@@ -12,12 +12,8 @@
         <br />
       </template>
       <template #desc>
-        用户名:
-        <span class="desc">{{ userForm.username }}</span
-        ><br /><br />
-        工号:
-        <span class="desc">{{ userForm.jobNumber }}</span
-        ><br /><br />
+        <div class="show">用户名:{{ userForm.username }}</div>
+        <div class="show">工号:{{ userForm.jobNumber }}</div>
       </template>
       <template #footer>
         <van-icon
@@ -30,21 +26,11 @@
       </template>
       <template #price>
         <div v-show="msg">
-          生日:
-          <span class="desc">{{ userForm.birth }}</span
-          ><br />
-          <span class="descc">
-            手机号:
-            <span class="desc">{{ userForm.phone }}</span></span
-          >
+          <div class="show">生日:{{ userForm.birth }}</div>    
+          <div class="show shows">手机号:{{ userForm.phone }}</div>
         </div>
       </template>
     </van-card>
-    <!-- 显示隐藏的个人信息 -->
-    <!-- <van-cell-group border v-show="msg">
-      <van-cell title="生日" value="内容" />
-      <van-cell title="手机号" value="内容" />
-    </van-cell-group> -->
     <!-- 用户操作栏 -->
     <div class="separated"></div>
     <van-cell title="我的收藏" is-link to="" icon="star-o" />
@@ -111,13 +97,20 @@ p {
   margin-top: 8px;
   font-size: 20px;
 }
-.desc {
+.show {
   font-size: 11px;
-  padding: 8px;
+  padding: 2px;
 }
-.descc {
-  line-height: 40px;
+.shows{
+  top: -3px;
+  position: relative;
 }
+.van-card__footer{
+ top:85px;
+ right: 20px;
+  position: absolute;
+}
+
 .img {
   width: 75px;
   height: 75px;
