@@ -37,11 +37,13 @@
       <van-tabbar-item replace to="/person" icon="user-circle-o"
         >个人中心</van-tabbar-item
       >
+      <div id="check" style="left:0" v-if="this.active === '#/books'"></div>
       <div
         id="check"
-        style="
-  left: 0"
+        style="left:33.3333%"
+        v-else-if="this.active === '#/mybooks'"
       ></div>
+      <div id="check" style="left:66.6666%" v-else></div>
     </van-tabbar>
   </div>
 </template>
@@ -57,18 +59,14 @@ export default {
         { text: "信息编辑", icon: "user-o" },
         { text: "密码设置", icon: "setting-o" },
         { text: "退出登录", icon: "down" }
-      ]
-      //active: "books"
+      ],
+      active: window.location.hash
     };
   },
   methods: {
     //跳转到登录界面
     login() {
       this.$router.push("login");
-    },
-    signUp() {
-      this.$router.push("/signUp");
-      window.sessionStorage.clear();
     },
     goMyBooks() {
       this.$router.push("myBooks");
@@ -99,7 +97,6 @@ export default {
             .then(() => {
               window.sessionStorage.clear();
               this.$router.push("/books");
-              location.reload();
             })
             .catch(() => {
               console.log("点击了取消");
@@ -111,20 +108,13 @@ export default {
   beforeUpdate() {
     const url = location.hash;
     if (url == "#/books") {
-      document.getElementById("check").style.left = "0";
+      document.getElementById("check").setAttribute("style", "left:0");
     } else if (url == "#/mybooks") {
-      document.getElementById("check").style.left = "33.3333%";
+      document.getElementById("check").setAttribute("style", "left:33.3333%");
     } else {
-      document.getElementById("check").style.left = "66.6666%";
+      document.getElementById("check").setAttribute("style", "left:66.6666%");
     }
   }
-  // watch: {
-  //   "location.hash"(val) {
-  //     if (val.indexOf("books") !== -1) {
-  //       console.log(val);
-  //     }
-  //   }
-  // }
 };
 </script>
 
