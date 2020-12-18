@@ -107,8 +107,8 @@ export default {
   padding-top: 20px;
   padding-bottom: 0px;
   background-image: url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1116404228,1514575065&fm=26&gp=0.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
 }
 p {
   margin-top: 8px;
