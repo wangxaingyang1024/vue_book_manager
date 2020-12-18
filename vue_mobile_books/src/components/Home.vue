@@ -37,6 +37,11 @@
         >个人中心</van-tabbar-item
       >
     </van-tabbar>
+    <div
+      id="check"
+      style="
+  left: 0"
+    ></div>
   </div>
 </template>
 
@@ -92,7 +97,6 @@ export default {
             })
             .then(() => {
               window.sessionStorage.clear();
-              this.$router.push("/books");
               location.reload();
             })
             .catch(() => {
@@ -101,7 +105,27 @@ export default {
           break;
       }
     }
+  },
+  // beforeCreate() {
+  //   console.log(location.hash);
+  // },
+  beforeUpdate() {
+    const url = location.hash;
+    if (url == "#/books") {
+      document.getElementById("check").style.left = "0";
+    } else if (url == "#/mybooks") {
+      document.getElementById("check").style.left = "33.3333%";
+    } else {
+      document.getElementById("check").style.left = "66.6666%";
+    }
   }
+  // watch: {
+  //   "location.hash"(val) {
+  //     if (val.indexOf("books") !== -1) {
+  //       console.log(val);
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -110,9 +134,34 @@ img {
   width: 60px;
   margin-top: 7px;
 }
-.van-nav-bar{
+.van-nav-bar {
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+.van-tabbar {
+  // border-top-left-radius: 25px;
+  // border-top-right-radius: 25px;
+  border-radius: 25px;
+}
+
+.van-tabbar-item--active {
+  // border-top-left-radius: 25px;
+  // border-top-right-radius: 25px;
+  border-radius: 25px;
+}
+#check {
+  position: absolute;
+  bottom: 0;
+  width: 33.3333%;
+  height: 50px;
+  z-index: 999999;
+  pointer-events: none;
+  transition: 0.5s;
+  transition-timing-function: ease;
+  // border-top-left-radius: 25px;
+  // border-top-right-radius: 25px;
+  border-radius: 25px;
+  background: rgba(184, 213, 236, 0.514);
 }
 </style>

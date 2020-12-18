@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 用户信息栏 -->
-    <van-card>
+    <van-card id="card" style="height:110px">
       <template #thumb>
         <div class="img">
           <span>{{ imgNickName }}</span>
@@ -25,8 +25,8 @@
         <van-icon size="20" name="arrow-up" v-else @click="show($event)" />
       </template>
       <template #price>
-        <div v-show="msg">
-          <div class="show">生日:{{ userForm.birth }}</div>    
+        <div id="price" style="height:0px">
+          <div class="show">生日:{{ userForm.birth }}</div>
           <div class="show shows">手机号:{{ userForm.phone }}</div>
         </div>
       </template>
@@ -74,6 +74,15 @@ export default {
     //判断是否点击了下拉按钮
     show(e) {
       if (e.currentTarget === e.target) {
+        if (this.msg === true) {
+          document.getElementById("card").style.height = "110px";
+          document.getElementById("price").style.height = "0px";
+        } else {
+          document.getElementById("card").style.height = "150px";
+          // setTimeout(() => {
+          document.getElementById("price").style.height = "40px";
+          // }, 1000);
+        }
         this.msg = !this.msg;
       }
     },
@@ -88,10 +97,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#price {
+  text-overflow: clip;
+  overflow: hidden;
+  transition: height 1s;
+}
 .van-card {
   background-color: #fff;
   padding-top: 20px;
   padding-bottom: 0px;
+  background-image: url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1116404228,1514575065&fm=26&gp=0.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 p {
   margin-top: 8px;
@@ -101,20 +118,31 @@ p {
   font-size: 11px;
   padding: 2px;
 }
-.shows{
+.shows {
   top: -3px;
   position: relative;
 }
-.van-card__footer{
- top:85px;
- right: 20px;
+.van-card {
+  transition: height 1s;
+}
+.van-card__footer {
+  top: 85px;
+  right: 20px;
   position: absolute;
+  .van-icon-arrow-up {
+    top: 40px;
+    transition: top 1s;
+  }
+  .van-icon-arrow-down {
+    top: 0;
+    transition: top 1s;
+  }
 }
 
 .img {
   width: 75px;
   height: 75px;
-  background-color: #3296fa;
+  background-color: #0b421750;
   border-radius: 50%;
   text-align: center;
   line-height: 75px;
@@ -127,6 +155,5 @@ p {
 .separated {
   width: 100%;
   height: 5px;
-  border: 1px solid #e7e7e7;
 }
 </style>

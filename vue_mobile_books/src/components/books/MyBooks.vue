@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 我的书籍 -->
-    <van-swipe-cell v-for="item in booklist" :key="item.isbn">
+    <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
       <van-collapse v-model="activeName" accordion>
         <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
           <div><span class="title">作者:</span> {{ item.author }}</div>
@@ -12,14 +12,7 @@
       </van-collapse>
       <!-- 左滑还书 -->
       <template #right>
-        <van-button
-          round
-          text="归还"
-          type="primary"
-          size="mini"
-          class="delete-button"
-          @click="returnBook(item.isbn)"
-        />
+        <van-button text="归还" class="return" @click="returnBook(item.isbn)" />
       </template>
     </van-swipe-cell>
   </div>
@@ -112,8 +105,14 @@ export default {
 .van-button {
   margin-right: 10px;
 }*/
-.delete-button {
-  margin: 10px;
+.return {
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    rgb(89, 201, 108)
+  );
 }
 .title {
   color: rgb(138, 197, 224);
