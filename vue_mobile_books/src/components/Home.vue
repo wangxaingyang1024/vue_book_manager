@@ -98,6 +98,7 @@ export default {
             })
             .then(() => {
               window.sessionStorage.clear();
+              this.$router.push("/books");
               location.reload();
             })
             .catch(() => {
@@ -106,9 +107,6 @@ export default {
           break;
       }
     }
-  },
-  beforeCreate() {
-    console.log();
   },
   beforeUpdate() {
     const url = location.hash;
@@ -138,7 +136,7 @@ img {
 .van-nav-bar {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 9;
 }
 .van-tabbar {
   border-radius: 25px;
@@ -152,7 +150,7 @@ img {
   bottom: 0;
   width: 33.3333%;
   height: 50px;
-  z-index: 999999;
+  z-index: 99;
   pointer-events: none;
   transition: 0.5s;
   transition-timing-function: ease;
