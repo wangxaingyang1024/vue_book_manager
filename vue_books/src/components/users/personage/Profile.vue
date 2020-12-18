@@ -12,6 +12,7 @@
         v-model="userForm.username"
         prefix-icon="el-icon-user"
         disabled
+        id="username"
       ></el-input>
     </el-form-item>
     <!-- 昵称 -->
@@ -20,12 +21,13 @@
         v-model="userForm.nickName"
         prefix-icon="el-icon-mobile"
         placeholder="设置您的昵称"
+        id="nickName"
       ></el-input>
     </el-form-item>
     <!-- 性别 -->
     <el-form-item prop="gender">
-      <el-radio v-model="userForm.gender" :label="1">男</el-radio>
-      <el-radio v-model="userForm.gender" :label="0">女</el-radio>
+      <el-radio v-model="userForm.gender" :label="1" id="gender_man">男</el-radio>
+      <el-radio v-model="userForm.gender" :label="0" id="gender_woman">女</el-radio>
     </el-form-item>
     <!-- 生日 -->
     <el-form-item prop="date">
@@ -36,6 +38,7 @@
         format="yyyy 年 MM 月 dd 日"
         value-format="yyyy-MM-dd"
         :picker-options="pickerOptions"
+        id="birth"
       >
         >
       </el-date-picker>
@@ -46,11 +49,12 @@
         v-model="userForm.phone"
         prefix-icon="el-icon-phone-outline"
         placeholder="请输入您的电话"
+        id="phone"
       ></el-input>
     </el-form-item>
     <!-- 按钮区域 -->
     <el-form-item>
-      <el-button type="primary" round @click="editUser">提交</el-button>
+      <el-button type="primary" round @click="editUser" id="editUser">提交</el-button>
     </el-form-item>
   </el-form>
 </template>

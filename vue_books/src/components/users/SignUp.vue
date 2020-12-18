@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" />
+          <img src="~assets/logo.jpg" @click="home" id="home"/>
         </el-col>
         <el-col :span="16">
           <span class="topText">注册页面</span>
@@ -25,6 +25,7 @@
             prefix-icon="el-icon-user"
             placeholder="设置用户名"
             v-focus
+            id="username"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -34,6 +35,7 @@
             prefix-icon="el-icon-lock"
             type="password"
             placeholder="设置您的登录密码"
+            id="password"
           ></el-input>
         </el-form-item>
         <!-- 二次验证密码 -->
@@ -44,6 +46,7 @@
             autocomplete="off"
             prefix-icon="el-icon-edit"
             placeholder="请再次输入您的密码"
+            id="checkPassword"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->

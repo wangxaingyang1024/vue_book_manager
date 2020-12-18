@@ -3,13 +3,13 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" />
+          <img src="~assets/logo.jpg" @click="home" id="home"/>
         </el-col>
         <el-col :span="16">
           <span class="topText">用户登录</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout">
+          <el-button type="info" round @click="checkout" class="checkout" id="checkout">
             切换管理员端入口
           </el-button>
         </el-col>
@@ -30,6 +30,7 @@
             v-model="loginForm.username"
             prefix-icon="el-icon-user"
             placeholder="用户名"
+            id="username"
           >
           </el-input>
         </el-form-item>
@@ -40,15 +41,16 @@
             prefix-icon="el-icon-lock"
             type="password"
             placeholder="密码"
+            id="password"
           >
           </el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="login">
+          <el-button type="primary" round @click="login" id="login">
             登录
           </el-button>
-          <el-button type="success" round @click="signUp">
+          <el-button type="success" round @click="signUp" id="signUp">
             注册
           </el-button>
         </el-form-item>

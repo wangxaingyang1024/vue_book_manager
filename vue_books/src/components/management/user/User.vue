@@ -25,6 +25,7 @@
             icon="el-icon-delete"
             size="mini"
             @click="removeUser(scope.row.jobNumber)"
+            id="removeUser"
           ></el-button>
         </template>
       </el-table-column>
@@ -38,6 +39,7 @@
       :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      id="pagination"
     ></el-pagination>
   </el-card>
 </template>

@@ -3,18 +3,18 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" />
+          <img src="~assets/logo.jpg" @click="home" id="home"/>
         </el-col>
         <el-col :span="14">
           <span class="topText">明日图书馆</span>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" round @click="login" class="logout"
+          <el-button type="primary" round @click="login" class="logout" id="login"
             >登录</el-button
           >
         </el-col>
         <el-col :span="2">
-          <el-button type="success" round @click="signUp" class="logout"
+          <el-button type="success" round @click="signUp" class="logout" id="signUp"
             >注册</el-button
           >
         </el-col>
@@ -30,6 +30,7 @@
               clearable
               v-model="queryInfo.name"
               prefix-icon="el-icon-search"
+              id="search"
             >
             </el-input
           ></el-col>
@@ -79,6 +80,7 @@
             :page-size="queryInfo.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
+            id="pagination"
           ></el-pagination>
         </el-card>
       </el-main>
