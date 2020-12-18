@@ -28,6 +28,7 @@
     </van-nav-bar>
     <!-- 路由占位符 -->
     <router-view></router-view>
+
     <van-tabbar route>
       <van-tabbar-item replace to="/books" icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item replace to="/mybooks" icon="todo-list-o"
@@ -36,12 +37,12 @@
       <van-tabbar-item replace to="/person" icon="user-circle-o"
         >个人中心</van-tabbar-item
       >
-    </van-tabbar>
-    <div
-      id="check"
-      style="
+      <div
+        id="check"
+        style="
   left: 0"
-    ></div>
+      ></div>
+    </van-tabbar>
   </div>
 </template>
 
@@ -106,9 +107,9 @@ export default {
       }
     }
   },
-  // beforeCreate() {
-  //   console.log(location.hash);
-  // },
+  beforeCreate() {
+    console.log();
+  },
   beforeUpdate() {
     const url = location.hash;
     if (url == "#/books") {
@@ -140,14 +141,10 @@ img {
   z-index: 1000;
 }
 .van-tabbar {
-  // border-top-left-radius: 25px;
-  // border-top-right-radius: 25px;
   border-radius: 25px;
 }
 
 .van-tabbar-item--active {
-  // border-top-left-radius: 25px;
-  // border-top-right-radius: 25px;
   border-radius: 25px;
 }
 #check {
@@ -159,8 +156,6 @@ img {
   pointer-events: none;
   transition: 0.5s;
   transition-timing-function: ease;
-  // border-top-left-radius: 25px;
-  // border-top-right-radius: 25px;
   border-radius: 25px;
   background: rgba(184, 213, 236, 0.514);
 }
