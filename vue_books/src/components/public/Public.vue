@@ -9,12 +9,12 @@
           <span class="topText">明日图书馆</span>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" round @click="login" class="logout" id="login"
+          <el-button type="primary" round @click="login" class="logout" id="loginButton"
             >登录</el-button
           >
         </el-col>
         <el-col :span="2">
-          <el-button type="success" round @click="signUp" class="logout" id="signUp"
+          <el-button type="success" round @click="signUp" class="logout" id="signUpButton"
             >注册</el-button
           >
         </el-col>

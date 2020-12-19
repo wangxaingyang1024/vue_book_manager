@@ -9,7 +9,7 @@
           <span class="topText">管理员登录</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout" id="checkout"
+          <el-button type="info" round @click="checkout" class="checkout" id="checkoutButton"
             >切换用户端入口</el-button
           >
         </el-col>
@@ -45,7 +45,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="login" class="login"
+          <el-button type="primary" round @click="login" class="login" id="loginButton"
             >登录</el-button
           >
           <!-- <el-button @click="signUp">注册</el-button> -->

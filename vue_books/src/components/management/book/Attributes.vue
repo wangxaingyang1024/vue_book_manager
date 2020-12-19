@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-button type="primary" @click="showAddTypeDialog">添加分类</el-button>
+    <el-button type="primary" @click="showAddTypeDialog" id="addTypeButton">添加分类</el-button>
     <tree-table
       :data="typeList"
       :columns="columns"
@@ -10,6 +10,7 @@
       border
       :default-expand-all="true"
       :show-row-hover="false"
+      id="treeTable"
     >
       <template slot="order" slot-scope="scope">
         <el-tag v-if="scope.row.level === 1">一级</el-tag>
@@ -23,6 +24,7 @@
           size="mini"
           circle
           @click="removeTypeDialog(scope.row)"
+          id="removeTypeButton"
         ></el-button>
       </template>
     </tree-table>
@@ -45,6 +47,7 @@
           <el-input
             v-model="addTypeForm.name"
             placeholder="分类名称"
+            id="name"
           ></el-input>
         </el-form-item>
         <el-form-item label="父级分类">
@@ -53,12 +56,13 @@
             :options="parentTypeList"
             :props="cascaderProps"
             clearable
+            id="parentCategory"
           ></el-cascader>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addTypeDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addType">确 定</el-button>
+        <el-button @click="addTypeDialogVisible = false" id="cancelButton">取 消</el-button>
+        <el-button type="primary" @click="addType" id="confirmButton">确 定</el-button>
       </span>
     </el-dialog>
   </el-card>

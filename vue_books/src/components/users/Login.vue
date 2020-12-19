@@ -9,7 +9,7 @@
           <span class="topText">用户登录</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout" id="checkout">
+          <el-button type="info" round @click="checkout" class="checkout" id="checkoutButton">
             切换管理员端入口
           </el-button>
         </el-col>

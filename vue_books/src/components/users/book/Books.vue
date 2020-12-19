@@ -53,7 +53,7 @@
             size="mini"
             @click="borrowBook(scope.row.isbn)"
             v-if="scope.row.status.toString() === 'true'"
-            id="borrowBook"
+            id="borrowBookButton"
             >借阅此书</el-button
           >
           <el-button type="" size="mini" disabled v-else>借阅此书</el-button>
