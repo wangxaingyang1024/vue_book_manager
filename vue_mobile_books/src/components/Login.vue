@@ -51,6 +51,11 @@ export default {
     },
     //登录
     async login() {
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        message: "登录中..."
+      });
       const { data: res } = await this.$http.post("login", this.loginForm);
       if (res.status === 3031)
         return this.$toast.fail("用户名不存在，请先注册!");

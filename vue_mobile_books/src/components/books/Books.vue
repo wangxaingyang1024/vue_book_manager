@@ -3,42 +3,46 @@
     <!-- 搜索 -->
     <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" />
     <!-- <p>图书列表</p> -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="getBookList"
-    >
-      <!-- 书籍 -->
-      <van-collapse
-        v-model="activeName"
-        v-for="item in booklist"
-        :key="item.isbn"
-        accordion
+    <div style="height:calc(100vh - 150px);overflow:auto;">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="getBookList"
       >
-        <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
-          <div><span class="title">作者:</span> {{ item.author }}</div>
-          <div><span class="title">编号:</span> {{ item.isbn }}</div>
-          <div>
-            <span class="title">状态: </span>
-            <van-tag type="success" v-if="item.status === true">未借出</van-tag>
-            <van-tag v-else>已借出</van-tag>
-          </div>
-          <div><span class="title">简介:</span> {{ item.synopsis }}</div>
-          <div><span class="title">类型:</span> {{ item.type }}</div>
-          <div>
-            <van-button
-              type="primary"
-              size="mini"
-              v-if="item.status === true"
-              @click="borrowBook(item.isbn)"
-              >借阅</van-button
-            >
-            <van-button disabled size="mini" v-else>借阅</van-button>
-          </div>
-        </van-collapse-item>
-      </van-collapse>
-    </van-list>
+        <!-- 书籍 -->
+        <van-collapse
+          v-model="activeName"
+          v-for="item in booklist"
+          :key="item.isbn"
+          accordion
+        >
+          <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
+            <div><span class="title">作者:</span> {{ item.author }}</div>
+            <div><span class="title">编号:</span> {{ item.isbn }}</div>
+            <div>
+              <span class="title">状态: </span>
+              <van-tag type="success" v-if="item.status === true"
+                >未借出</van-tag
+              >
+              <van-tag v-else>已借出</van-tag>
+            </div>
+            <div><span class="title">简介:</span> {{ item.synopsis }}</div>
+            <div><span class="title">类型:</span> {{ item.type }}</div>
+            <div>
+              <van-button
+                type="primary"
+                size="mini"
+                v-if="item.status === true"
+                @click="borrowBook(item.isbn)"
+                >借阅</van-button
+              >
+              <van-button disabled size="mini" v-else>借阅</van-button>
+            </div>
+          </van-collapse-item>
+        </van-collapse>
+      </van-list>
+    </div>
   </div>
 </template>
 
