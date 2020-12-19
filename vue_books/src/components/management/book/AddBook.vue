@@ -6,6 +6,7 @@
         v-model="addBook.name"
         prefix-icon="el-icon-document-checked"
         placeholder="添加书名"
+        id="search"
       ></el-input>
     </el-form-item>
     <!-- 作者 -->
@@ -14,6 +15,7 @@
         v-model="addBook.author"
         prefix-icon="el-icon-edit"
         placeholder="添加作者"
+        id="author"
       ></el-input>
     </el-form-item>
     <!-- 类型 -->
@@ -24,6 +26,7 @@
         :options="typeList"
         :props="cascaderProps"
         clearable
+        id="type"
       ></el-cascader>
     </el-form-item>
     <!-- 简介 -->
@@ -34,11 +37,12 @@
         v-model="addBook.synopsis"
         prefix-icon="el-icon-edit-outline"
         placeholder="添加简介"
+        id="synopsis"
       ></el-input>
     </el-form-item>
     <!-- 按钮区域 -->
     <el-form-item class="btns">
-      <el-button type="primary" @click="add">确认添加</el-button>
+      <el-button type="primary" @click="add" id="confirmButton">确认添加</el-button>
     </el-form-item>
   </el-form>
 </template>

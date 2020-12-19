@@ -8,6 +8,11 @@
         <el-col :span="16">
           <span class="topText">注册页面</span>
         </el-col>
+        <el-col :span="4">
+          <el-button type="info" round @click="back" class="back" id="backButton">
+            返回登录
+          </el-button>
+        </el-col>
       </el-row>
     </el-header>
     <el-main>
@@ -51,7 +56,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="addUser">提交</el-button>
+          <el-button type="primary" round @click="addUser" id="addUserButton">提交</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -146,6 +151,10 @@ export default {
   methods: {
     home() {
       this.$router.push("/public");
+    },
+    back() {
+      //跳转用户登录界面
+      this.$router.push("/login");
     },
     //点击按钮提交表单
     addUser() {

@@ -40,7 +40,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" round @click="editUser" id="editUser">提交</el-button>
+      <el-button type="primary" round @click="editUser" id="editUserButton">提交</el-button>
     </el-form-item>
   </el-form>
 </template>

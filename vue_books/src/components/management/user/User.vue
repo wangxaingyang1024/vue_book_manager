@@ -25,7 +25,7 @@
             icon="el-icon-delete"
             size="mini"
             @click="removeUser(scope.row.jobNumber)"
-            id="removeUser"
+            id="removeUserButton"
           ></el-button>
         </template>
       </el-table-column>

@@ -12,7 +12,7 @@
         </el-input>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" @click="goAddBook" id="goAddBook">添加书籍</el-button>
+        <el-button type="primary" @click="goAddBook" id="goAddBookButton">添加书籍</el-button>
       </el-col>
     </el-row>
     <el-table :data="booklist" border stripe>
@@ -42,7 +42,7 @@
             circle
             @click="showEditDialog(scope.row)"
             v-if="scope.row.status.toString() === 'true'"
-            id="showEditDialog"
+            id="showEditDialogButton"
           ></el-button>
           <!-- 删除按钮 -->
           <el-button
@@ -52,7 +52,7 @@
             circle
             @click="removeBook(scope.row.isbn)"
             v-if="scope.row.status.toString() === 'true'"
-            id="removeBook"
+            id="removeBookButton"
           ></el-button>
           <el-tag type="info" v-else>禁止修改</el-tag>
         </template>
@@ -83,10 +83,10 @@
         label-width="70px"
       >
         <el-form-item label="书名">
-          <el-input v-model="editForm.name"></el-input>
+          <el-input v-model="editForm.name" id="name"></el-input>
         </el-form-item>
         <el-form-item label="作者" prop="author">
-          <el-input v-model="editForm.author"></el-input>
+          <el-input v-model="editForm.author" id="author"></el-input>
         </el-form-item>
 
         <!-- 类型 -->
@@ -97,16 +97,17 @@
             :options="typeList"
             :props="cascaderProps"
             clearable
+            id="level"
           ></el-cascader>
         </el-form-item>
         <!-- 简介 -->
         <el-form-item label="简介" prop="synopsis">
-          <el-input v-model="editForm.synopsis"></el-input>
+          <el-input v-model="editForm.synopsis" id="synopsis"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false" id="">取 消</el-button>
-        <el-button type="primary" @click="editBookInfo">确 定</el-button>
+        <el-button @click="editDialogVisible = false" id="cancelButton">取 消</el-button>
+        <el-button type="primary" @click="editBookInfo" id="confirmButton">确 定</el-button>
       </span>
     </el-dialog>
   </el-card>
