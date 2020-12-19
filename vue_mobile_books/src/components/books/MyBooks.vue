@@ -34,11 +34,6 @@ export default {
   methods: {
     //获取书籍列表
     async getBookList() {
-      this.$toast.loading({
-        duration: 0, // 持续展示 toast
-        forbidClick: true,
-        className: "toast"
-      });
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
@@ -50,12 +45,15 @@ export default {
         return this.$toast.fail("获取图书失败！");
       }
       this.booklist = res.data;
-      console.log(res.status);
-      this.$toast({
-        message: "左滑还书",
-        position: "center",
-        className: "toast"
-      });
+      this.$toast.clear();
+      if (!window.sessionStorage.getItem("num")) {
+        window.sessionStorage.setItem("num", "num");
+        this.$toast({
+          message: "左滑还书",
+          position: "center",
+          className: "toast"
+        });
+      }
     },
     //归还书籍
     async returnBook(isbn) {

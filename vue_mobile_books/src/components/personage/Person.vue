@@ -59,11 +59,6 @@ export default {
   },
   methods: {
     async getUserForm() {
-      this.$toast.loading({
-        duration: 0, // 持续展示 toast
-        forbidClick: true,
-        className: "toast"
-      });
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
       console.log(res);
       if (res.status === 402) {
