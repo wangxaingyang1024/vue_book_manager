@@ -11,6 +11,8 @@
         label="用户名"
         :rules="[{ required: true }]"
         clearable
+        ref="input"
+        id="username"
       />
       <van-field
         placeholder="请输入密码"
@@ -36,10 +38,15 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "zzz",
-        password: "Guo123456"
+        username: "",
+        password: ""
       }
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.input.focus();
+    });
   },
   methods: {
     home() {

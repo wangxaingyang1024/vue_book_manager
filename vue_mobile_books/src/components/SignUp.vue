@@ -11,6 +11,7 @@
         clearable
         v-model="signUpForm.username"
         label="用户名"
+        ref="input"
         :rules="[
           { required: true },
           { pattern, message: '需以字母开头，字母数字组合3~10长度' }
@@ -66,6 +67,11 @@ export default {
       //检验用户名规则
       pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.input.focus();
+    });
   },
   methods: {
     //检验密码规则
