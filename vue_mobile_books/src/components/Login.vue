@@ -3,9 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="用户登录" left-arrow @click-left="home"> </van-nav-bar>
     <!-- 登录表单区域 -->
-    <div class="welcome">
-      <p>欢迎登录明日图书馆</p>
-    </div>
+    <div class="welcome"></div>
     <van-form @submit="login">
       <van-field
         placeholder="请输入用户名"
@@ -86,7 +84,7 @@ img {
   height: 80px;
   line-height: 80px;
   background-image: url("https://ss1.baidu.com/6ON1bjeh1BF3odCf/it/u=2816492195,455116796&fm=15&gp=0.jpg");
-  background-size:100% 100%;
+  background-size: 100% 100%;
   p {
     text-align: center;
     color: #eee;

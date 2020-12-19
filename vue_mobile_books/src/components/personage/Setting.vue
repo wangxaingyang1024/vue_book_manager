@@ -35,8 +35,8 @@ export default {
           confirmButtonColor: "red"
         })
         .then(() => {
-          this.$router.push("/books");
           window.sessionStorage.clear();
+          this.$router.push("/books");
         })
         .catch(() => {
           console.log("点击了取消");
