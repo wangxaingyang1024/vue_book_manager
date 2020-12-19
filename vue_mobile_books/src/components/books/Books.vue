@@ -63,7 +63,7 @@ export default {
         //当前页数
         pageNum: 1,
         //当前每页显示多少条数据
-        pageSize: 1
+        pageSize: 10
       },
       //数据总条数
       total: 1
