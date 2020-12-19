@@ -34,6 +34,13 @@ export default {
   methods: {
     //获取书籍列表
     async getBookList() {
+      if (window.sessionStorage.getItem("jobNumber")) {
+        this.$toast.loading({
+          duration: 0, // 持续展示 toast
+          forbidClick: true,
+          className: "toast"
+        });
+      }
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
@@ -84,8 +91,8 @@ export default {
           });
           // console.log("还书失败");
         }
-        this.$toast.success({ message: "归还书籍成功!", className: "toast" });
         this.getBookList();
+        this.$toast.success({ message: "归还书籍成功!", className: "toast" });
       }
     }
   }
