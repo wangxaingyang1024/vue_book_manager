@@ -75,13 +75,21 @@ export default {
   },
   methods: {
     async getUserForm() {
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
-
       console.log(res);
       if (res.status !== 200) {
-        return this.$toast.fail("获取个人信息失败！");
+        return this.$toast.fail({
+          message: "获取个人信息失败!",
+          className: "toast"
+        });
       }
       this.userForm = res.data;
+      this.$toast.clear();
       this.userForm.birth = this.userForm.birth.slice(0, 10);
       this.userForm.gender = this.userForm.gender + "";
     },
@@ -136,20 +144,24 @@ export default {
       ) {
         return;
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.put("upProfile", this.userForm);
       if (res.status !== 3032) {
-        return this.$toast.fail("修改失败！");
+        return this.$toast.fail({ message: "修改失败!", className: "toast" });
       } else {
         // location.reload();
         this.getUserForm();
-        this.$toast.success("修改成功！");
+        this.$toast.success({ message: "修改成功!", className: "toast" });
         console.log(this.userForm.nickName);
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
     },
     onClickLeft() {
-      window.history.back();
-      location.reload();
+      this.$router.push("setting");
     }
   }
 };

@@ -34,6 +34,11 @@ export default {
   methods: {
     //获取书籍列表
     async getBookList() {
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
@@ -62,20 +67,26 @@ export default {
         })
         .catch(err => err);
       //console.log(confirmResult)
-      //用户确认删除 返回字符串confirm
-      //用户取消删除 返回字符串cancel
       if (confirmResult !== "confirm") {
-        console.log("用户取消了归还");
+        return;
       } else {
+        this.$toast.loading({
+          duration: 0, // 持续展示 toast
+          forbidClick: true,
+          className: "toast"
+        });
         const { data: res } = await this.$http.post("book/return", {
           jobNumber: this.jobNumber,
           isbn: isbn
         });
         if (res.status !== 6008) {
-          return this.$toast.fail("归还书籍失败！");
+          return this.$toast.fail({
+            message: "归还书籍失败!",
+            className: "toast"
+          });
           // console.log("还书失败");
         }
-        this.$toast.success("归还书籍成功!");
+        this.$toast.success({ message: "归还书籍成功!", className: "toast" });
         this.getBookList();
       }
     }
@@ -85,9 +96,6 @@ export default {
 <style lang="less">
 .van-swipe-cell__right {
   background: #fff;
-}
-.toast {
-  background: rgba(75, 76, 76, 0.456);
 }
 </style>
 <style lang="less" scoped>

@@ -80,17 +80,30 @@ export default {
     },
     //返回上一层
     login() {
-      window.history.back();
+      this.$router.push("login");
     },
     //注册按钮
     async signUp() {
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
+
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
       //注册成功跳转到登录，失败则停留当前页面
-      if (res.status == 3021) return this.$toast.fail("用户名已存在！");
+      if (res.status == 3021)
+        return this.$toast.fail({
+          message: "用户名已存在!",
+          className: "toast"
+        });
       if (res.status !== 3024) {
-        this.$toast.fail("注册失败！");
+        this.$toast.fail({ message: "注册失败!", className: "toast" });
       } else {
-        this.$toast.success("注册成功！请登录！");
+        this.$toast.success({
+          message: "注册成功！请登录!",
+          className: "toast"
+        });
         this.$router.push("/login");
       }
     }

@@ -12,7 +12,9 @@ body,
   margin: 0;
   padding: 0;
 }
-
+.toast {
+  background: rgba(75, 76, 76, 0.456);
+}
 body {
   background-color: #e4fcf175;
 }

@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      window.history.back();
+      this.$router.push("/person");
     },
     //退出登录
     exitHome() {
@@ -39,7 +39,7 @@ export default {
           this.$router.push("/books");
         })
         .catch(() => {
-          console.log("点击了取消");
+          return;
         });
     },
     exitLogin() {
@@ -53,7 +53,6 @@ export default {
 .separated {
   width: 100%;
   height: 5px;
-  border: 1px solid #e7e7e7;
 }
 .exit {
   text-align: center;

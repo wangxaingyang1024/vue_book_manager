@@ -54,19 +54,23 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        message: "登录中..."
+        className: "toast"
       });
       const { data: res } = await this.$http.post("login", this.loginForm);
       if (res.status === 3031)
-        return this.$toast.fail("用户名不存在，请先注册!");
-      if (res.status !== 1000) return this.$toast.fail("登录失败!");
+        return this.$toast.fail({
+          message: "用户名不存在，请先注册!",
+          className: "toast"
+        });
+      if (res.status !== 1000)
+        return this.$toast.fail({ message: "登录失败!", className: "toast" });
       //将登录成功的token保存到客户端的sessionStorage中
       window.sessionStorage.setItem("token", res.data.token);
       //将jobNumber保存到客户端的sessionStorage中
       window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
       window.sessionStorage.setItem("nickName", res.data.nickName);
       //通过编程式导航跳转到后台主页，路由地址  /home
-      this.$toast.success("登录成功!");
+      this.$toast.success({ message: "登录成功!", className: "toast" });
       this.$router.push("/home");
     }
   }

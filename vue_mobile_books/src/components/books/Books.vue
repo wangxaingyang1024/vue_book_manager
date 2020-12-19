@@ -87,7 +87,10 @@ export default {
         params: this.queryInfo
       });
       if (res.status !== 6011) {
-        return this.$totast.fail("获取图书列表失败！");
+        return this.$totast.fail({
+          message: "获取图书列表失败!",
+          className: "toast"
+        });
       }
       this.queryInfo.pageNum += 1;
       this.booklist.push(...res.data.list);
@@ -97,17 +100,22 @@ export default {
     //借阅书籍
     async borrowBook(isbn) {
       if (this.jobNumber === null || this.token === null) {
-        return this.$toast.fail("请先登录！");
+        return this.$toast.fail({ message: "请先登录!", className: "toast" });
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
         isbn: isbn
       });
       //console.log(res);
       if (res.status !== 6006) {
-        return this.$toast.fail("借阅失败！");
+        return this.$toast.fail({ message: "借阅失败!", className: "toast" });
       }
-      this.$toast.success("借阅成功!");
+      this.$toast.success({ message: "借阅成功!", className: "toast" });
       location.reload();
     }
   },

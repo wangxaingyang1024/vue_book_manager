@@ -103,16 +103,21 @@ export default {
       ) {
         return;
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("changePsw", this.userForm);
       console.log(res);
-      if (res.status !== 1002) return this.$toast.fail("修改失败！");
-
-      this.$toast.success("修改成功！");
+      if (res.status !== 1002)
+        return this.$toast.fail({ message: "修改失败!", className: "toast" });
+      this.$toast.success({ message: "修改成功!", className: "toast" });
       window.sessionStorage.clear();
       return this.$router.push("/login");
     },
     onClickLeft() {
-      window.history.back();
+      this.$router.push("setting");
     }
   }
 };

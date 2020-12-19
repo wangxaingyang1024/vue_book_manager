@@ -100,7 +100,7 @@ export default {
               location.reload();
             })
             .catch(() => {
-              console.log("点击了取消");
+              return;
             });
           break;
       }
