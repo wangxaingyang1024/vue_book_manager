@@ -112,7 +112,7 @@ export default {
       return this.$router.push("/login");
     },
     onClickLeft() {
-      this.$router.push("/setting");
+      window.history.back();
     }
   }
 };

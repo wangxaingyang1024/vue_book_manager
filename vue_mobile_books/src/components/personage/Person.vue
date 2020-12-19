@@ -63,7 +63,7 @@ export default {
 
       console.log(res);
       if (res.status === 402) {
-        return this.$toast.fail("请先登录！");
+        return;
       }
       if (res.status !== 200) {
         return this.$toast.fail("获取个人信息失败！");
@@ -87,9 +87,6 @@ export default {
       }
     },
     toSetting() {
-      if (this.nickName === null) {
-        return this.$toast.fail("请先登录！");
-      }
       this.$router.push("/setting");
     }
   }

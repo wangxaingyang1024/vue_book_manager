@@ -42,7 +42,6 @@ export default {
     };
   },
   methods: {
-    //点击图片跳转到主页
     home() {
       this.$router.push("/home");
     },

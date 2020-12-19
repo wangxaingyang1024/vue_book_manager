@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.push("/person");
+      window.history.back();
     },
     //退出登录
     exitHome() {

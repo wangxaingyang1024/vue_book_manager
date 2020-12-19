@@ -140,15 +140,16 @@ export default {
       if (res.status !== 3032) {
         return this.$toast.fail("修改失败！");
       } else {
-        location.reload();
-        // this.getUserForm();
+        // location.reload();
+        this.getUserForm();
         this.$toast.success("修改成功！");
         console.log(this.userForm.nickName);
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
     },
     onClickLeft() {
-      this.$router.push("/setting");
+      window.history.back();
+      location.reload();
     }
   }
 };

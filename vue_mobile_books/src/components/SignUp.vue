@@ -68,10 +68,6 @@ export default {
     };
   },
   methods: {
-    //点击图片跳转到主页
-    home() {
-      this.$router.push("/home");
-    },
     //检验密码规则
     psw(val) {
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(val);
@@ -84,7 +80,7 @@ export default {
     },
     //返回上一层
     login() {
-      this.$router.push("/login");
+      window.history.back();
     },
     //注册按钮
     async signUp() {

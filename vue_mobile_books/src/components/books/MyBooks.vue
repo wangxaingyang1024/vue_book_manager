@@ -39,7 +39,7 @@ export default {
       );
       console.log(res);
       if (res.status === 402) {
-        return this.$toast.fail("请先登录！");
+        return;
       }
       if (res.status !== 200) {
         return this.$toast.fail("获取图书失败！");
