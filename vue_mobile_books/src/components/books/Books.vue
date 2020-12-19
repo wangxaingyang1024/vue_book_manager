@@ -12,7 +12,7 @@
       >
         <!-- 书籍 -->
         <van-collapse
-          v-model="activeName"
+          v-model="item.isbn"
           v-for="item in booklist"
           :key="item.isbn"
           accordion
@@ -57,14 +57,13 @@ export default {
       value: "",
       activeName: "",
       booklist: [],
-      typeList: [],
       queryInfo: {
         //模糊查询
         name: "",
         //当前页数
         pageNum: 1,
         //当前每页显示多少条数据
-        pageSize: 10
+        pageSize: 1
       },
       //数据总条数
       total: 1
@@ -122,8 +121,12 @@ export default {
   watch: {
     "queryInfo.name"(val) {
       this.queryInfo.pageNum = 1;
+      this.total = 1;
       this.booklist = [];
+      this.finished = false;
+      this.loading = false;
       this.getBookList();
+      this.queryInfo.pageNum += 1;
     }
   }
 };
