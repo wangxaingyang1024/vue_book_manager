@@ -3,7 +3,7 @@
     <!-- 我的书籍 -->
     <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
       <van-collapse v-model="activeName" accordion>
-        <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
+        <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
           <div><span class="title">作者:</span> {{ item.author }}</div>
           <div><span class="title">编号:</span> {{ item.isbn }}</div>
           <div><span class="title">简介:</span> {{ item.synopsis }}</div>
