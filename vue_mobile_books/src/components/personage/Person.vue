@@ -148,6 +148,10 @@ p {
 
 .img {
   user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
   width: 75px;
   height: 75px;
   background-color: #0b421750;

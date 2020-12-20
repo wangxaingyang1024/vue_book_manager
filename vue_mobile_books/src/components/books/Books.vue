@@ -63,7 +63,7 @@ export default {
         //当前页数
         pageNum: 1,
         //当前每页显示多少条数据
-        pageSize: 10
+        pageSize: 1
       },
       //数据总条数
       total: 1
@@ -80,7 +80,7 @@ export default {
     //获取书籍列表
     async getBookList() {
       if (this.booklist.length >= this.total) {
-        this.finished = true;
+        return (this.finished = true);
       }
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo
