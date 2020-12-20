@@ -12,12 +12,12 @@
       >
         <!-- 书籍 -->
         <van-collapse
-          v-model="item.isbn"
-          v-for="item in booklist"
+          v-model="activeName"
+          v-for="(item, index) in booklist"
           :key="item.isbn"
           accordion
         >
-          <van-collapse-item :title="'《' + item.name + '》'" :name="item.name">
+          <van-collapse-item :title="'《' + item.name + '》'" :name="index">
             <div><span class="title">作者:</span> {{ item.author }}</div>
             <div><span class="title">编号:</span> {{ item.isbn }}</div>
             <div>
@@ -55,7 +55,7 @@ export default {
       loading: false,
       finished: false,
       value: "",
-      activeName: "",
+      activeName: "1",
       booklist: [],
       queryInfo: {
         //模糊查询
@@ -63,7 +63,7 @@ export default {
         //当前页数
         pageNum: 1,
         //当前每页显示多少条数据
-        pageSize: 1
+        pageSize: 10
       },
       //数据总条数
       total: 1
