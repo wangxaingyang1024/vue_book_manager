@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <template>
   <el-card class="box-card">
     <el-row :gutter="20">
@@ -10,7 +9,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            id='datePicker'
+            id="datePicker"
           >
             >
           </el-date-picker>
@@ -37,8 +36,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button @click="getAllLog" v-if="all === true" id='getAllLogButton'>加载全部</el-button>
-    <el-button @click="getLog" v-else id='getLogButton'>折叠</el-button>
+    <el-button @click="getAllLog" v-if="all === true" id="getAllLogButton"
+      >加载全部</el-button
+    >
+    <el-button @click="getLog" v-else id="getLogButton">折叠</el-button>
   </el-card>
 </template>
 

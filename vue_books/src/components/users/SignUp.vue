@@ -3,13 +3,19 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home"/>
+          <img src="~assets/logo.jpg" @click="home" id="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">注册页面</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="back" class="back" id="backButton">
+          <el-button
+            type="info"
+            round
+            @click="back"
+            class="back"
+            id="backButton"
+          >
             返回登录
           </el-button>
         </el-col>
@@ -56,7 +62,9 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="addUser" id="addUserButton">提交</el-button>
+          <el-button type="primary" round @click="addUser" id="addUserButton"
+            >提交</el-button
+          >
         </el-form-item>
       </el-form>
     </el-main>
@@ -168,7 +176,7 @@ export default {
           this.$message.error("注册失败！");
         } else {
           this.$message.success("注册成功！请登录！");
-          this.$router.push("/Login");
+          this.$router.push("/login");
         }
       });
     },
