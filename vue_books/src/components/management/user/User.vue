@@ -14,7 +14,12 @@
       <el-table-column prop="phone" label="电话"> </el-table-column>
       <el-table-column prop="birth" label="年龄">
         <template slot-scope="scope">
-          {{ new Date().getFullYear() - scope.row.birth.slice(0, 4) + "岁" }}
+          {{
+            scope.row.birth === null
+              ? 0
+              : new Date().getFullYear() - scope.row.birth.slice(0, 4)
+          }}岁
+          <!-- {{ new Date().getFullYear() - scope.row.birth.slice(0, 4) + "岁" }} -->
         </template>
       </el-table-column>
       <el-table-column label="操作">
