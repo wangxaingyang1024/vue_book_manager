@@ -78,12 +78,12 @@ export default {
         return (this.loglist = this.list.slice(0, 10));
       }
       const { data: res } = await this.$http.get("log/admin/newLogs");
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }
       this.loglist = res.data;
-      this.loading = !this.loading;
     },
     async getAllLog() {
       this.loading = !this.loading;
@@ -93,12 +93,12 @@ export default {
         return (this.loglist = this.list);
       }
       const { data: res } = await this.$http.get("log/admin/allLogs");
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
       }
       this.loglist = res.data;
-      this.loading = !this.loading;
     },
     async getLogByTime() {
       this.loading = !this.loading;
@@ -108,6 +108,7 @@ export default {
         "log/admin/logT",
         this.findTime
       );
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
@@ -115,7 +116,6 @@ export default {
       this.list = res.data;
       this.loglist = this.list.slice(0, 10);
       console.log(this.list);
-      this.loading = !this.loading;
     },
   },
   watch: {

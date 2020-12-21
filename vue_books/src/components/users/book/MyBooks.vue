@@ -59,12 +59,12 @@ export default {
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data;
-      this.loading = !this.loading;
       console.log(res.status);
     },
     async returnBook(isbn) {

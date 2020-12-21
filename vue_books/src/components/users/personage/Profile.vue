@@ -117,12 +117,12 @@ export default {
     async getUserForm() {
       this.loading = !this.loading;
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
+      this.loading = !this.loading;
       console.log(res.data);
       if (res.status !== 200) {
         return this.$message.error("获取个人信息失败！");
       }
       this.userForm = res.data;
-      this.loading = !this.loading;
     },
     //点击按钮提交表单
     editUser() {

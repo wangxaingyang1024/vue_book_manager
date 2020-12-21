@@ -129,12 +129,12 @@ export default {
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
+      this.loading = !this.loading;
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data.list;
       this.total = res.data.total;
-      this.loading = !this.loading;
     },
     async borrowBook(isbn) {
       if (this.jobNumber === null || this.token === null) {

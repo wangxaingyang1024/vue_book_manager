@@ -218,13 +218,13 @@ export default {
       const { data: res } = await this.$http.get(`admin/find`, {
         params: this.queryInfo,
       });
+      this.loading = !this.loading;
       console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data.list;
       this.total = res.data.total;
-      this.loading = !this.loading;
     },
     // typeFilter(value, row) {
     //   return row.type === value;
@@ -239,11 +239,11 @@ export default {
     async getTypeList() {
       this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/type/3");
+      this.loading = !this.loading;
       // console.log(res.data);
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");
       this.typeList = res.data;
-      this.loading = !this.loading;
     },
     //监听修改书籍对话框的关闭事件
     editDialogClosed() {

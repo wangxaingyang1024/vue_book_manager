@@ -85,6 +85,7 @@ export default {
       const { data: res } = await this.$http.get(
         `admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
       );
+      this.loading = !this.loading;
       if (res.status === 3023) {
         return (this.userlist = []);
       }
@@ -93,7 +94,6 @@ export default {
       }
       this.userlist = res.data.list;
       this.total = res.data.total;
-      this.loading = !this.loading;
     },
     async removeUser(jobNumber) {
       //弹框询问用户是否删除数据

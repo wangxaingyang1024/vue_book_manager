@@ -125,9 +125,9 @@ export default {
     async getTypeList() {
       this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/type/3");
+      this.loading = !this.loading;
       if (res.status !== 200) return this.$message.error("获取图书分类失败！");
       this.typeList = res.data;
-      this.loading = !this.loading;
     },
     showAddTypeDialog() {
       this.getParentTypeList();
