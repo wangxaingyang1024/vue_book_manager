@@ -33,6 +33,7 @@
     <el-container>
       <!-- 内容主体 -->
       <el-main>
+        <el-backtop target=".el-main"></el-backtop>
         <el-card>
           <el-col :span="8">
             <el-input

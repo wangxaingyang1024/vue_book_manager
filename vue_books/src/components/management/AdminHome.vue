@@ -13,7 +13,12 @@
           {{ " Hi, " + this.nickName }}
         </el-col>
         <el-col :span="3">
-          <el-button type="info" round @click="logout" class="logout" id="logout"
+          <el-button
+            type="info"
+            round
+            @click="logout"
+            class="logout"
+            id="logout"
             >退出</el-button
           >
         </el-col>
@@ -63,6 +68,7 @@
       </el-aside>
       <!-- 右侧内容主体 -->
       <el-main>
+        <el-backtop target=".el-main"></el-backtop>
         <!-- 路由占位符 -->
         <router-view></router-view>
       </el-main>
