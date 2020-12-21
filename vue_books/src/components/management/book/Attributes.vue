@@ -1,6 +1,8 @@
 <template>
   <el-card>
-    <el-button type="primary" @click="showAddTypeDialog" id="addTypeButton">添加分类</el-button>
+    <el-button type="primary" @click="showAddTypeDialog" id="addTypeButton"
+      >添加分类</el-button
+    >
     <tree-table
       :data="typeList"
       :columns="columns"
@@ -10,6 +12,7 @@
       border
       :default-expand-all="true"
       :show-row-hover="false"
+      v-loading="loading"
       id="treeTable"
     >
       <template slot="order" slot-scope="scope">
@@ -61,8 +64,12 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addTypeDialogVisible = false" id="cancelButton">取 消</el-button>
-        <el-button type="primary" @click="addType" id="confirmButton">确 定</el-button>
+        <el-button @click="addTypeDialogVisible = false" id="cancelButton"
+          >取 消</el-button
+        >
+        <el-button type="primary" @click="addType" id="confirmButton"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </el-card>
@@ -72,6 +79,7 @@
 export default {
   data() {
     return {
+      loading: false,
       typeList: [],
       columns: [
         {
@@ -115,9 +123,11 @@ export default {
   methods: {
     //获取分类列表
     async getTypeList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/type/3");
       if (res.status !== 200) return this.$message.error("获取图书分类失败！");
       this.typeList = res.data;
+      this.loading = !this.loading;
     },
     showAddTypeDialog() {
       this.getParentTypeList();

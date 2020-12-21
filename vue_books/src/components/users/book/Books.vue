@@ -10,7 +10,7 @@
       >
       </el-input
     ></el-col>
-    <el-table :data="booklist" stripe>
+    <el-table :data="booklist" stripe v-loading="loading">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -62,6 +62,7 @@
     </el-table>
     <!-- 分页区域 -->
     <el-pagination
+      v-if="loading === false"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pageNum"
@@ -78,6 +79,7 @@
 export default {
   data() {
     return {
+      loading: false,
       queryInfo: {
         //模糊查询
         name: "",
@@ -123,6 +125,7 @@ export default {
     //   // console.log(this.typeList);
     // },
     async getBookList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
@@ -131,6 +134,7 @@ export default {
       }
       this.booklist = res.data.list;
       this.total = res.data.total;
+      this.loading = !this.loading;
     },
     async borrowBook(isbn) {
       if (this.jobNumber === null || this.token === null) {

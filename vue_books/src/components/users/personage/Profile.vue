@@ -5,6 +5,7 @@
     :model="userForm"
     :rules="editFormRules"
     status-icon
+    v-loading="loading"
   >
     <!-- 用户名 -->
     <el-form-item>
@@ -26,8 +27,12 @@
     </el-form-item>
     <!-- 性别 -->
     <el-form-item prop="gender">
-      <el-radio v-model="userForm.gender" :label="1" id="gender_man">男</el-radio>
-      <el-radio v-model="userForm.gender" :label="0" id="gender_woman">女</el-radio>
+      <el-radio v-model="userForm.gender" :label="1" id="gender_man"
+        >男</el-radio
+      >
+      <el-radio v-model="userForm.gender" :label="0" id="gender_woman"
+        >女</el-radio
+      >
     </el-form-item>
     <!-- 生日 -->
     <el-form-item prop="date">
@@ -54,7 +59,9 @@
     </el-form-item>
     <!-- 按钮区域 -->
     <el-form-item>
-      <el-button type="primary" round @click="editUser" id="editUserButton">提交</el-button>
+      <el-button type="primary" round @click="editUser" id="editUserButton"
+        >提交</el-button
+      >
     </el-form-item>
   </el-form>
 </template>
@@ -76,6 +83,7 @@ export default {
       callback(new Error("请输入合法手机号"));
     };
     return {
+      loading: false,
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       userForm: {},
       editFormRules: {
@@ -107,13 +115,14 @@ export default {
   },
   methods: {
     async getUserForm() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
-
       console.log(res.data);
       if (res.status !== 200) {
         return this.$message.error("获取个人信息失败！");
       }
       this.userForm = res.data;
+      this.loading = !this.loading;
     },
     //点击按钮提交表单
     editUser() {
