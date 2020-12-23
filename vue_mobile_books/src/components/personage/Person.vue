@@ -1,11 +1,10 @@
 <template>
   <div>
     <!-- 用户信息栏 -->
-    <van-card id="card" style="height:110px">
+    <van-card id="card" style="height: 110px">
       <template #thumb>
-        <div class="img">
-          <span>{{ imgNickName }}</span>
-        </div>
+        <img src="" style="border-radius: 50%" id="userAvatar" />
+        <canvas id="avatarCanvas" style="display: none"></canvas>
       </template>
       <template #title>
         <p>{{ userForm.nickName }}</p>
@@ -25,7 +24,7 @@
         <van-icon size="20" name="arrow-up" v-else @click="show($event)" />
       </template>
       <template #price>
-        <div id="price" style="height:0px">
+        <div id="price" style="height: 0px">
           <div class="show">生日:{{ userForm.birth }}</div>
           <div class="show shows">手机号:{{ userForm.phone }}</div>
         </div>
@@ -46,16 +45,15 @@ export default {
     return {
       nickName: window.sessionStorage.getItem("nickName"),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      imgNickName: "",
       msg: false,
-      userForm: {}
+      userForm: {},
     };
   },
   created() {
     this.getUserForm();
-    if (this.nickName !== null) {
-      this.imgNickName = this.nickName.slice(-2);
-    }
+  },
+  mounted() {
+    this.generatorAvator(this.nickName, "avatarCanvas", "userAvatar");
   },
   methods: {
     async getUserForm() {
@@ -63,7 +61,7 @@ export default {
         this.$toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
-          className: "toast"
+          className: "toast",
         });
       }
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
@@ -74,7 +72,7 @@ export default {
       if (res.status !== 200) {
         return this.$toast.fail({
           message: "获取个人信息失败!",
-          className: "toast"
+          className: "toast",
         });
       }
       this.$toast.clear();
@@ -98,8 +96,73 @@ export default {
     },
     toSetting() {
       this.$router.push("/setting");
-    }
-  }
+    },
+    generatorAvator(username, canvasId, avatarContainerId) {
+      //设置头像昵称，如果为null或者为空时，设置为无
+      var nickname = username;
+      //设置头像大小
+      var avatarSize = 75;
+
+      //设置头像内部文字大小
+      var fontSize = 23;
+
+      //设置头像内部字体
+      var fontWeight = "normal";
+
+      //设置头像背景颜色
+      var colors = [
+        "#31bc9f",
+        "#33cc70",
+        "#4a94db",
+        "#9b5fb6",
+        "#34495e",
+        "#16a085",
+        "#27ae60",
+        "#2980b9",
+        "#8e44ad",
+        "#2c3e50",
+        "#f1cb1e",
+        "#e6761b",
+        "#e7363b",
+        "#00bcd4",
+        "#95a5a6",
+        "#f39c12",
+        "#d35400",
+        "#c0392b",
+        "#bdc3c7",
+        "#7f8c8d",
+      ];
+      var avatarColor = colors[Math.floor(Math.random() * colors.length)];
+
+      /*根据id获取canvas
+       * 如果为空，则创建新的canvas
+       * */
+      var canvas = document.getElementById(canvasId);
+
+      //初始化canvas设置
+      canvas.width = avatarSize;
+      canvas.height = avatarSize;
+      var context = canvas.getContext("2d");
+
+      //头像背景颜色设置
+      context.fillStyle = avatarColor;
+      context.fillRect(0, 0, canvas.width + 10, canvas.height);
+
+      //头像字体颜色设置
+      context.fillStyle = "#FFFFFF";
+      context.font = fontWeight + " " + fontSize + "px sans-serif";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      // context.translate(6, 8);
+      console.log(nickname);
+      if (!nickname) {
+        nickname = "null";
+      }
+      context.fillText(nickname.slice(-2), avatarSize / 2, avatarSize / 2);
+
+      document.getElementById(avatarContainerId).src = canvas.toDataURL("image/png");
+    },
+  },
 };
 </script>
 
@@ -143,25 +206,6 @@ p {
   .van-icon-arrow-down {
     top: 0;
     transition: top 1s;
-  }
-}
-
-.img {
-  user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-  width: 75px;
-  height: 75px;
-  background-color: #0b421750;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 75px;
-  margin-top: 10px;
-  span {
-    color: #fff;
-    font-size: 25px;
   }
 }
 .separated {
