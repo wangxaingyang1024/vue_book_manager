@@ -3,18 +3,18 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="设置">
       <template #left>
-        <van-icon name="arrow-left" @click="onClickLeft" />
+        <van-icon name="arrow-left" @click="onClickLeft" id="personButton"/>
       </template>
     </van-nav-bar>
     <!-- 主体内容 -->
     <van-cell-group border>
-      <van-cell title="个人信息设置" is-link to="/profile" />
-      <van-cell title="密码设置" is-link to="/admin" />
+      <van-cell title="个人信息设置" is-link to="/profile" id="profileButton"/>
+      <van-cell title="密码设置" is-link to="/admin" id="adminButton"/>
     </van-cell-group>
     <div class="separated"></div>
-    <van-cell class="exit" title="切换账号" @click="exitLogin" />
+    <van-cell class="exit" title="切换账号" @click="exitLogin" id="exitLoginButton"/>
     <div class="separated"></div>
-    <van-cell class="exit" title="退出登录" @click="exitHome" />
+    <van-cell class="exit" title="退出登录" @click="exitHome" id="exitHomeButton"/>
   </div>
 </template>
 

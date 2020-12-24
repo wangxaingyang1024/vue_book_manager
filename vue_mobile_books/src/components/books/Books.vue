@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" />
+    <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" id="search"/>
     <!-- <p>图书列表</p> -->
-    <div style="height:calc(100vh - 150px);overflow:auto;">
+    <div style="height:calc(100vh - 150px);overflow:auto;" >
       <van-list
         v-model="loading"
         :finished="finished"
@@ -16,6 +16,7 @@
           v-for="(item, index) in booklist"
           :key="item.isbn"
           accordion
+          id="moreMessage"
         >
           <van-collapse-item :title="'《' + item.name + '》'" :name="index">
             <div><span class="title">作者:</span> {{ item.author }}</div>
@@ -35,6 +36,7 @@
                 size="mini"
                 v-if="item.status === true"
                 @click="borrowBook(item.isbn)"
+                id="borrowBookButton"
                 >借阅</van-button
               >
               <van-button disabled size="mini" v-else>借阅</van-button>

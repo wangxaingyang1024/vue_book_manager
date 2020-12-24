@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="用户登录" left-arrow @click-left="home"> </van-nav-bar>
+    <van-nav-bar title="用户登录" left-arrow @click-left="home" id="leaveLogin"> </van-nav-bar>
     <!-- 登录表单区域 -->
     <div class="welcome"></div>
     <van-form @submit="login">
@@ -21,13 +21,14 @@
         label="密码"
         :rules="[{ required: true }]"
         clearable
+        id="password"
       />
       <div style="margin: 35px">
-        <van-button round block type="primary" native-type="submit">
+        <van-button round block type="primary" native-type="submit" id="login">
           登录
         </van-button>
       </div>
-      <p @click="signUp">新用户注册</p>
+      <p @click="signUp" id="signUpButton">新用户注册</p>
     </van-form>
   </div>
 </template>

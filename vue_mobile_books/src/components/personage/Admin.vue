@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="密码设置" left-arrow @click-left="onClickLeft">
+    <van-nav-bar title="密码设置" left-arrow @click-left="onClickLeft" id="leaveAdmin">
     </van-nav-bar>
     <van-form @submit="editUser">
       <van-field
@@ -17,6 +17,7 @@
             message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           }
         ]"
+        id="oldPsw"
       />
       <van-field
         v-model="userForm.newPsw"
@@ -32,6 +33,7 @@
           },
           { validator: newPsw, message: '新密码不能与旧密码相同' }
         ]"
+        id="newPsw"
       />
       <van-field
         v-model="userForm.checkPsw"
@@ -47,9 +49,10 @@
           },
           { validator: reNewPsw, message: '两次密码不一致' }
         ]"
+        id="checkPsw"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" @click="editUser">
+        <van-button round block type="info" @click="editUser" id="editUserButton">
           提交
         </van-button>
       </div>

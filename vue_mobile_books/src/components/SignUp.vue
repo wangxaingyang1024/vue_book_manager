@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <!-- 导航区域 -->
-    <van-nav-bar title="新用户注册" left-arrow @click-left="login">
+    <van-nav-bar title="新用户注册" left-arrow @click-left="login" id="leaveSignUp">
     </van-nav-bar>
     <!-- 注册表单区域 -->
     <div class="welcome"></div>
@@ -16,6 +16,7 @@
           { required: true },
           { pattern, message: '需以字母开头，字母数字组合3~10长度' }
         ]"
+        id="username"
       />
       <van-field
         placeholder="请输入密码"
@@ -30,6 +31,7 @@
             message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           }
         ]"
+        id="password"
       />
       <van-field
         placeholder="请再次输入密码"
@@ -45,9 +47,10 @@
           },
           { validator: rePsw, message: '两次密码必须一致' }
         ]"
+        id="checkPassword"
       />
       <div style="margin: 35px">
-        <van-button round block type="primary" native-type="submit">
+        <van-button round block type="primary" native-type="submit" id="signUpButton">
           注册
         </van-button>
       </div>

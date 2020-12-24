@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="个人信息设置" left-arrow @click-left="onClickLeft">
+    <van-nav-bar title="个人信息设置" left-arrow @click-left="onClickLeft" id="leaveProfile">
     </van-nav-bar>
     <van-form @submit="editUser">
       <van-field v-model="userForm.username" label="用户名" disabled />
@@ -11,8 +11,9 @@
         placeholder="请设置您的昵称"
         clearable
         :rules="[{ validator: nickNameRule, message: '长度为3-10位' }]"
+        id="nickName"
       />
-      <van-field label="性别">
+      <van-field label="性别" id="gender">
         <template #input>
           <van-radio-group v-model="userForm.gender" direction="horizontal">
             <van-radio size="mini" name="1">男</van-radio>
@@ -27,6 +28,7 @@
         :value="userForm.birth"
         value-class="van-field__control"
         @click="showPopup"
+        id="birth"
       ></van-cell>
       <van-popup v-model="show" position="bottom" round>
         <van-datetime-picker
@@ -38,6 +40,7 @@
           :loading="isLoadingShow"
           @cancel="show = false"
           @confirm="confirmPicker"
+          id="date"
         />
       </van-popup>
       <van-field
@@ -47,9 +50,10 @@
         type="tel"
         clearable
         :rules="[{ validator: phoneRule, message: '请输入正确手机号' }]"
+        id="phone"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="info" native-type="submit" @click="editUser" id="editUserButton">
           提交
         </van-button>
       </div>

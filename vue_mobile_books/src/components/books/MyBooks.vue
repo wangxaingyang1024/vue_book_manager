@@ -12,7 +12,7 @@
       </van-collapse>
       <!-- 左滑还书 -->
       <template #right>
-        <van-button text="归还" class="return" @click="returnBook(item.isbn)" />
+        <van-button text="归还" class="return" @click="returnBook(item.isbn)" id="returnBookButton"/>
       </template>
     </van-swipe-cell>
   </div>
