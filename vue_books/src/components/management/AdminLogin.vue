@@ -3,13 +3,18 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home"/>
+          <img src="~assets/logo.jpg" @click="home" id="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">管理员登录</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout" id="checkoutButton"
+          <el-button
+            type="info"
+            round
+            @click="checkout"
+            class="checkout"
+            id="checkoutButton"
             >切换用户端入口</el-button
           >
         </el-col>
@@ -18,6 +23,7 @@
     <el-main>
       <!-- 登录表单区域 -->
       <el-form
+        v-loading="loading"
         ref="loginFormRef"
         :model="loginForm"
         :rules="loginFormRules"
@@ -45,7 +51,12 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="login" class="login" id="loginButton"
+          <el-button
+            type="primary"
+            round
+            @click="login"
+            class="login"
+            id="loginButton"
             >登录</el-button
           >
           <!-- <el-button @click="signUp">注册</el-button> -->
@@ -59,6 +70,7 @@
 export default {
   data() {
     return {
+      loading: false,
       //这是登录表单的数据绑定对象
       loginForm: {
         username: "aaa",
@@ -101,10 +113,13 @@ export default {
       let that = this;
       that.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
+        this.loading = !this.loading;
         const { data: res } = await that.$http.post(
           "admin/login",
           that.loginForm
         );
+
+        this.loading = !this.loading;
         if (res.status == 3000) return that.$message.error("用户名不存在");
         if (res.status == 3001) return that.$message.error("密码错误！");
         if (res.status !== 1001)

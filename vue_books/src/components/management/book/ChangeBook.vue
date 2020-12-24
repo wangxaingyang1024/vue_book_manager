@@ -12,10 +12,12 @@
         </el-input>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" @click="goAddBook" id="goAddBookButton">添加书籍</el-button>
+        <el-button type="primary" @click="goAddBook" id="goAddBookButton"
+          >添加书籍</el-button
+        >
       </el-col>
     </el-row>
-    <el-table :data="booklist" border stripe>
+    <el-table :data="booklist" border stripe v-loading="loading">
       <el-table-column type="index" label="序号" width="50px">
       </el-table-column>
       <el-table-column prop="name" label="图书名"> </el-table-column>
@@ -60,6 +62,7 @@
     </el-table>
     <!-- 分页区域 -->
     <el-pagination
+      v-if="loading === false"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pageNum"
@@ -75,6 +78,7 @@
       :visible.sync="editDialogVisible"
       width="50%"
       @close="editDialogClosed"
+      v-loading="loading"
     >
       <el-form
         :model="editForm"
@@ -106,8 +110,12 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false" id="cancelButton">取 消</el-button>
-        <el-button type="primary" @click="editBookInfo" id="confirmButton">确 定</el-button>
+        <el-button @click="editDialogVisible = false" id="cancelButton"
+          >取 消</el-button
+        >
+        <el-button type="primary" @click="editBookInfo" id="confirmButton"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </el-card>
@@ -117,6 +125,7 @@
 export default {
   data() {
     return {
+      loading: false,
       queryInfo: {
         //模糊查询
         name: "",
@@ -205,9 +214,11 @@ export default {
       this.$router.push("/addBook");
     },
     async getBookList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get(`admin/find`, {
         params: this.queryInfo,
       });
+      this.loading = !this.loading;
       console.log(res.data);
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
@@ -226,7 +237,9 @@ export default {
     },
     //获取书籍分类
     async getTypeList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/type/3");
+      this.loading = !this.loading;
       // console.log(res.data);
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");

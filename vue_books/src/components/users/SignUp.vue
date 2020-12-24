@@ -28,6 +28,7 @@
         :model="addForm"
         :rules="addFormRules"
         status-icon
+        v-loading="loading"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -103,6 +104,7 @@ export default {
       return callback();
     };
     return {
+      loading: false,
       addForm: {
         username: "",
         password: "",
@@ -168,8 +170,10 @@ export default {
     addUser() {
       this.$refs.addFormRef.validate(async (valid) => {
         if (!valid) return;
+        this.loading = !this.loading;
         //可发起注册网络请求
         const { data: res } = await this.$http.post("signUp", this.addForm);
+        this.loading = !this.loading;
         //注册成功跳转到登录，失败则停留当前页面
         if (res.status == 3021) return this.$message.error("用户名已存在！");
         if (res.status !== 3024) {

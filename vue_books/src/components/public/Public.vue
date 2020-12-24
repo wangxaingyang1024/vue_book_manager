@@ -3,18 +3,28 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home"/>
+          <img src="~assets/logo.jpg" @click="home" id="home" />
         </el-col>
         <el-col :span="14">
           <span class="topText">明日图书馆</span>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" round @click="login" class="logout" id="loginButton"
+          <el-button
+            type="primary"
+            round
+            @click="login"
+            class="logout"
+            id="loginButton"
             >登录</el-button
           >
         </el-col>
         <el-col :span="2">
-          <el-button type="success" round @click="signUp" class="logout" id="signUpButton"
+          <el-button
+            type="success"
+            round
+            @click="signUp"
+            class="logout"
+            id="signUpButton"
             >注册</el-button
           >
         </el-col>
@@ -23,6 +33,7 @@
     <el-container>
       <!-- 内容主体 -->
       <el-main>
+        <el-backtop target=".el-main"></el-backtop>
         <el-card>
           <el-col :span="8">
             <el-input
@@ -34,7 +45,7 @@
             >
             </el-input
           ></el-col>
-          <el-table :data="booklist" stripe>
+          <el-table :data="booklist" stripe v-loading="loading">
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -73,6 +84,7 @@
           </el-table>
           <!-- 分页区域 -->
           <el-pagination
+            v-if="loading === false"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryInfo.pageNum"
@@ -92,6 +104,7 @@
 export default {
   data() {
     return {
+      loading: false,
       nickName: window.sessionStorage.getItem("nickName"),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       queryInfo: {
@@ -135,11 +148,13 @@ export default {
       this.getBookList();
     },
     async getBookList() {
+      this.loading = !this.loading;
       // this.booklist = [];
       // this.typeList = [];
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
+      this.loading = !this.loading;
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
       }

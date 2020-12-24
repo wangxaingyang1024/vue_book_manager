@@ -16,7 +16,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-table :data="loglist" border stripe>
+    <el-table :data="loglist" border stripe v-loading="loading">
       <el-table-column type="index" label="序号" width="70px">
       </el-table-column>
       <el-table-column prop="nickName" label="借阅人" width="120px">
@@ -36,10 +36,18 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button @click="getAllLog" v-if="all === true" id="getAllLogButton"
+    <el-button
+      @click="getAllLog"
+      v-if="all === true && loading === false"
+      id="getAllLogButton"
       >加载全部</el-button
     >
-    <el-button @click="getLog" v-else id="getLogButton">折叠</el-button>
+    <el-button
+      @click="getLog"
+      v-else-if="all === false && loading === false"
+      id="getLogButton"
+      >折叠</el-button
+    >
   </el-card>
 </template>
 
@@ -55,6 +63,7 @@ export default {
         endTime: "",
       },
       all: false,
+      loading: false,
     };
   },
   created() {
@@ -62,11 +71,14 @@ export default {
   },
   methods: {
     async getLog() {
+      this.loading = !this.loading;
       this.all = !this.all;
       if (this.list.length !== 0) {
+        this.loading = !this.loading;
         return (this.loglist = this.list.slice(0, 10));
       }
       const { data: res } = await this.$http.get("log/admin/newLogs");
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
@@ -74,11 +86,14 @@ export default {
       this.loglist = res.data;
     },
     async getAllLog() {
+      this.loading = !this.loading;
       this.all = !this.all;
       if (this.list.length !== 0) {
+        this.loading = !this.loading;
         return (this.loglist = this.list);
       }
       const { data: res } = await this.$http.get("log/admin/allLogs");
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");
@@ -86,12 +101,14 @@ export default {
       this.loglist = res.data;
     },
     async getLogByTime() {
+      this.loading = !this.loading;
       this.all = true;
       console.log(this.findTime);
       const { data: res } = await this.$http.post(
         "log/admin/logT",
         this.findTime
       );
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取借阅记录失败！");

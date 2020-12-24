@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-table :data="booklist" stripe>
+    <el-table :data="booklist" stripe v-loading="loading">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -45,6 +45,7 @@
 export default {
   data() {
     return {
+      loading: false,
       booklist: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
     };
@@ -54,9 +55,11 @@ export default {
   },
   methods: {
     async getBookList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取图书列表失败！");

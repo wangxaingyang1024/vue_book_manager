@@ -86,6 +86,7 @@
 
       <!-- 内容主体 -->
       <el-main>
+        <el-backtop target=".el-main"></el-backtop>
         <!-- 路由占位符 -->
         <router-view></router-view>
       </el-main>

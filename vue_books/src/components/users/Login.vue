@@ -3,13 +3,19 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home"/>
+          <img src="~assets/logo.jpg" @click="home" id="home" />
         </el-col>
         <el-col :span="16">
           <span class="topText">用户登录</span>
         </el-col>
         <el-col :span="4">
-          <el-button type="info" round @click="checkout" class="checkout" id="checkoutButton">
+          <el-button
+            type="info"
+            round
+            @click="checkout"
+            class="checkout"
+            id="checkoutButton"
+          >
             切换管理员端入口
           </el-button>
         </el-col>
@@ -23,6 +29,7 @@
         :rules="loginFormRules"
         label-width="0px"
         class="login_form"
+        v-loading="loading"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -63,6 +70,7 @@
 export default {
   data() {
     return {
+      loading: false,
       //这是登录表单的数据绑定对象
       loginForm: {
         username: "zzz",
@@ -108,7 +116,9 @@ export default {
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
+        this.loading = !this.loading;
         const { data: res } = await this.$http.post("login", this.loginForm);
+        this.loading = !this.loading;
         if (res.status === 3031)
           return this.$message.error("用户名不存在，请先注册!");
         if (res.status !== 1000) return this.$message.error("登录失败!");

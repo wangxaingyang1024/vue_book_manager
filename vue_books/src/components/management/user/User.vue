@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <el-table :data="userlist" border stripe>
+    <el-table :data="userlist" border stripe v-loading="loading">
       <el-table-column type="index" label="序号" width="50px">
       </el-table-column>
       <el-table-column prop="username" label="用户名"> </el-table-column>
@@ -37,6 +37,7 @@
     </el-table>
     <!-- 分页区域 -->
     <el-pagination
+      v-if="loading === false"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pageNum"
@@ -53,6 +54,7 @@
 export default {
   data() {
     return {
+      loading: false,
       queryInfo: {
         //当前页数
         pageNum: 1,
@@ -79,9 +81,11 @@ export default {
       this.getUserList();
     },
     async getUserList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get(
         `admin/emps/${this.queryInfo.pageNum}/${this.queryInfo.pageSize}`
       );
+      this.loading = !this.loading;
       if (res.status === 3023) {
         return (this.userlist = []);
       }
