@@ -3,7 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="密码设置" left-arrow @click-left="onClickLeft" id="leaveAdmin">
     </van-nav-bar>
-    <van-form @submit="editUser">
+    <van-form>
       <van-field
         v-model="userForm.oldPsw"
         type="password"
@@ -39,7 +39,7 @@
         v-model="userForm.checkPsw"
         type="password"
         label="新密码"
-        placehold3eer="请再次输入新密码"
+        placeholder="请再次输入新密码"
         clearable
         :rules="[
           { required: true },
@@ -93,7 +93,6 @@ export default {
     },
     //点击按钮提交表单
     async editUser() {
-      // console.log(this.psw(this.userForm.oldPsw));
       if (
         this.userForm.oldPsw === "" ||
         this.userForm.newPsw === "" ||
@@ -117,7 +116,7 @@ export default {
         return this.$toast.fail({ message: "修改失败!", className: "toast" });
       this.$toast.success({ message: "修改成功!", className: "toast" });
       window.sessionStorage.clear();
-      return this.$router.push("/login");
+      return this.$router.push("login");
     },
     onClickLeft() {
       this.$router.push("setting");

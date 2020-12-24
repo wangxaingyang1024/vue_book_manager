@@ -76,6 +76,7 @@ export default {
       window.sessionStorage.setItem("token", res.data.token);
       //将jobNumber保存到客户端的sessionStorage中
       window.sessionStorage.setItem("jobNumber", res.data.jobNumber);
+      window.sessionStorage.setItem("username", res.data.username);
       window.sessionStorage.setItem("nickName", res.data.nickName);
       //通过编程式导航跳转到后台主页，路由地址  /home
       this.$toast.success({ message: "登录成功!", className: "toast" });
