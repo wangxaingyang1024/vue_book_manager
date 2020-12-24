@@ -235,15 +235,18 @@ export default {
       this.$router.push("/login");
     },
     //获取验证码
-    getAuthCode() {
-      this.$refs.addFormRef.email.validate(async (valid) => {
-        if (!valid) return;
-        const { data: res } = await this.$http.post("/api", this.addForm.email);
-        if(res.status !== 123) return this.$message.error('');
-        else{
-          this.$message.success('验证码已发送到您的邮箱！')
-        }
-      });
+    async getAuthCode() {
+      //this.$refs.addFormRef.email.validate(async (valid) => {
+      // if (!valid) return;
+      const { data: res } = await this.$http.post(
+        "email/verify",
+        this.addForm.email
+      );
+      if (res.status !== 200) return this.$message.error("获取验证码失败！");
+      else {
+        this.$message.success("验证码已发送到您的邮箱！");
+      }
+      // });
     },
     //点击按钮提交表单
     addUser() {

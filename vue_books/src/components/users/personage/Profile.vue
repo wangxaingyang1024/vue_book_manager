@@ -16,6 +16,15 @@
         id="username"
       ></el-input>
     </el-form-item>
+    <!-- 邮箱 -->
+    <el-form-item>
+      <el-input
+        v-model="userForm.email"
+        prefix-icon="el-icon-notebook-2"
+        disabled
+        id="email"
+      ></el-input>
+    </el-form-item>
     <!-- 昵称 -->
     <el-form-item prop="nickName">
       <el-input
