@@ -47,10 +47,10 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" round @click="login" id="login">
+          <el-button type="primary" round @click="login" id="loginButton">
             登录
           </el-button>
-          <el-button type="success" round @click="signUp" id="signUp">
+          <el-button type="success" round @click="signUp" id="signUpButton">
             注册
           </el-button>
         </el-form-item>

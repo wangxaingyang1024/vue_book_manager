@@ -3,19 +3,29 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home"/>
+          <img src="~assets/logo.jpg" @click="home" id="home" />
         </el-col>
         <el-col :span="14">
           <span class="topText">明日图书馆</span>
         </el-col>
         <span v-if="jobNumber === null">
           <el-col :span="2">
-            <el-button type="primary" round @click="login" class="logout" id="login"
+            <el-button
+              type="primary"
+              round
+              @click="login"
+              class="logout"
+              id="login"
               >登录</el-button
             >
           </el-col>
           <el-col :span="2">
-            <el-button type="success" round @click="signUp" class="logout" id="signUp"
+            <el-button
+              type="success"
+              round
+              @click="signUp"
+              class="logout"
+              id="signUp"
               >注册</el-button
             >
           </el-col>
@@ -26,7 +36,12 @@
             Hi, {{ this.nickName }}
           </el-col>
           <el-col :span="3">
-            <el-button type="info" round @click="logout" class="logout" id="logout"
+            <el-button
+              type="info"
+              round
+              @click="logout"
+              class="logout"
+              id="logout"
               >退出</el-button
             >
           </el-col>
@@ -34,7 +49,8 @@
       </el-row>
     </el-header>
     <el-container>
-      <el-aside width="200px" v-if="jobNumber !== null">
+      <el-aside width="200px">
+        <!-- TODO<el-aside width="200px" v-if="jobNumber !== null"> -->
         <el-menu unique-opened :default-active="active" router>
           <el-submenu index="1" id="bookList">
             <template slot="title"
@@ -48,8 +64,11 @@
             <el-menu-item index="/myBooks" id="myBooks"
               ><i class="el-icon-goods"></i>我的借阅</el-menu-item
             >
+            <el-menu-item index="/favorite" id="favorite"
+              ><i class="el-icon-star-off"></i>我的收藏</el-menu-item
+            >
           </el-submenu>
-          <el-submenu index="2" id="personage"> 
+          <el-submenu index="2" id="personage">
             <template slot="title"
               ><i class="el-icon-star-on"></i>账户管理</template
             >
