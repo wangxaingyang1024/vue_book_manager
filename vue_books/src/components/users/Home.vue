@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home" />
+          <img src="~assets/logo.jpg" @click="home" id="homeSkip" />
         </el-col>
         <el-col :span="14">
           <span class="topText">明日图书馆</span>
@@ -49,8 +49,7 @@
       </el-row>
     </el-header>
     <el-container>
-      <el-aside width="200px">
-        <!-- TODO<el-aside width="200px" v-if="jobNumber !== null"> -->
+      <el-aside width="200px" v-if="jobNumber !== null">
         <el-menu unique-opened :default-active="active" router>
           <el-submenu index="1" id="bookList">
             <template slot="title"

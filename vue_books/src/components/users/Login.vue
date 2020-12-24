@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="4">
-          <img src="~assets/logo.jpg" @click="home" id="home" />
+          <img src="~assets/logo.jpg" @click="home" id="homeSkip" />
         </el-col>
         <el-col :span="16">
           <span class="topText">用户登录</span>

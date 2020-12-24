@@ -29,6 +29,7 @@
         :rules="addFormRules"
         status-icon
         v-loading="loading"
+        inline
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -61,6 +62,36 @@
             id="checkPassword"
           ></el-input>
         </el-form-item>
+        <!-- 邮箱 -->
+        <el-form-item prop="email">
+          <el-input
+            v-model="addForm.email"
+            prefix-icon="el-icon-notebook-2"
+            placeholder="请设置您的邮箱"
+            id="email"
+          ></el-input>
+        </el-form-item>
+        <!-- 验证码 -->
+        <el-form-item prop="authCode">
+          <el-input
+            v-model="addForm.authCode"
+            prefix-icon="el-icon-edit-outline"
+            placeholder="请输入验证码"
+            id="authCode"
+            class="authCode"
+            style="width: 300px"
+            type="number"
+          ></el-input>
+        </el-form-item>
+
+        <el-button
+          class="getAuthCode"
+          type="success"
+          @click="getAuthCode"
+          id="getAuthCodeButton"
+        >
+          获取验证码
+        </el-button>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary" round @click="addUser" id="addUserButton"
@@ -84,6 +115,17 @@ export default {
       }
 
       callback(new Error("需以字母开头，字母数字组合3~10长度"));
+    };
+    //验证邮箱规则
+    const checkEmail = (rule, value, callback) => {
+      const regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+      if (regEmail.test(value)) {
+        //合法邮箱
+        return callback();
+      }
+
+      callback(new Error("请输入正确邮箱格式"));
     };
     //验证密码
     const validatePassword = (rule, value, callback) => {
@@ -114,6 +156,8 @@ export default {
         phone: "",
         age: "",
         checkPassword: "",
+        email: "",
+        authCode: "",
       },
       addFormRules: {
         username: [
@@ -130,6 +174,30 @@ export default {
           },
           {
             validator: checkUsername,
+            trigger: "blur",
+          },
+        ],
+        email: [
+          {
+            required: true,
+            message: "请输入邮箱",
+            trigger: "blur",
+          },
+          {
+            validator: checkEmail,
+            trigger: "blur",
+          },
+        ],
+        authCode: [
+          {
+            required: true,
+            message: "请输入验证码",
+            trigger: "blur",
+          },
+          {
+            min: 4,
+            max: 4,
+            message: "请输入4位数字验证码",
             trigger: "blur",
           },
         ],
@@ -166,6 +234,17 @@ export default {
       //跳转用户登录界面
       this.$router.push("/login");
     },
+    //获取验证码
+    getAuthCode() {
+      this.$refs.addFormRef.email.validate(async (valid) => {
+        if (!valid) return;
+        const { data: res } = await this.$http.post("/api", this.addForm.email);
+        if(res.status !== 123) return this.$message.error('');
+        else{
+          this.$message.success('验证码已发送到您的邮箱！')
+        }
+      });
+    },
     //点击按钮提交表单
     addUser() {
       this.$refs.addFormRef.validate(async (valid) => {
@@ -187,7 +266,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.querySelector("input").focus();
       },
     },
@@ -198,6 +277,10 @@ export default {
 .el-form-item__error {
   margin-top: 7px;
   margin-left: 7px;
+}
+.getAuthCode {
+  width: 120px !important;
+  margin-left: 70px;
 }
 </style>
 <style lang="less" scoped>

@@ -39,7 +39,7 @@
         v-model="userForm.checkPsw"
         type="password"
         label="新密码"
-        placeholder="请再次输入新密码"
+        placehold3eer="请再次输入新密码"
         clearable
         :rules="[
           { required: true },
