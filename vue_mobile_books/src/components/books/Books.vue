@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" id="search"/>
+    <van-search v-model="queryInfo.name" placeholder="请输入搜索关键词" />
     <!-- <p>图书列表</p> -->
-    <div style="height:calc(100vh - 150px);overflow:auto;" >
+    <div style="height: calc(100vh - 150px); overflow: auto">
       <van-list
         v-model="loading"
         :finished="finished"
@@ -11,38 +11,30 @@
         @load="getBookList"
       >
         <!-- 书籍 -->
-        <van-collapse
-          v-model="activeName"
-          v-for="(item, index) in booklist"
-          :key="item.isbn"
-          accordion
-          id="moreMessage"
-        >
-          <van-collapse-item :title="'《' + item.name + '》'" :name="index">
-            <div><span class="title">作者:</span> {{ item.author }}</div>
-            <div><span class="title">编号:</span> {{ item.isbn }}</div>
-            <div>
-              <span class="title">状态: </span>
-              <van-tag type="success" v-if="item.status === true"
-                >未借出</van-tag
+        <van-swipe-cell v-for="(item, index) in booklist" :key="index" id="moreMessage">
+          <van-cell>
+            <template #title>
+              <span>《{{ item.name }}》</span>
+            </template>
+            <template #right-icon>
+              <van-button type="primary" size="mini" @click="bookDetail(item.isbn)"
+                >查看详情</van-button
               >
-              <van-tag v-else>已借出</van-tag>
-            </div>
-            <div><span class="title">简介:</span> {{ item.synopsis }}</div>
-            <div><span class="title">类型:</span> {{ item.type }}</div>
-            <div>
-              <van-button
-                type="primary"
-                size="mini"
-                v-if="item.status === true"
-                @click="borrowBook(item.isbn)"
-                id="borrowBookButton"
-                >借阅</van-button
-              >
-              <van-button disabled size="mini" v-else>借阅</van-button>
-            </div>
-          </van-collapse-item>
-        </van-collapse>
+            </template>
+          </van-cell>
+          <!-- 左滑借书 -->
+          <template #right>
+            <van-button
+              class="borrow"
+              square
+              type="info"
+              text="借阅"
+              v-if="item.status === true"
+              @click="borrowBook(item.isbn)"
+            ></van-button>
+            <van-button class="borrow" disabled text="借阅" v-else></van-button>
+          </template>
+        </van-swipe-cell>
       </van-list>
     </div>
   </div>
@@ -56,8 +48,6 @@ export default {
       token: window.sessionStorage.getItem("token"),
       loading: false,
       finished: false,
-      value: "",
-      activeName: "1",
       booklist: [],
       queryInfo: {
         //模糊查询
@@ -65,10 +55,10 @@ export default {
         //当前页数
         pageNum: 1,
         //当前每页显示多少条数据
-        pageSize: 10
+        pageSize: 10,
       },
       //数据总条数
-      total: 1
+      total: 1,
     };
   },
   created() {
@@ -76,23 +66,21 @@ export default {
     this.queryInfo.pageNum += 1;
   },
   methods: {
-    onCancel(val) {
-      this.val = "";
-    },
     //获取书籍列表
     async getBookList() {
       if (this.booklist.length >= this.total) {
         return (this.finished = true);
       }
       const { data: res } = await this.$http.get("admin/find", {
-        params: this.queryInfo
+        params: this.queryInfo,
       });
       if (res.status !== 6011) {
         return this.$totast.fail({
           message: "获取图书列表失败!",
-          className: "toast"
+          className: "toast",
         });
       }
+      //console.log(res.data.list);
       this.queryInfo.pageNum += 1;
       this.booklist.push(...res.data.list);
       this.loading = false;
@@ -106,11 +94,11 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
-        isbn: isbn
+        isbn: isbn,
       });
       //console.log(res);
       if (res.status !== 6006) {
@@ -118,7 +106,21 @@ export default {
       }
       this.$toast.success({ message: "借阅成功!", className: "toast" });
       location.reload();
-    }
+    },
+    bookDetail(isbn) {
+      //先存isbn
+      //window.sessionStorage.setItem("isbn", isbn);
+      //找到当前isbn所对应的对象
+      let r = {};
+      this.booklist.forEach((val) => {
+        if (val.isbn == isbn) {
+          r = val;
+        }
+      });
+      let books = JSON.stringify(r);
+      window.sessionStorage.setItem("bookDetail", books);
+      this.$router.push("detail");
+    },
   },
   watch: {
     "queryInfo.name"(val) {
@@ -129,8 +131,8 @@ export default {
       this.loading = false;
       this.getBookList();
       this.queryInfo.pageNum += 1;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -140,20 +142,11 @@ export default {
   top: 46px;
   z-index: 1000;
 }
-.van-button {
-  top: -20px;
-  float: right;
-}
 .title {
   color: rgb(138, 197, 224);
 }
-.van-collapse-item {
-  background: #fff;
+
+.borrow {
+  float: right;
 }
-/*p{
-  margin-left: 10px;
-  margin-bottom: 10px;
-  font-family: 宋体;
-  font-size: 20px;
-}*/
 </style>
