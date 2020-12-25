@@ -72,15 +72,14 @@
           ></el-input>
         </el-form-item>
         <!-- 验证码 -->
-        <el-form-item prop="authCode">
+        <el-form-item prop="code">
           <el-input
-            v-model="addForm.authCode"
+            v-model="addForm.code"
             prefix-icon="el-icon-edit-outline"
             placeholder="请输入验证码"
-            id="authCode"
-            class="authCode"
+            id="code"
+            class="code"
             style="width: 300px"
-            type="number"
           ></el-input>
         </el-form-item>
 
@@ -157,7 +156,7 @@ export default {
         age: "",
         checkPassword: "",
         email: "",
-        authCode: "",
+        code: "",
       },
       addFormRules: {
         username: [
@@ -188,16 +187,16 @@ export default {
             trigger: "blur",
           },
         ],
-        authCode: [
+        code: [
           {
             required: true,
             message: "请输入验证码",
             trigger: "blur",
           },
           {
-            min: 4,
-            max: 4,
-            message: "请输入4位数字验证码",
+            min: 6,
+            max: 6,
+            message: "请输入6位数字验证码",
             trigger: "blur",
           },
         ],
@@ -238,10 +237,9 @@ export default {
     async getAuthCode() {
       //this.$refs.addFormRef.email.validate(async (valid) => {
       // if (!valid) return;
-      const { data: res } = await this.$http.post(
-        "email/verify",
-        this.addForm.email
-      );
+      const { data: res } = await this.$http.post("email/verify", {
+        email: this.addForm.email,
+      });
       if (res.status !== 200) return this.$message.error("获取验证码失败！");
       else {
         this.$message.success("验证码已发送到您的邮箱！");
@@ -251,10 +249,12 @@ export default {
     //点击按钮提交表单
     addUser() {
       this.$refs.addFormRef.validate(async (valid) => {
+        console.log(this.addForm);
         if (!valid) return;
         this.loading = !this.loading;
         //可发起注册网络请求
         const { data: res } = await this.$http.post("signUp", this.addForm);
+        console.log(res);
         this.loading = !this.loading;
         //注册成功跳转到登录，失败则停留当前页面
         if (res.status == 3021) return this.$message.error("用户名已存在！");
@@ -269,7 +269,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.querySelector("input").focus();
       },
     },
