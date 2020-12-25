@@ -241,6 +241,11 @@ export default {
     },
     //获取验证码
     async getAuthCode() {
+      const regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+      if (!regEmail.test(this.addForm.email)) {
+        return this.$message.error("请输入合法的邮箱！");
+      }
       let TIME_COUNT = 60;
       if (!this.timer) {
         this.count = TIME_COUNT;
@@ -255,18 +260,13 @@ export default {
           }
         }, 1000);
       }
-
-    //TODO   对单个邮箱的验证
-    //  this.$refs.addFormRef.email.validate(async (valid) => {
-      //  if (!valid) return;
-        const { data: res } = await this.$http.post("email/verify", {
-          email: this.addForm.email,
-        });
-        if (res.status !== 200) return this.$message.error("获取验证码失败！");
-        else {
-          this.$message.success("验证码已发送到您的邮箱！");
-        }
-     // });
+      const { data: res } = await this.$http.post("email/verify", {
+        email: this.addForm.email,
+      });
+      if (res.status !== 200) return this.$message.error("获取验证码失败！");
+      else {
+        this.$message.success("验证码已发送到您的邮箱！");
+      }
     },
     //点击按钮提交表单
     addUser() {

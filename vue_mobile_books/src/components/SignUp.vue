@@ -1,7 +1,12 @@
 <template>
   <div class="bg">
     <!-- 导航区域 -->
-    <van-nav-bar title="新用户注册" left-arrow @click-left="login" id="leaveSignUp">
+    <van-nav-bar
+      title="新用户注册"
+      left-arrow
+      @click-left="login"
+      id="leaveSignUp"
+    >
     </van-nav-bar>
     <!-- 注册表单区域 -->
     <div class="welcome"></div>
@@ -14,7 +19,7 @@
         ref="input"
         :rules="[
           { required: true },
-          { pattern, message: '需以字母开头，字母数字组合3~10长度' }
+          { pattern, message: '需以字母开头，字母数字组合3~10长度' },
         ]"
         id="username"
       />
@@ -28,8 +33,8 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
-          }
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
         ]"
         id="password"
       />
@@ -43,14 +48,58 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
           },
-          { validator: rePsw, message: '两次密码必须一致' }
+          { validator: rePsw, message: '两次密码必须一致' },
         ]"
         id="checkPassword"
       />
+      <van-field
+        placeholder="请输入邮箱"
+        clearable
+        v-model="signUpForm.email"
+        type="email"
+        label="邮箱"
+        :rules="[
+          { required: true },
+          {
+            validator: email,
+            message: '请输入正确的邮箱格式',
+          },
+        ]"
+        id="email"
+      >
+      </van-field>
+      <van-field
+        v-model="signUpForm.code"
+        center
+        clearable
+        label="邮箱验证码"
+        placeholder="请输入验证码"
+        id="code"
+      >
+        <template #button>
+          <van-button
+            size="small"
+            type="primary"
+            @click="getAuthCode"
+            id="getAuthCodeButton"
+            v-if="show"
+            >发送验证码</van-button
+          ><van-button v-if="!show" disabled type="danger" class="getAuthCode"
+          size="small"
+            >{{ count }}s后可重发
+          </van-button>
+        </template>
+      </van-field>
       <div style="margin: 35px">
-        <van-button round block type="primary" native-type="submit" id="signUpButton">
+        <van-button
+          round
+          block
+          type="primary"
+          native-type="submit"
+          id="signUpButton"
+        >
           注册
         </van-button>
       </div>
@@ -62,13 +111,23 @@
 export default {
   data() {
     return {
+      show: true,
+      count: "",
+      timer: null,
       signUpForm: {
         username: "",
         password: "",
-        checkPassword: ""
+        nickName: "", // 昵称
+        job_number: "",
+        gender: "",
+        phone: "",
+        age: "",
+        checkPassword: "",
+        email: "",
+        code: "",
       },
       //检验用户名规则
-      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/
+      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
     };
   },
   mounted() {
@@ -87,16 +146,51 @@ export default {
       }
       return false;
     },
+    //验证邮箱
+    email(val) {
+      return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+        val
+      );
+    },
     //返回上一层
     login() {
       this.$router.push("login");
+    },
+    //获取验证码
+    async getAuthCode() {
+      const regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+      if (!regEmail.test(this.signUpForm.email)) {
+        return this.$toast.fail("请输入合法的邮箱！");
+      }
+      let TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
+      const { data: res } = await this.$http.post("email/verify", {
+        email: this.signUpForm.email,
+      });
+      if (res.status !== 200) return this.$toast.fail("获取验证码失败！");
+      else {
+        this.$toast.success("验证码已发送到您的邮箱！");
+      }
     },
     //注册按钮
     async signUp() {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
 
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
@@ -104,19 +198,19 @@ export default {
       if (res.status == 3021)
         return this.$toast.fail({
           message: "用户名已存在!",
-          className: "toast"
+          className: "toast",
         });
       if (res.status !== 3024) {
         this.$toast.fail({ message: "注册失败!", className: "toast" });
       } else {
         this.$toast.success({
           message: "注册成功！请登录!",
-          className: "toast"
+          className: "toast",
         });
         this.$router.push("/login");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
