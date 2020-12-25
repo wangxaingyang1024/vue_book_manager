@@ -55,14 +55,20 @@ const Setting = () =>
 
 const Books = () =>
     import (
-        /* webpackChunkName: "books_mybooks" */
+        /* webpackChunkName: "books_mybooks_Detail" */
         "components/books/Books.vue"
     );
 const MyBooks = () =>
     import (
-        /* webpackChunkName: "books_mybooks" */
+        /* webpackChunkName: "books_mybooks_Detail" */
         "components/books/MyBooks.vue"
     );
+const Detail = () =>
+    import (
+        /* webpackChunkName: "books_mybooks_Detail" */
+        "components/books/Detail.vue"
+    );
+
 
 Vue.use(VueRouter);
 
@@ -83,7 +89,8 @@ const router = new VueRouter({
             children: [
                 { path: "/myBooks", component: MyBooks },
                 { path: "/books", component: Books },
-                { path: "/person", component: Person }
+                { path: "/person", component: Person },
+                { path: "/detail", component: Detail },
             ]
         }
     ]
