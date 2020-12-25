@@ -63,6 +63,11 @@ const MyBooks = () =>
         /* webpackChunkName: "books_mybooks" */
         "components/books/MyBooks.vue"
     );
+const Detail = () =>
+    import (
+        /* webpackChunkName: "books_mybooks" */
+        "components/books/Detail.vue"
+    );
 
 Vue.use(VueRouter);
 
@@ -76,6 +81,8 @@ const router = new VueRouter({
         { path: "/setting", component: Setting },
         { path: "/admin", component: Admin },
         { path: "/profile", component: Profile },
+        { path: "/detail", component: Detail },
+
         {
             path: "/home",
             component: Home,
@@ -90,7 +97,7 @@ const router = new VueRouter({
 });
 
 //挂载路由导航守卫
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     //to 将要访问的路径
     //from 代表从哪个路径跳转来
     //next 一个函数，表示放行
@@ -112,6 +119,6 @@ router.beforeEach((to, from, next) => {
             });
     }
     next();
-});
+});*/
 
 export default router;

@@ -107,6 +107,7 @@ export default {
       this.$toast.success({ message: "借阅成功!", className: "toast" });
       location.reload();
     },
+    //详情按钮
     bookDetail(isbn) {
       //先存isbn
       //window.sessionStorage.setItem("isbn", isbn);
