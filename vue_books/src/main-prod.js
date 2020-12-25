@@ -17,8 +17,8 @@ axios.defaults.baseURL = "http://182.92.77.213:8899/api/";
 
 //在request拦截器中，展示进度条
 axios.interceptors.request.use((config) => {
-  config.headers.Authorization = window.sessionStorage.getItem("token");
-  return config;
+    config.headers.Authorization = window.sessionStorage.getItem("token");
+    return config;
 });
 
 NProgress.inc(0.2);
@@ -26,13 +26,13 @@ NProgress.configure({ easing: "ease", speed: 500, showSpinner: false });
 
 //在request拦截器中，展示进度条
 router.beforeEach((to, from, next) => {
-  NProgress.start();
-  next();
+    NProgress.start();
+    next();
 });
 
 // //在request拦截器中，隐藏进度条
 router.afterEach(() => {
-  NProgress.done();
+    NProgress.done();
 });
 
 Vue.prototype.$http = axios;
@@ -41,8 +41,8 @@ Vue.config.productionTip = false;
 Vue.component("tree-table", TreeTable);
 
 new Vue({
-  el: "#app",
-  router,
-  store,
-  render: (h) => h(App),
+    el: "#app",
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount("#app");

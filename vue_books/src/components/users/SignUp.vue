@@ -84,12 +84,15 @@
         </el-form-item>
 
         <el-button
-          class="getAuthCode"
+          v-if="show"
           type="success"
-          @click="getAuthCode"
+          class="getAuthCode"
           id="getAuthCodeButton"
+          @click="getAuthCode"
+          >获取验证码</el-button
         >
-          获取验证码
+        <el-button v-if="!show" disabled type="success" class="getAuthCode"
+          >{{ count }}s后可重发
         </el-button>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -145,6 +148,9 @@ export default {
       return callback();
     };
     return {
+      show: true,
+      count: "",
+      timer: null,
       loading: false,
       addForm: {
         username: "",
@@ -235,16 +241,32 @@ export default {
     },
     //获取验证码
     async getAuthCode() {
-      //this.$refs.addFormRef.email.validate(async (valid) => {
-      // if (!valid) return;
-      const { data: res } = await this.$http.post("email/verify", {
-        email: this.addForm.email,
-      });
-      if (res.status !== 200) return this.$message.error("获取验证码失败！");
-      else {
-        this.$message.success("验证码已发送到您的邮箱！");
+      let TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
       }
-      // });
+
+    //TODO   对单个邮箱的验证
+    //  this.$refs.addFormRef.email.validate(async (valid) => {
+      //  if (!valid) return;
+        const { data: res } = await this.$http.post("email/verify", {
+          email: this.addForm.email,
+        });
+        if (res.status !== 200) return this.$message.error("获取验证码失败！");
+        else {
+          this.$message.success("验证码已发送到您的邮箱！");
+        }
+     // });
     },
     //点击按钮提交表单
     addUser() {
@@ -269,7 +291,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.querySelector("input").focus();
       },
     },
@@ -284,6 +306,8 @@ export default {
 .getAuthCode {
   width: 120px !important;
   margin-left: 70px;
+  background-color: #de8080;
+  border-color: #de8080;
 }
 </style>
 <style lang="less" scoped>
