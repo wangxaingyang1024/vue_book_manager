@@ -76,7 +76,7 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary">发表评论</van-button>
+      <van-button type="primary">发表回复</van-button>
     </van-action-sheet>
   </div>
 </template>
@@ -173,7 +173,7 @@ export default {
         }
       });
       this.placeholder = a.name;
-      console.log(a);
+      //console.log(a);
     },
   },
 };
@@ -186,8 +186,8 @@ export default {
   margin-top: 0;
   .van-icon {
     margin-top: 15px;
-    margin-left: 10px;
-    margin-right: 115px;
+    margin-left: 16px;
+    margin-right: 20px;
   }
   p {
     margin-top: 5px;
@@ -271,6 +271,13 @@ export default {
   padding: 10px;
   :nth-child(1) {
     color: #2a3e8d;
+  }
+}
+.van-list {
+  .van-icon {
+    width: 20px;
+    float: right;
+    top: -25px;
   }
 }
 </style>
