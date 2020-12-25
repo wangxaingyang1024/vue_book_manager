@@ -11,43 +11,19 @@
       </el-input
     ></el-col>
     <el-table :data="booklist" stripe v-loading="loading">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="书名">
-              <span>{{ "《" + props.row.name + "》" }}</span>
-            </el-form-item>
-            <el-form-item label="作者">
-              <span>{{ props.row.author }}</span>
-            </el-form-item>
-            <el-form-item label="类型">
-              <span>{{ props.row.type }}</span>
-            </el-form-item>
-            <el-form-item label="状态">
-              <span>
-                <el-tag
-                  type="success"
-                  v-if="props.row.status.toString() === 'true'"
-                  >未借出</el-tag
-                >
-                <el-tag v-else>已借出</el-tag>
-              </span>
-            </el-form-item>
-            <el-form-item label="简介">
-              <span>{{ props.row.synopsis }}</span>
-            </el-form-item>
-            <el-form-item label="编号">
-              <span>{{ props.row.isbn }}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
       <el-table-column label="书名" prop="name"> </el-table-column>
       <el-table-column label="作者" prop="author"> </el-table-column>
       <el-table-column label="编号" prop="isbn"> </el-table-column>
       <el-table-column prop="type" label="类型"> </el-table-column>
       <el-table-column label="操作" prop="status">
         <template slot-scope="scope">
+          <el-button
+            type="success"
+            size="mini"
+            @click="bookDetail(scope.row)"
+            id="bookDetail"
+            >查看详情</el-button
+          >
           <el-button
             type="primary"
             size="mini"
@@ -154,6 +130,11 @@ export default {
     // typeFilter(value, row) {
     //   return row.type === value;
     // },
+    bookDetail(row) {
+      const book = JSON.stringify(row);
+      window.sessionStorage.setItem("book", book);
+      this.$router.push("/bookDetail");
+    },
   },
   watch: {
     "queryInfo.name"(val) {
