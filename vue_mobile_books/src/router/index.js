@@ -65,16 +65,10 @@ const MyBooks = () =>
     );
 const Detail = () =>
     import (
-<<<<<<< HEAD
         /* webpackChunkName: "books_mybooks_Detail" */
         "components/books/Detail.vue"
     );
 
-=======
-        /* webpackChunkName: "books_mybooks" */
-        "components/books/Detail.vue"
-    );
->>>>>>> babb5a9986a2d2e08eb2e034d7d01cd94d390057
 
 Vue.use(VueRouter);
 
