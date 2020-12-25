@@ -47,6 +47,11 @@ const BookDetail = () =>
     /* webpackChunkName: "books_myBooks_bookDetail" */
     "components/users/book/BookDetail.vue"
   );
+// const Comment = () =>
+//   import(
+//     /* webpackChunkName: "comment" */
+//     "components/users/book/Comment.vue"
+//   );
 
 const Favorite = () =>
   import(
@@ -125,7 +130,11 @@ const router = new Router({
       children: [
         { path: "/books", component: Books },
         { path: "/myBooks", component: MyBooks },
-        { path: "/bookDetail", component: BookDetail },
+        {
+          path: "/bookDetail",
+          component: BookDetail,
+          // children: [{ path: "/bookDetail", component: Comment }],
+        },
         { path: "/favorite", component: Favorite },
         { path: "/profile", component: Profile },
         { path: "/admin", component: Admin },

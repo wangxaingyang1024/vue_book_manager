@@ -10,6 +10,12 @@ Vue.use(ElementUI);
 //引入nprogress包对应的js和css
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+//发表评论组件
+import addComment from "../src/components/users/book/AddComment.vue";
+Vue.component("add-comment", addComment);
+//评论列表组件
+import Comments from "../src/components/users/book/Comments.vue";
+Vue.component("comments", Comments);
 //引入tree-table
 import TreeTable from "vue-table-with-tree-grid";
 //引入axios
