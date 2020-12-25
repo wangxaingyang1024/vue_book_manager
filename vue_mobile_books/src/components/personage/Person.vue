@@ -33,7 +33,7 @@
     </van-card>
     <!-- 用户操作栏 -->
     <div class="separated"></div>
-    <van-cell title="我的收藏" is-link to="" icon="star-o" id="favoriteButton"/>
+    <van-cell title="我的收藏" is-link  icon="star-o" @click="toFavorite" id="favoriteButton"/>
     <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton"/>
     <div class="separated"></div>
     <van-cell title="设置" is-link icon="setting-o" @click="toSetting" id="settingButton"/>
@@ -97,6 +97,9 @@ export default {
     },
     toSetting() {
       this.$router.push("/setting");
+    },
+    toFavorite() {
+      this.$router.push("/favorite");
     },
     generatorAvator(username, canvasId, avatarContainerId) {
       //设置头像昵称，如果为null或者为空时，设置为无

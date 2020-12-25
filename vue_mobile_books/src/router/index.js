@@ -68,6 +68,12 @@ const Detail = () =>
         /* webpackChunkName: "books_mybooks_Detail" */
         "components/books/Detail.vue"
     );
+const Favorite = () =>
+    import (
+        /* webpackChunkName: "Favorite" */
+        "components/books/Favorite.vue"
+    );
+
 
 
 Vue.use(VueRouter);
@@ -83,7 +89,6 @@ const router = new VueRouter({
         { path: "/admin", component: Admin },
         { path: "/profile", component: Profile },
         { path: "/detail", component: Detail },
-
         {
             path: "/home",
             component: Home,
@@ -93,6 +98,7 @@ const router = new VueRouter({
                 { path: "/books", component: Books },
                 { path: "/person", component: Person },
                 { path: "/detail", component: Detail },
+                { path: "/favorite", component: Favorite },
             ]
         }
     ]
