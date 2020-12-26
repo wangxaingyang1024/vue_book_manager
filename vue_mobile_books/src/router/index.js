@@ -52,6 +52,11 @@ const Setting = () =>
         /* webpackChunkName: "person_setting" */
         "components/personage/Setting.vue"
     );
+const Collection = () =>
+    import (
+        /* webpackChunkName: "person_setting" */
+        "components/personage/Collection.vue"
+    );
 
 const Books = () =>
     import (
@@ -83,7 +88,7 @@ const router = new VueRouter({
         { path: "/admin", component: Admin },
         { path: "/profile", component: Profile },
         { path: "/detail", component: Detail },
-
+        { path: "/collection", component: Collection },
         {
             path: "/home",
             component: Home,
