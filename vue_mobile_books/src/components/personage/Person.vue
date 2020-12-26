@@ -39,20 +39,14 @@
     </van-card>
     <!-- 用户操作栏 -->
     <div class="separated"></div>
-<<<<<<< HEAD
     <van-cell
       title="爱看书籍"
-      @click="collection"
       is-link
-      to=""
+      to="collection"
       icon="star-o"
       id="favoriteButton"
     />
     <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton" />
-=======
-    <van-cell title="我的收藏" is-link  icon="star-o" @click="toFavorite" id="favoriteButton"/>
-    <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton"/>
->>>>>>> 92fba81cf606910aa26c57909bff2b372a0285e6
     <div class="separated"></div>
     <van-cell
       title="设置"
@@ -122,9 +116,9 @@ export default {
     toSetting() {
       this.$router.push("/setting");
     },
-    toFavorite() {
+    /*toFavorite() {
       this.$router.push("/favorite");
-    },
+    },*/
     generatorAvator(username, canvasId, avatarContainerId) {
       //设置头像昵称，如果为null或者为空时，设置为无
       var nickname = username;
@@ -189,10 +183,6 @@ export default {
       context.fillText(nickname.slice(-2), avatarSize / 2, avatarSize / 2);
 
       document.getElementById(avatarContainerId).src = canvas.toDataURL("image/png");
-    },
-    //进入我的收藏
-    collection() {
-      this.$router.push("collection");
     },
   },
 };

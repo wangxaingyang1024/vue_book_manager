@@ -94,10 +94,7 @@ const router = new VueRouter({
         { path: "/admin", component: Admin },
         { path: "/profile", component: Profile },
         { path: "/detail", component: Detail },
-<<<<<<< HEAD
         { path: "/collection", component: Collection },
-=======
->>>>>>> 92fba81cf606910aa26c57909bff2b372a0285e6
         {
             path: "/home",
             component: Home,
@@ -107,7 +104,7 @@ const router = new VueRouter({
                 { path: "/books", component: Books },
                 { path: "/person", component: Person },
                 { path: "/detail", component: Detail },
-                { path: "/favorite", component: Favorite },
+                //{ path: "/favorite", component: Favorite },
             ]
         }
     ]
