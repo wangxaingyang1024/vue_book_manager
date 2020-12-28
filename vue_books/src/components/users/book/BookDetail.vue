@@ -70,7 +70,7 @@
         style="margin-top:15px"
       >
       </el-input>
-      <div class="add" @click="add">
+      <div class="add" @click="p">
         发表评论
       </div>
       <hr />
@@ -171,7 +171,6 @@ export default {
         `comment/findEnd/${this.book.isbn}`
       );
       this.comments = res.data;
-      console.log(1);
       console.log(res);
     },
     goBack() {
@@ -235,11 +234,19 @@ export default {
       }
       this.$message.success("借阅书籍成功!");
     },
+    p() {
+      this.parNumber = 0;
+      this.add();
+    },
     async add() {
       if (this.parNumber === 0) {
         this.message = this.message1;
+        this.parFlag = "0";
       } else {
         this.message = this.message2;
+      }
+      if (this.message === "") {
+        return this.$message.warning("评论内容不能为空!");
       }
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
