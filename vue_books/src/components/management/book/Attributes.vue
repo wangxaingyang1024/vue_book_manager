@@ -128,6 +128,7 @@ export default {
       this.loading = !this.loading;
       if (res.status !== 200) return this.$message.error("获取图书分类失败！");
       this.typeList = res.data;
+      console.log(this.typeList);
     },
     showAddTypeDialog() {
       this.getParentTypeList();

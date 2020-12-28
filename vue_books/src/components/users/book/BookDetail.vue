@@ -62,7 +62,7 @@
         type="textarea"
         :rows="3"
         placeholder="请输入内容"
-        v-model="content"
+        v-model="message1"
         maxlength="50"
         show-word-limit
         clearable
@@ -75,11 +75,11 @@
       </div>
       <hr />
       <!-- <comments></comments> -->
-      <div v-for="item in comments" :key="item.id">
-        <h5>{{ item.nickName }}</h5>
-        <p>{{ item.content }}</p>
+      <div v-for="item in comments" :key="item.myFlag">
+        <h5>{{ item.myNickname }}</h5>
+        <p>{{ item.message }}</p>
         <span
-          >{{ item.date }}
+          >{{ item.commentTime }}
           <span class="comment-icon">
             <i class="el-icon-thumb" @click="like()"></i>
             <i class="el-icon-chat-line-square" @click="reply(item)"></i>
@@ -87,13 +87,13 @@
         </span>
         <div
           v-for="subItem in item.children"
-          :key="subItem.id"
+          :key="subItem.myFlag"
           style="margin-left:100px"
         >
-          <h5>{{ subItem.nickName }}</h5>
-          <p>{{ subItem.content }}</p>
+          <h5>{{ subItem.myNickname }} @ {{ item.myNickname }}</h5>
+          <p>{{ subItem.message }}</p>
           <span
-            >{{ subItem.date }}
+            >{{ subItem.commentTime }}
             <span class="comment-icon">
               <i class="el-icon-thumb" @click="like()"></i>
               <i
@@ -103,19 +103,19 @@
             </span>
           </span>
         </div>
-        <div v-if="active === item.id" style="margin-left:100px">
+        <div v-if="active === item.myFlag" style="margin-left:100px">
           <el-input
             type="textarea"
             :rows="3"
             :placeholder="place"
-            v-model="content1"
+            v-model="message2"
             maxlength="50"
             show-word-limit
             clearable
             resize="none"
           >
           </el-input>
-          <div class="add" @click="add1">
+          <div class="add" @click="add">
             发表评论
           </div>
         </div>
@@ -136,52 +136,13 @@ export default {
       book: [],
       active: "",
       click: false,
-      content: "",
-      content1: "",
+      message: "",
+      message1: "",
+      message2: "",
+      parNumber: 0,
+      parFlag: "0",
       place: "",
-      comments: [
-        {
-          id: 1,
-          nickName: "aaa",
-          content: "这本书针不戳",
-          date: "2020-12-25",
-          children: [
-            {
-              id: 11,
-              nickName: "zzz",
-              content: "不会吧不会吧",
-              date: "2020-12-25",
-            },
-            {
-              id: 12,
-              nickName: "啊哈哈",
-              content: "我服了",
-              date: "2020-12-25",
-            },
-          ],
-        },
-        { id: 2, nickName: "bbb", content: "这本书针不戳", date: "2020-12-25" },
-        {
-          id: 3,
-          nickName: "ccc",
-          content: "这本书针不戳",
-          date: "2020-12-25",
-          children: [
-            {
-              id: 11,
-              nickName: "zzz",
-              content: "不会吧不会吧",
-              date: "2020-12-25",
-            },
-            {
-              id: 12,
-              nickName: "啊哈哈",
-              content: "我服了",
-              date: "2020-12-25",
-            },
-          ],
-        },
-      ],
+      comments: [],
     };
   },
   created() {
@@ -205,9 +166,12 @@ export default {
       this.click = res.data;
     },
     async getComments() {
+      console.log(this.book.isbn);
       const { data: res } = await this.$http.get(
-        `comment/findAllComment/${this.book.isbn}`
+        `comment/findEnd/${this.book.isbn}`
       );
+      this.comments = res.data;
+      console.log(1);
       console.log(res);
     },
     goBack() {
@@ -271,56 +235,56 @@ export default {
       }
       this.$message.success("借阅书籍成功!");
     },
-    add() {
-      if (this.content === "") {
-        return this.$message.warning("请先输入内容再发表评论！");
+    async add() {
+      if (this.parNumber === 0) {
+        this.message = this.message1;
+      } else {
+        this.message = this.message2;
       }
-      const date = new Date();
-      console.log(this.content);
-      this.comments.unshift({
-        nickName: window.sessionStorage.getItem("nickName"),
-        content: this.content,
-        date: this.time(date),
-        id: this.comments.length + 1 + "",
+      const { data: res } = await this.$http.post("comment/addComment", {
+        myNumber: this.jobNumber,
+        parNumber: this.parNumber,
+        parFlag: this.parFlag,
+        isbn: this.book.isbn,
+        message: this.message,
+        likeCount: 0,
       });
-      this.content = "";
-      this.active = "";
-    },
-    add1() {
-      if (this.content1 === "") {
-        return this.$message.warning("请先输入内容再发表评论！");
+      console.log(res);
+      if (res.status !== 3034) {
+        return this.$message.error("发表评论失败!");
       }
-      const date = new Date();
-      console.log(this.content1);
-      this.comments.unshift({
-        nickName: window.sessionStorage.getItem("nickName"),
-        content: this.content1,
-        date: this.time(date),
-        id: this.comments.length + 1 + "",
-      });
-      this.content1 = "";
+      this.$message.success("发表评论成功!");
+      this.message = "";
+      this.message1 = "";
+      this.message2 = "";
+      this.parNumber = 0;
       this.active = "";
+      return this.getComments();
     },
-    time(date) {
-      var y = date.getFullYear();
-      var m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      var d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      var h = date.getHours();
-      h = h < 10 ? "0" + h : h;
-      var minute = date.getMinutes();
-      minute = minute < 10 ? "0" + minute : minute;
-      var second = date.getSeconds();
-      second = second < 10 ? "0" + second : second;
-      return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
-    },
+    // time(date) {
+    //   var y = date.getFullYear();
+    //   var m = date.getMonth() + 1;
+    //   m = m < 10 ? "0" + m : m;
+    //   var d = date.getDate();
+    //   d = d < 10 ? "0" + d : d;
+    //   var h = date.getHours();
+    //   h = h < 10 ? "0" + h : h;
+    //   var minute = date.getMinutes();
+    //   minute = minute < 10 ? "0" + minute : minute;
+    //   var second = date.getSeconds();
+    //   second = second < 10 ? "0" + second : second;
+    //   return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
+    // },
     reply(item, subItem) {
-      this.active = item.id;
+      this.active = item.myFlag;
       if (subItem) {
-        return (this.place = `回复@${subItem.nickName}:`);
+        this.parNumber = subItem.myNumber;
+        this.parFlag = item.myFlag;
+        return (this.place = `回复@${subItem.myNickname}:`);
       }
-      this.place = `回复@${item.nickName}:`;
+      this.parNumber = item.myNumber;
+      this.parFlag = item.myFlag;
+      this.place = `回复@${item.myNickname}:`;
     },
   },
 };
