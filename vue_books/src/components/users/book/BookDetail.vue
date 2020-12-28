@@ -34,15 +34,24 @@
           <i class="el-icon-shopping-cart-2"></i>
         </el-tooltip>
       </div>
-      <div class="click" @click="favorite">
+      <div class="click" @click="favorite" v-if="click === false">
         <el-tooltip
           effect="light"
           content="收藏"
           placement="top-start"
           offset="5"
         >
-          <i class="el-icon-star-off" v-if="check === false"></i>
-          <i class="el-icon-star-on" v-else></i>
+          <i class="el-icon-star-off"></i>
+        </el-tooltip>
+      </div>
+      <div class="click" @click="favorite" v-else>
+        <el-tooltip
+          effect="light"
+          content="取消收藏"
+          placement="top-start"
+          offset="5"
+        >
+          <i class="el-icon-star-on"></i>
         </el-tooltip>
       </div>
     </el-card>
@@ -57,6 +66,8 @@
         maxlength="50"
         show-word-limit
         clearable
+        resize="none"
+        style="margin-top:15px"
       >
       </el-input>
       <div class="add" @click="add">
@@ -69,7 +80,8 @@
         <p>{{ item.content }}</p>
         <span
           >{{ item.date }}
-          <i class="el-icon-chat-line-square" @click="huifu(item)"></i>
+          <i class="el-icon-chat-line-square" @click="reply(item)"></i>
+          <i class="el-icon-chat-line-square" @click="reply(item)"></i>
         </span>
         <div
           v-for="subItem in item.children"
@@ -82,7 +94,7 @@
             >{{ subItem.date }}
             <i
               class="el-icon-chat-line-square"
-              @click="huifu(item, subItem)"
+              @click="reply(item, subItem)"
             ></i>
           </span>
         </div>
@@ -95,6 +107,7 @@
             maxlength="50"
             show-word-limit
             clearable
+            resize="none"
           >
           </el-input>
           <div class="add" @click="add1">
@@ -116,7 +129,7 @@ export default {
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       book: [],
       active: "",
-      check: false,
+      click: false,
       content: "",
       content1: "",
       place: "",
@@ -142,35 +155,75 @@ export default {
           ],
         },
         { id: 2, nickName: "bbb", content: "这本书针不戳", date: "2020-12-25" },
-        { id: 3, nickName: "ccc", content: "这本书针不戳", date: "2020-12-25" },
+        {
+          id: 3,
+          nickName: "ccc",
+          content: "这本书针不戳",
+          date: "2020-12-25",
+          children: [
+            {
+              id: 11,
+              nickName: "zzz",
+              content: "不会吧不会吧",
+              date: "2020-12-25",
+            },
+            {
+              id: 12,
+              nickName: "啊哈哈",
+              content: "我服了",
+              date: "2020-12-25",
+            },
+          ],
+        },
       ],
     };
   },
   created() {
     this.book = JSON.parse(window.sessionStorage.getItem("book"));
+    this.getCheck();
     console.log(this.book);
   },
   methods: {
+    async getCheck() {
+      const { data: res } = await this.$http.post("", {
+        jobNumber: this.jobNumber,
+        isbn: this.book.isbn,
+      });
+      if (res.status !== 6015) {
+        return this.$message.error("查询是否已收藏失败!");
+      }
+    },
     goBack() {
       window.history.back();
     },
     async favorite() {
-      this.check = !this.check;
-      if (this.check === true) {
+      this.click = !this.click;
+      if (this.click === true) {
         const { data: res } = await this.$http.post("book/favorite", {
           jobNumber: this.jobNumber,
           isbn: this.book.isbn,
-          isClick: this.check,
+          isClick: this.click,
         });
         if (res.status !== 6015) {
           return this.$message.error("收藏失败!");
         }
         return this.$message.success("收藏成功!");
       }
+      //弹框询问用户是否取消收藏
+      const confirmResult = await this.$confirm("是否确认取消收藏?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).catch((err) => err);
+      //如果用户确认删除,则返回值为字符串confirm
+      //如果用户取消删除，则返回值为字符串cancel
+      if (confirmResult !== "confirm") {
+        return;
+      }
       const { data: res } = await this.$http.post("book/favorite", {
         jobNumber: this.jobNumber,
         isbn: this.book.isbn,
-        isClick: this.check,
+        isClick: this.click,
       });
       if (res.status !== 6014) {
         return this.$message.error("取消收藏失败!");
@@ -188,7 +241,7 @@ export default {
         jobNumber: this.jobNumber,
         isbn: this.book.isbn,
       });
-      //console.log(res);
+      console.log(res);
       if (res.status !== 6006) {
         return this.$message.error("借阅书籍失败！");
       }
@@ -238,7 +291,7 @@ export default {
       second = second < 10 ? "0" + second : second;
       return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
     },
-    huifu(item, subItem) {
+    reply(item, subItem) {
       this.active = item.id;
       if (subItem) {
         return (this.place = `回复@${subItem.nickName}:`);
@@ -251,10 +304,11 @@ export default {
 
 <style lang="less" scoped>
 .el-card {
+  padding: 10px;
   margin-top: 15px;
   div {
-    margin-top: 15px;
     .title {
+      line-height: 40px;
       color: rgb(25, 121, 148);
     }
     .click {
@@ -293,6 +347,7 @@ export default {
   width: 150px;
   height: 80px;
   border-radius: 20px;
+  margin-top: 15px;
   display: flex;
   //实现垂直居中
   align-items: center;
@@ -307,11 +362,11 @@ export default {
 }
 .el-page-header {
   position: sticky;
-  top: -19px;
+  top: -20px;
   background: #fff;
   padding: 15px;
   z-index: 1000;
   border: 1px solid rgba(90, 88, 88, 0.37);
-  box-shadow: 1px 5px 10px rgba(90, 88, 88, 0.61);
+  box-shadow: 1px 5px 10px rgba(90, 88, 66, 0.61);
 }
 </style>

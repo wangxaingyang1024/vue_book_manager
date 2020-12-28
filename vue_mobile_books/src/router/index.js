@@ -98,7 +98,6 @@ const router = new VueRouter({
                 { path: "/books", component: Books },
                 { path: "/person", component: Person },
                 { path: "/detail", component: Detail },
-
             ]
         }
     ]

@@ -36,7 +36,7 @@
       <el-table-column label="作者" prop="author"> </el-table-column>
       <el-table-column label="编号" prop="isbn"> </el-table-column>
       <el-table-column prop="type" label="类型"> </el-table-column>
-      <el-table-column label="操作" prop="status">
+      <el-table-column label="操作" prop="status" width="300px">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -48,9 +48,9 @@
           >
           <el-button type="" size="mini" disabled v-else>借阅此书</el-button>
           <el-button
-            type="danger"
+            type="warning"
             size="mini"
-            @click="cancelFavorite(scope.row.sao)"
+            @click="cancelFavorite(scope.row.isbn)"
             id="cancelFavoriteButton"
           >
             取消收藏
@@ -76,9 +76,9 @@ export default {
   methods: {
     async getBookList() {
       const { data: res } = await this.$http.get(
-        "book/findOne/" + this.jobNumber
+        `book/getFavorite/${this.jobNumber}`
       );
-      if (res.status !== 200) {
+      if (res.status !== 6013) {
         return this.$message.error("获取图书列表失败！");
       }
       this.booklist = res.data;
@@ -98,26 +98,25 @@ export default {
       this.getBookList();
     },
     async cancelFavorite(isbn) {
-      //弹框询问用户是否删除数据
-      const confirmResult = await this.$confirm(
-        "此操作将取消收藏该书籍, 是否继续?",
-        "提示",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      ).catch((err) => err);
+      console.log(isbn);
+      //弹框询问用户是否取消收藏
+      const confirmResult = await this.$confirm("是否确认取消收藏?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).catch((err) => err);
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
         return;
       }
-      // console.log(typeof isbn);
-      const { data: res } = await this.$http.post(
-        //TODO  "admin/delete/" + isbn
-      );
-      if (res.status !== 6002) {
+      const { data: res } = await this.$http.post(`book/favorite`, {
+        jobNumber: this.jobNumber,
+        isbn: isbn,
+        isClick: false,
+      });
+      console.log(res);
+      if (res.status !== 6014) {
         return this.$message.error("取消收藏失败");
       }
       this.$message.success("取消收藏成功！");
