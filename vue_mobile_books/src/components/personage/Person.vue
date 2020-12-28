@@ -40,14 +40,8 @@
     <!-- 用户操作栏 -->
     <div class="separated"></div>
     <van-cell
-<<<<<<< HEAD
       title="我的收藏"
       is-link
-=======
-      title="爱看书籍"
-      is-link
-      to="collection"
->>>>>>> ec64605bab187776dee46f2c768dac48ea39f8fe
       icon="star-o"
       @click="toFavorite"
       id="favoriteButton"
@@ -122,9 +116,9 @@ export default {
     toSetting() {
       this.$router.push("/setting");
     },
-    /*toFavorite() {
+    toFavorite() {
       this.$router.push("/favorite");
-    },*/
+    },
     generatorAvator(username, canvasId, avatarContainerId) {
       //设置头像昵称，如果为null或者为空时，设置为无
       var nickname = username;
