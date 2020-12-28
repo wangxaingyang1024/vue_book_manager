@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-page-header @back="goBack" content="详情页面"> </el-page-header>
-    <el-card>
+    <el-card v-loading="loading">
       <div>
         <span class="title">书名：</span>
         《 {{ this.book.name }} 》
@@ -80,8 +80,10 @@
         <p>{{ item.content }}</p>
         <span
           >{{ item.date }}
-          <i class="el-icon-chat-line-square" @click="reply(item)"></i>
-          <i class="el-icon-chat-line-square" @click="reply(item)"></i>
+          <span class="comment-icon">
+            <i class="el-icon-thumb" @click="like()"></i>
+            <i class="el-icon-chat-line-square" @click="reply(item)"></i>
+          </span>
         </span>
         <div
           v-for="subItem in item.children"
@@ -92,10 +94,13 @@
           <p>{{ subItem.content }}</p>
           <span
             >{{ subItem.date }}
-            <i
-              class="el-icon-chat-line-square"
-              @click="reply(item, subItem)"
-            ></i>
+            <span class="comment-icon">
+              <i class="el-icon-thumb" @click="like()"></i>
+              <i
+                class="el-icon-chat-line-square"
+                @click="reply(item, subItem)"
+              ></i>
+            </span>
           </span>
         </div>
         <div v-if="active === item.id" style="margin-left:100px">
@@ -126,6 +131,7 @@ export default {
   components: { Comments },
   data() {
     return {
+      loading: false,
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       book: [],
       active: "",
@@ -180,33 +186,46 @@ export default {
   },
   created() {
     this.book = JSON.parse(window.sessionStorage.getItem("book"));
-    this.getCheck();
     console.log(this.book);
+    this.getCheck();
+    this.getComments();
   },
   methods: {
     async getCheck() {
-      const { data: res } = await this.$http.post("", {
+      this.loading = !this.loading;
+      const { data: res } = await this.$http.post(`book/isClick`, {
         jobNumber: this.jobNumber,
         isbn: this.book.isbn,
       });
-      if (res.status !== 6015) {
+      this.loading = !this.loading;
+      console.log(res);
+      if (res.status !== 200) {
         return this.$message.error("查询是否已收藏失败!");
       }
+      this.click = res.data;
+    },
+    async getComments() {
+      const { data: res } = await this.$http.get(
+        `comment/findAllComment/${this.book.isbn}`
+      );
+      console.log(res);
     },
     goBack() {
       window.history.back();
     },
     async favorite() {
-      this.click = !this.click;
-      if (this.click === true) {
+      if (this.click === false) {
+        this.loading = !this.loading;
         const { data: res } = await this.$http.post("book/favorite", {
           jobNumber: this.jobNumber,
           isbn: this.book.isbn,
-          isClick: this.click,
+          isClick: true,
         });
+        this.loading = !this.loading;
         if (res.status !== 6015) {
           return this.$message.error("收藏失败!");
         }
+        this.click = !this.click;
         return this.$message.success("收藏成功!");
       }
       //弹框询问用户是否取消收藏
@@ -220,14 +239,17 @@ export default {
       if (confirmResult !== "confirm") {
         return;
       }
+      this.loading = !this.loading;
       const { data: res } = await this.$http.post("book/favorite", {
         jobNumber: this.jobNumber,
         isbn: this.book.isbn,
-        isClick: this.click,
+        isClick: false,
       });
+      this.loading = !this.loading;
       if (res.status !== 6014) {
         return this.$message.error("取消收藏失败!");
       }
+      this.click = !this.click;
       return this.$message.success("已取消收藏!");
     },
     async borrowBook() {
@@ -237,10 +259,12 @@ export default {
       if (this.book.status === false) {
         return this.$message.warning("这本书已经被借走了哦！");
       }
+      this.loading = !this.loading;
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
         isbn: this.book.isbn,
       });
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 6006) {
         return this.$message.error("借阅书籍失败！");
@@ -357,9 +381,6 @@ export default {
 .add:hover {
   background: #02a3cf;
 }
-.el-icon-chat-line-square:hover {
-  color: rgb(255, 209, 6);
-}
 .el-page-header {
   position: sticky;
   top: -20px;
@@ -368,5 +389,13 @@ export default {
   z-index: 1000;
   border: 1px solid rgba(90, 88, 88, 0.37);
   box-shadow: 1px 5px 10px rgba(90, 88, 66, 0.61);
+}
+.comment-icon {
+  i {
+    margin-left: 15px;
+  }
+  i:hover {
+    color: rgb(255, 209, 6);
+  }
 }
 </style>
