@@ -30,7 +30,7 @@
           size="22"
           @click="onCollection"
         />
-        <van-icon v-else @click="inCollection" color="#00a1d6" name="star" size="22" />
+        <van-icon v-else @click="inCollection" color="#f17a98" name="star" size="22" />
       </template>
       <template #footer>
         <van-button
@@ -59,15 +59,18 @@
     <!-- 评论内容界面 -->
     <span class="commentSpan">热门评论</span>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了">
-      <div class="exterComment" v-for="(item, index) in commentlist" :key="index">
-        <p class="name">{{ item.name }}</p>
-        <p class="time">{{ item.time }}</p>
-        <p class="comments">{{ item.comments }}</p>
+      <div class="exterComment" v-for="(item1, index1) in commentlist" :key="index1">
+        <p class="name">{{ item1.myName }}</p>
+        <p class="time">{{ item1.commentTime }}</p>
+        <p class="comments">{{ item1.message }}</p>
+        <span class="likeCount1" v-if="like === false">{{ item1.likeCount }}</span>
+        <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
         <van-icon size="18" name="thumb-circle-o" v-if="like === false" @click="onLike" />
-        <van-icon size="18" color="#00a1d6" v-else name="thumb-circle" />
+        <van-icon size="18" color="#f17a98" v-else name="thumb-circle" />
         <van-icon size="18" name="chat-o" @click="interComment(item.jobnumber)" />
-        <div class="interComment">
-          <span>余福东：</span><span>哈哈哈哈哈哈哈哈哈哈或</span>
+        <div class="interComment" v-for="(item2, index2) in item1.list" :key="index2">
+          <span>{{ item2.myName }}：</span>
+          <span>{{ item2.message }}</span>
         </div>
       </div>
     </van-list>
@@ -119,16 +122,123 @@ export default {
       //获取的评论列表
       commentlist: [
         {
-          name: "yhh",
-          comments: "判断收藏按钮颜色变化",
-          time: "12-7",
-          jobnumber: 111,
+          mid: 32,
+          myNumber: 64728217,
+          parNumber: 963852741,
+          isbn: 963852741,
+          message: "hahahahaahahahaaaaa",
+          commentTime: "2020-12-26T09:41:13.000+08:00",
+          likeCount: 9,
+          myName: "aaa",
+          name: "三国演义",
+          list: [],
+          pname: "三国演义",
         },
         {
-          name: "lii",
-          comments: "取的评论列表",
-          time: "12-6",
-          jobnumber: 222,
+          mid: 30,
+          myNumber: 98810914,
+          parNumber: 963852741,
+          isbn: 963852741,
+          message: "hahahahaahahahaaaaa",
+          commentTime: "2020-12-26T09:40:43.000+08:00",
+          likeCount: 8,
+          myName: "mmm",
+          name: "三国演义",
+          list: [
+            {
+              mid: 26,
+              myNumber: 64728217,
+              parNumber: 98810914,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:35:00.000+08:00",
+              likeCount: 8,
+              myName: "aaa",
+              name: "三国演义",
+              list: null,
+              pname: "mmm",
+            },
+          ],
+          pname: "三国演义",
+        },
+        {
+          mid: 31,
+          myNumber: 38056808,
+          parNumber: 963852741,
+          isbn: 963852741,
+          message: "hahahahaahahahaaaaa",
+          commentTime: "2020-12-26T09:41:07.000+08:00",
+          likeCount: 3,
+          myName: "iii",
+          name: "三国演义",
+          list: [
+            {
+              mid: 29,
+              myNumber: 98810914,
+              parNumber: 38056808,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:35:32.000+08:00",
+              likeCount: 0,
+              myName: "mmm",
+              name: "三国演义",
+              list: null,
+              pname: "iii",
+            },
+            {
+              mid: 28,
+              myNumber: 98810914,
+              parNumber: 38056808,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:35:24.000+08:00",
+              likeCount: 9,
+              myName: "mmm",
+              name: "三国演义",
+              list: null,
+              pname: "iii",
+            },
+            {
+              mid: 27,
+              myNumber: 64728217,
+              parNumber: 38056808,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:35:08.000+08:00",
+              likeCount: 0,
+              myName: "aaa",
+              name: "三国演义",
+              list: null,
+              pname: "iii",
+            },
+            {
+              mid: 25,
+              myNumber: 64728217,
+              parNumber: 38056808,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:34:45.000+08:00",
+              likeCount: 0,
+              myName: "aaa",
+              name: "三国演义",
+              list: null,
+              pname: "iii",
+            },
+            {
+              mid: 23,
+              myNumber: 38056808,
+              parNumber: 38056808,
+              isbn: 963852741,
+              message: "hahahahaahahahaaaaa",
+              commentTime: "2020-12-26T09:34:28.000+08:00",
+              likeCount: 1,
+              myName: "iii",
+              name: "三国演义",
+              list: null,
+              pname: "iii",
+            },
+          ],
+          pname: "三国演义",
         },
       ],
     };
@@ -262,6 +372,7 @@ export default {
   border-bottom: 1px solid #e8e8e8;
   background-color: #ffffff;
   padding-top: 10px;
+  padding-bottom: 15px;
   .van-icon {
     display: flex;
     justify-content: flex-end;
@@ -281,12 +392,13 @@ export default {
   .comments {
     margin-top: 10px;
     margin-left: 30px;
+    margin-bottom: 15px;
   }
 }
 .interComment {
   width: 80%;
   background-color: #f7f7f7;
-  margin: 20px;
+  margin-left: 20px;
   font-size: 14px;
   padding: 10px;
   :nth-child(1) {
@@ -298,6 +410,18 @@ export default {
     width: 20px;
     float: right;
     top: -25px;
+    right: 3px;
   }
+}
+.likeCount1 {
+  font-size: 12px;
+  float: right;
+  margin-top: -17px;
+}
+.likeCount2 {
+  font-size: 12px;
+  float: right;
+  margin-top: -17px;
+  color: #f17a98;
 }
 </style>

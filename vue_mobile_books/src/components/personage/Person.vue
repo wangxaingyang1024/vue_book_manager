@@ -40,10 +40,16 @@
     <!-- 用户操作栏 -->
     <div class="separated"></div>
     <van-cell
+<<<<<<< HEAD
+      title="我的收藏"
+      is-link
+=======
       title="爱看书籍"
       is-link
       to="collection"
+>>>>>>> ec64605bab187776dee46f2c768dac48ea39f8fe
       icon="star-o"
+      @click="toFavorite"
       id="favoriteButton"
     />
     <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton" />

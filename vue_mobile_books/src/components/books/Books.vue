@@ -110,7 +110,7 @@ export default {
     //详情按钮
     bookDetail(isbn) {
       //先存isbn
-      //window.sessionStorage.setItem("isbn", isbn);
+      window.sessionStorage.setItem("isbn", isbn);
       //找到当前isbn所对应的对象
       let r = {};
       this.booklist.forEach((val) => {
