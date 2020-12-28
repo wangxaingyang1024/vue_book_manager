@@ -22,7 +22,13 @@
           @click="show($event)"
           id="moreMessage"
         />
-        <van-icon size="20" name="arrow-up" v-else @click="show($event)" id="lessMessage"/>
+        <van-icon
+          size="20"
+          name="arrow-up"
+          v-else
+          @click="show($event)"
+          id="lessMessage"
+        />
       </template>
       <template #price>
         <div id="price" style="height: 0px">
@@ -33,10 +39,22 @@
     </van-card>
     <!-- 用户操作栏 -->
     <div class="separated"></div>
-    <van-cell title="我的收藏" is-link  icon="star-o" @click="toFavorite" id="favoriteButton"/>
-    <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton"/>
+    <van-cell
+      title="爱看书籍"
+      is-link
+      to="collection"
+      icon="star-o"
+      id="favoriteButton"
+    />
+    <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton" />
     <div class="separated"></div>
-    <van-cell title="设置" is-link icon="setting-o" @click="toSetting" id="settingButton"/>
+    <van-cell
+      title="设置"
+      is-link
+      icon="setting-o"
+      @click="toSetting"
+      id="settingButton"
+    />
   </div>
 </template>
 
@@ -98,9 +116,9 @@ export default {
     toSetting() {
       this.$router.push("/setting");
     },
-    toFavorite() {
+    /*toFavorite() {
       this.$router.push("/favorite");
-    },
+    },*/
     generatorAvator(username, canvasId, avatarContainerId) {
       //设置头像昵称，如果为null或者为空时，设置为无
       var nickname = username;
@@ -164,9 +182,7 @@ export default {
       }
       context.fillText(nickname.slice(-2), avatarSize / 2, avatarSize / 2);
 
-      document.getElementById(avatarContainerId).src = canvas.toDataURL(
-        "image/png"
-      );
+      document.getElementById(avatarContainerId).src = canvas.toDataURL("image/png");
     },
   },
 };

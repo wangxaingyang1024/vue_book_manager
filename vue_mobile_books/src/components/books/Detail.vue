@@ -24,8 +24,13 @@
         <span class="text">简介：{{ bookObject.synopsis }}</span>
         <span class="text">类型：{{ bookObject.type }}</span>
         <van-icon name="chat-o" size="22" @click="exterComment" />
-        <van-icon v-if="collection === true" name="star-o" size="22" />
-        <van-icon v-else color="#00a1d6" name="star" size="22" />
+        <van-icon
+          v-if="collection === false"
+          name="star-o"
+          size="22"
+          @click="onCollection"
+        />
+        <van-icon v-else @click="inCollection" color="#00a1d6" name="star" size="22" />
       </template>
       <template #footer>
         <van-button
@@ -58,6 +63,8 @@
         <p class="name">{{ item.name }}</p>
         <p class="time">{{ item.time }}</p>
         <p class="comments">{{ item.comments }}</p>
+        <van-icon size="18" name="thumb-circle-o" v-if="like === false" @click="onLike" />
+        <van-icon size="18" color="#00a1d6" v-else name="thumb-circle" />
         <van-icon size="18" name="chat-o" @click="interComment(item.jobnumber)" />
         <div class="interComment">
           <span>余福东：</span><span>哈哈哈哈哈哈哈哈哈哈或</span>
@@ -98,7 +105,7 @@ export default {
       finished: true,
       bookObject: {},
       //判断收藏按钮颜色变化
-      collection: true,
+      collection: false,
       //评论框是否弹出
       show1: false,
       show2: false,
@@ -107,6 +114,8 @@ export default {
       message2: "",
       //获取二级评论数据绑定
       placeholder: "",
+      //点赞判断
+      like: false,
       //获取的评论列表
       commentlist: [
         {
@@ -174,6 +183,17 @@ export default {
       });
       this.placeholder = a.name;
       //console.log(a);
+    },
+    //点赞
+    onLike() {
+      this.like = true;
+    },
+    //收藏
+    onCollection() {
+      this.collection = true;
+    },
+    inCollection() {
+      this.collection = false;
     },
   },
 };
