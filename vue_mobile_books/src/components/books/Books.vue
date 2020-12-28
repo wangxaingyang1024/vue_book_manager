@@ -109,8 +109,11 @@ export default {
     },
     //详情按钮
     bookDetail(isbn) {
+      if (this.jobNumber === null || this.token === null) {
+        return this.$toast.fail({ message: "请先登录!", className: "toast" });
+      }
       //先存isbn
-      window.sessionStorage.setItem("isbn", isbn);
+      //window.sessionStorage.setItem("isbn", isbn);
       //找到当前isbn所对应的对象
       let r = {};
       this.booklist.forEach((val) => {

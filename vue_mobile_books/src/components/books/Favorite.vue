@@ -12,7 +12,7 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="getLikeList"
+        @load="getBookList"
       >
         <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
           <van-collapse v-model="activeName" accordion>
@@ -21,6 +21,15 @@
               <div><span class="title">编号:</span> {{ item.isbn }}</div>
               <div><span class="title">简介:</span> {{ item.synopsis }}</div>
               <div><span class="title">类型:</span> {{ item.type }}</div>
+              <div class="btn">
+                <van-button
+                  type="primary"
+                  size="mini"
+                  @click="cancelFavorite(item.isbn)"
+                  id="cancelFavoriteButton"
+                  >取消收藏</van-button
+                >
+              </div>
             </van-collapse-item>
           </van-collapse>
         </van-swipe-cell>
@@ -39,7 +48,15 @@ export default {
     return {
       loading: false,
       finished: true,
-      booklist: [],
+      booklist: [
+        {
+          name: "dasda",
+          author: "dasdas",
+          isbn: 524121,
+          synopsis: "dasdasdasd",
+          type: "sadasdasd",
+        },
+      ],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       activeName: "",
     };
@@ -47,63 +64,36 @@ export default {
   methods: {
     //获取书籍列表
     async getBookList() {
-      if (window.sessionStorage.getItem("jobNumber")) {
-        this.$toast.loading({
-          duration: 0, // 持续展示 toast
-          forbidClick: true,
-          className: "toast",
-        });
-      }
-      const { data: res } = await this.$http.get("book/findOne/" + this.jobNumber);
-      console.log(res);
-      if (res.status === 402) {
-        return;
-      }
-      if (res.status !== 200) {
-        return this.$toast.fail("获取图书失败！");
+      const { data: res } = await this.$http.get(`book/getFavorite/${this.jobNumber}`);
+      if (res.status !== 6013) {
+        return this.$toast.fail("获取图书列表失败！");
       }
       this.booklist = res.data;
-      this.$toast.clear();
-      if (!window.sessionStorage.getItem("num")) {
-        window.sessionStorage.setItem("num", "num");
-        this.$toast({
-          message: "左滑还书",
-          position: "center",
-          className: "toast",
-        });
-      }
+      console.log(res.data);
     },
-    //归还书籍
-    async returnBook(isbn) {
-      console.log(isbn);
+    //取消收藏
+    async cancelFavorite(isbn) {
+      //console.log(isbn);
       const confirmResult = await this.$dialog
         .confirm({
-          message: "确定要归还吗？",
+          message: "确定要取消收藏吗？",
           confirmButtonColor: "red",
         })
         .catch((err) => err);
-      //console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return;
       } else {
-        this.$toast.loading({
-          duration: 0, // 持续展示 toast
-          forbidClick: true,
-          className: "toast",
-        });
-        const { data: res } = await this.$http.post("book/return", {
+        const { data: res } = await this.$http.post(`book/favorite`, {
           jobNumber: this.jobNumber,
           isbn: isbn,
+          isClick: false,
         });
-        if (res.status !== 6008) {
-          return this.$toast.fail({
-            message: "归还书籍失败!",
-            className: "toast",
-          });
-          // console.log("还书失败");
+        console.log(res);
+        if (res.status !== 6014) {
+          return this.$toast.fail("取消收藏失败");
         }
+        this.$toast.success("取消收藏成功！");
         this.getBookList();
-        this.$toast.success({ message: "归还书籍成功!", className: "toast" });
       }
     },
     //返回
@@ -140,5 +130,11 @@ export default {
 }
 .title {
   color: rgb(138, 197, 224);
+}
+.btn {
+  .van-button {
+    float: right;
+    top: -20px;
+  }
 }
 </style>

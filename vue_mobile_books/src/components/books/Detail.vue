@@ -24,13 +24,8 @@
         <span class="text">简介：{{ bookObject.synopsis }}</span>
         <span class="text">类型：{{ bookObject.type }}</span>
         <van-icon name="chat-o" size="22" @click="exterComment" />
-        <van-icon
-          v-if="collection === false"
-          name="star-o"
-          size="22"
-          @click="onCollection"
-        />
-        <van-icon v-else @click="inCollection" color="#f17a98" name="star" size="22" />
+        <van-icon v-if="collection === false" name="star-o" size="22" @click="favorite" />
+        <van-icon v-else @click="favorite" color="#f17a98" name="star" size="22" />
       </template>
       <template #footer>
         <van-button
@@ -54,20 +49,25 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary">发表评论</van-button>
+      <van-button type="primary" @click="add1">发表评论</van-button>
     </van-action-sheet>
     <!-- 评论内容界面 -->
     <span class="commentSpan">热门评论</span>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="this.getCommentList"
+    >
       <div class="exterComment" v-for="(item1, index1) in commentlist" :key="index1">
         <p class="name">{{ item1.myName }}</p>
-        <p class="time">{{ item1.commentTime }}</p>
+        <p class="time">{{ item1.commentTime.slice(0, 19) }}</p>
         <p class="comments">{{ item1.message }}</p>
         <span class="likeCount1" v-if="like === false">{{ item1.likeCount }}</span>
         <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
         <van-icon size="18" name="thumb-circle-o" v-if="like === false" @click="onLike" />
         <van-icon size="18" color="#f17a98" v-else name="thumb-circle" />
-        <van-icon size="18" name="chat-o" @click="interComment(item.jobnumber)" />
+        <van-icon size="18" name="chat-o" @click="interComment(item1.mid)" />
         <div class="interComment" v-for="(item2, index2) in item1.list" :key="index2">
           <span>{{ item2.myName }}：</span>
           <span>{{ item2.message }}</span>
@@ -86,7 +86,7 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary">发表回复</van-button>
+      <van-button type="primary" @click="add2">发表回复</van-button>
     </van-action-sheet>
   </div>
 </template>
@@ -99,6 +99,8 @@ export default {
     //console.log(this.bookObject);
     //获取评论列表
     this.getCommentList();
+    //获取是否已收藏
+    this.getCheck();
   },
   data() {
     return {
@@ -120,138 +122,37 @@ export default {
       //点赞判断
       like: false,
       //获取的评论列表
-      commentlist: [
-        {
-          mid: 32,
-          myNumber: 64728217,
-          parNumber: 963852741,
-          isbn: 963852741,
-          message: "hahahahaahahahaaaaa",
-          commentTime: "2020-12-26T09:41:13.000+08:00",
-          likeCount: 9,
-          myName: "aaa",
-          name: "三国演义",
-          list: [],
-          pname: "三国演义",
-        },
-        {
-          mid: 30,
-          myNumber: 98810914,
-          parNumber: 963852741,
-          isbn: 963852741,
-          message: "hahahahaahahahaaaaa",
-          commentTime: "2020-12-26T09:40:43.000+08:00",
-          likeCount: 8,
-          myName: "mmm",
-          name: "三国演义",
-          list: [
-            {
-              mid: 26,
-              myNumber: 64728217,
-              parNumber: 98810914,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:35:00.000+08:00",
-              likeCount: 8,
-              myName: "aaa",
-              name: "三国演义",
-              list: null,
-              pname: "mmm",
-            },
-          ],
-          pname: "三国演义",
-        },
-        {
-          mid: 31,
-          myNumber: 38056808,
-          parNumber: 963852741,
-          isbn: 963852741,
-          message: "hahahahaahahahaaaaa",
-          commentTime: "2020-12-26T09:41:07.000+08:00",
-          likeCount: 3,
-          myName: "iii",
-          name: "三国演义",
-          list: [
-            {
-              mid: 29,
-              myNumber: 98810914,
-              parNumber: 38056808,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:35:32.000+08:00",
-              likeCount: 0,
-              myName: "mmm",
-              name: "三国演义",
-              list: null,
-              pname: "iii",
-            },
-            {
-              mid: 28,
-              myNumber: 98810914,
-              parNumber: 38056808,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:35:24.000+08:00",
-              likeCount: 9,
-              myName: "mmm",
-              name: "三国演义",
-              list: null,
-              pname: "iii",
-            },
-            {
-              mid: 27,
-              myNumber: 64728217,
-              parNumber: 38056808,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:35:08.000+08:00",
-              likeCount: 0,
-              myName: "aaa",
-              name: "三国演义",
-              list: null,
-              pname: "iii",
-            },
-            {
-              mid: 25,
-              myNumber: 64728217,
-              parNumber: 38056808,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:34:45.000+08:00",
-              likeCount: 0,
-              myName: "aaa",
-              name: "三国演义",
-              list: null,
-              pname: "iii",
-            },
-            {
-              mid: 23,
-              myNumber: 38056808,
-              parNumber: 38056808,
-              isbn: 963852741,
-              message: "hahahahaahahahaaaaa",
-              commentTime: "2020-12-26T09:34:28.000+08:00",
-              likeCount: 1,
-              myName: "iii",
-              name: "三国演义",
-              list: null,
-              pname: "iii",
-            },
-          ],
-          pname: "三国演义",
-        },
-      ],
+      commentlist: [],
     };
   },
   methods: {
     //跳转回图书页面
     onClickLeft() {
       this.$router.push("books");
-      window.sessionStorage.clear();
+      window.sessionStorage.removeItem("bookDetail");
     },
-    //弹出评论框
+    //弹出一级评论框
     exterComment(bookObject) {
       this.show1 = true;
+    },
+    //发表一级评论
+    async add1() {
+      if (this.message1 === "") {
+        return this.$toast.fail("请先输入内容");
+      }
+      const { data: res } = await this.$http.post("comment/addComment", {
+        myNumber: this.jobNumber,
+        parNumber: 0,
+        isbn: this.bookObject.isbn,
+        message: this.message1,
+        likeCount: 0,
+      });
+      if (res.status !== 3034) {
+        return this.$toast.fail("发表评论失败");
+      }
+      this.message1 = "";
+      this.$toast.success("发表评论成功");
+      this.getCommentList();
     },
     //关闭弹框清除弹框内容
     closeSheet() {
@@ -280,18 +181,25 @@ export default {
       location.reload();
     },
     //获取评论列表
-    getCommentList() {},
+    async getCommentList() {
+      console.log(this.bookObject.isbn);
+      const { data: res } = await this.$http.get(
+        `comment/findEnd/${this.bookObject.isbn}`
+      );
+      this.commentlist = res.data;
+      console.log(res);
+    },
     //二级评论按钮
-    interComment(jobnumber) {
+    interComment(mid) {
       this.show2 = true;
       //找到当前对应的评论
       let a = {};
       this.commentlist.forEach((val) => {
-        if (val.jobnumber == jobnumber) {
+        if (val.mid == mid) {
           a = val;
         }
       });
-      this.placeholder = a.name;
+      this.placeholder = a.myName;
       //console.log(a);
     },
     //点赞
@@ -299,11 +207,55 @@ export default {
       this.like = true;
     },
     //收藏
-    onCollection() {
-      this.collection = true;
+    async favorite() {
+      if (this.collection === false) {
+        const { data: res } = await this.$http.post("book/favorite", {
+          jobNumber: this.jobNumber,
+          isbn: this.bookObject.isbn,
+          isClick: true,
+        });
+        if (res.status !== 6015) {
+          return this.$toast.fail("收藏失败!");
+        }
+        this.collection = !this.collection;
+        return this.$toast.success("收藏成功!");
+      }
+      //弹框询问用户是否取消收藏
+      const confirmResult = await this.$dialog
+        .confirm({
+          message: "确定要取消收藏吗？",
+          confirmButtonColor: "red",
+        })
+        .catch((err) => err);
+      //如果用户确认删除,则返回值为字符串confirm
+      //如果用户取消删除，则返回值为字符串cancel
+      if (confirmResult !== "confirm") {
+        return;
+      }
+      const { data: res } = await this.$http.post("book/favorite", {
+        jobNumber: this.jobNumber,
+        isbn: this.bookObject.isbn,
+        isClick: false,
+      });
+      if (res.status !== 6014) {
+        return this.$toast.error("取消收藏失败!");
+      }
+      this.collection = !this.collection;
+      //return this.$toast.success("已取消收藏!");
     },
-    inCollection() {
-      this.collection = false;
+    //查询是否已收藏
+    async getCheck() {
+      this.loading = !this.loading;
+      const { data: res } = await this.$http.post(`book/isClick`, {
+        jobNumber: this.jobNumber,
+        isbn: this.bookObject.isbn,
+      });
+      this.loading = !this.loading;
+      //console.log(res);
+      if (res.status !== 200) {
+        return this.$toast.fail("查询是否已收藏失败!");
+      }
+      this.collection = res.data;
     },
   },
 };
