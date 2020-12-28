@@ -140,13 +140,11 @@ export default {
       if (this.message1 === "") {
         return this.$toast.fail("请先输入内容");
       }
-      const date = new Date();
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
         parNumber: 0,
         isbn: this.bookObject.isbn,
         message: this.message1,
-        commnetTime: this.time(date),
         likeCount: 0,
       });
       if (res.status !== 3034) {

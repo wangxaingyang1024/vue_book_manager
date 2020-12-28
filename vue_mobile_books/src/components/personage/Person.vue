@@ -117,6 +117,9 @@ export default {
       this.$router.push("/setting");
     },
     toFavorite() {
+      if (this.jobNumber === null || this.token === null) {
+        return this.$toast.fail({ message: "请先登录!", className: "toast" });
+      }
       this.$router.push("/favorite");
     },
     generatorAvator(username, canvasId, avatarContainerId) {
