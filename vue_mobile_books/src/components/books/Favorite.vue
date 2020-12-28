@@ -1,16 +1,31 @@
 <template>
   <div>
+    <!-- 顶部导航区域 -->
+    <van-nav-bar title="爱看书籍">
+      <template #left>
+        <van-icon name="arrow-left" @click="onClickLeft" />
+      </template>
+    </van-nav-bar>
     <!-- 我的书籍 -->
-    <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
-      <van-collapse v-model="activeName" accordion>
-        <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
-          <div><span class="title">作者:</span> {{ item.author }}</div>
-          <div><span class="title">编号:</span> {{ item.isbn }}</div>
-          <div><span class="title">简介:</span> {{ item.synopsis }}</div>
-          <div><span class="title">类型:</span> {{ item.type }}</div>
-        </van-collapse-item>
-      </van-collapse>
-    </van-swipe-cell>
+    <div style="height: calc(100vh - 150px); overflow: auto">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="getLikeList"
+      >
+        <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
+          <van-collapse v-model="activeName" accordion>
+            <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
+              <div><span class="title">作者:</span> {{ item.author }}</div>
+              <div><span class="title">编号:</span> {{ item.isbn }}</div>
+              <div><span class="title">简介:</span> {{ item.synopsis }}</div>
+              <div><span class="title">类型:</span> {{ item.type }}</div>
+            </van-collapse-item>
+          </van-collapse>
+        </van-swipe-cell>
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -22,9 +37,11 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      finished: true,
       booklist: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      activeName: ""
+      activeName: "",
     };
   },
   methods: {
@@ -34,12 +51,10 @@ export default {
         this.$toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
-          className: "toast"
+          className: "toast",
         });
       }
-      const { data: res } = await this.$http.get(
-        "book/findOne/" + this.jobNumber
-      );
+      const { data: res } = await this.$http.get("book/findOne/" + this.jobNumber);
       console.log(res);
       if (res.status === 402) {
         return;
@@ -54,7 +69,7 @@ export default {
         this.$toast({
           message: "左滑还书",
           position: "center",
-          className: "toast"
+          className: "toast",
         });
       }
     },
@@ -64,9 +79,9 @@ export default {
       const confirmResult = await this.$dialog
         .confirm({
           message: "确定要归还吗？",
-          confirmButtonColor: "red"
+          confirmButtonColor: "red",
         })
-        .catch(err => err);
+        .catch((err) => err);
       //console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return;
@@ -74,24 +89,28 @@ export default {
         this.$toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
-          className: "toast"
+          className: "toast",
         });
         const { data: res } = await this.$http.post("book/return", {
           jobNumber: this.jobNumber,
-          isbn: isbn
+          isbn: isbn,
         });
         if (res.status !== 6008) {
           return this.$toast.fail({
             message: "归还书籍失败!",
-            className: "toast"
+            className: "toast",
           });
           // console.log("还书失败");
         }
         this.getBookList();
         this.$toast.success({ message: "归还书籍成功!", className: "toast" });
       }
-    }
-  }
+    },
+    //返回
+    onClickLeft() {
+      this.$router.push("person");
+    },
+  },
 };
 </script>
 <style lang="less">
@@ -117,11 +136,7 @@ export default {
 .return {
   width: 100px;
   height: 100%;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 0, 0, 0),
-    rgb(89, 201, 108)
-  );
+  background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(89, 201, 108));
 }
 .title {
   color: rgb(138, 197, 224);
