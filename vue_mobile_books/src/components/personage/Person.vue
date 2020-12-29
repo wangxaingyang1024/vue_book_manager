@@ -135,7 +135,7 @@ export default {
       var fontWeight = "normal";
 
       //设置头像背景颜色
-      var colors = [
+      /*var colors = [
         "#31bc9f",
         "#33cc70",
         "#4a94db",
@@ -156,8 +156,8 @@ export default {
         "#c0392b",
         "#bdc3c7",
         "#7f8c8d",
-      ];
-      var avatarColor = colors[Math.floor(Math.random() * colors.length)];
+      ];*/
+      var avatarColor = "#3296fa"; //colors[Math.floor(Math.random() * colors.length)];
 
       /*根据id获取canvas
        * 如果为空，则创建新的canvas

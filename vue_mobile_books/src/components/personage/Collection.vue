@@ -40,10 +40,7 @@ export default {
       loading: false,
       finished: true,
       //爱看列表
-      likelist: [
-        { name: "asdasdas", isbn: 12345566 },
-        { name: "aasdassdas", isbn: 12362266 },
-      ],
+      likelist: [],
     };
   },
   methods: {
