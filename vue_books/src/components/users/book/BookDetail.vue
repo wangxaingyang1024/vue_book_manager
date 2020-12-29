@@ -111,9 +111,9 @@
           style="margin-left:70px"
         >
           <div class="comment">
-            <b class="nickname">{{ subItem.myNickname }}</b
-            >&nbsp;
-            {{ subItem.message }}
+            <b class="nickname">{{ subItem.myNickname }}</b>
+            <span v-html="'&nbsp;&nbsp;'"></span>
+            <span class="message">{{ subItem.message }}</span>
           </div>
           <div class="comment comment-date">
             {{ subItem.commentTime.substring(0, item.commentTime.length - 2) }}
@@ -145,7 +145,7 @@
               <b class="nickname">{{ tinyItem.myNickname }}</b
               >&nbsp; <span class="reply">回复</span> @{{ subItem.myNickname }}
               ：
-              {{ tinyItem.message }}
+              <span class="message"> {{ tinyItem.message }}</span>
             </div>
             <div class="comment comment-date">
               {{
@@ -515,5 +515,8 @@ export default {
 .nickname {
   font-size: 13px;
   color: rgba(71, 71, 71, 0.74);
+}
+.message {
+  font-size: 80%;
 }
 </style>
