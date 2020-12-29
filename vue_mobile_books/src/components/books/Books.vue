@@ -12,14 +12,12 @@
       >
         <!-- 书籍 -->
         <van-swipe-cell v-for="(item, index) in booklist" :key="index" id="moreMessage">
-          <van-cell>
+          <van-cell @click="bookDetail(item.isbn)" id="bookDetailButton">
             <template #title>
               <span>《{{ item.name }}》</span>
             </template>
             <template #right-icon>
-              <van-button type="primary" size="mini" @click="bookDetail(item.isbn)"
-                >查看详情</van-button
-              >
+              <van-icon name="arrow" />
             </template>
           </van-cell>
           <!-- 左滑借书 -->
@@ -31,6 +29,7 @@
               text="借阅"
               v-if="item.status === true"
               @click="borrowBook(item.isbn)"
+              id="borrowBookButton"
             ></van-button>
             <van-button class="borrow" disabled text="借阅" v-else></van-button>
           </template>
@@ -152,5 +151,10 @@ export default {
 
 .borrow {
   float: right;
+}
+.van-swipe-cell {
+  .van-icon {
+    margin-top: 6px;
+  }
 }
 </style>
