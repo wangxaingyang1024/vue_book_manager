@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-page-header @back="goBack" content="详情页面"> </el-page-header>
+    <el-page-header @back="goBack" content="详情页面" id="goBack">
+    </el-page-header>
     <el-card v-loading="loading">
       <div>
         <span class="title">书名：</span>
@@ -23,8 +24,7 @@
         <span class="title">简介：</span>
         {{ this.book.synopsis }}
       </div>
-      <div class="click" @click="borrowBook">
-        <!-- <span><i class="el-icon-chat-line-square"></i>评论</span> -->
+      <div class="click" @click="borrowBook" id="borrowBook">
         <el-tooltip
           effect="light"
           content="借阅"
@@ -34,7 +34,7 @@
           <i class="el-icon-shopping-cart-2"></i>
         </el-tooltip>
       </div>
-      <div class="click" @click="favorite" v-if="click === false">
+      <div class="click" id="favorite" @click="favorite" v-if="click === false">
         <el-tooltip
           effect="light"
           content="收藏"
@@ -44,7 +44,7 @@
           <i class="el-icon-star-off"></i>
         </el-tooltip>
       </div>
-      <div class="click" @click="favorite" v-else>
+      <div class="click" id="unFavorite" @click="favorite" v-else>
         <el-tooltip
           effect="light"
           content="取消收藏"
@@ -59,6 +59,7 @@
     <el-card>
       <!-- <add-comment></add-comment> -->
       <el-input
+        id="message1"
         type="textarea"
         :rows="3"
         placeholder="请输入内容"
@@ -70,41 +71,75 @@
         style="margin-top:15px"
       >
       </el-input>
-      <div class="add" @click="p">
+      <div class="add" @click="p" id="add1">
         发表评论
       </div>
       <hr />
       <!-- <comments></comments> -->
       <div v-for="item in comments" :key="item.myFlag">
-        <h5>{{ item.myNickname }}</h5>
+        <b>{{ item.myNickname }}</b>
         <p>{{ item.message }}</p>
-        <span
-          >{{ item.commentTime }}
+        <div class="comment-date">
+          {{ item.commentTime.substring(0, item.commentTime.length - 2) }}
           <span class="comment-icon">
-            <i class="el-icon-thumb" @click="like()"></i>
-            <i class="el-icon-chat-line-square" @click="reply(item)"></i>
+            <i
+              id="like1"
+              class="el-icon-thumb"
+              @click="like(item.myFlag)"
+              v-if="likeList.indexOf(item.myFlag) === -1"
+            ></i>
+            <i
+              id="unLike1"
+              class="el-icon-thumb"
+              style="color: rgb(255, 209, 6);"
+              @click="like(item.myFlag)"
+              v-else
+            ></i>
+            {{ item.likeCount }}
+            <i
+              id="reply1"
+              class="el-icon-chat-line-square"
+              @click="reply(item)"
+            ></i>
           </span>
-        </span>
+        </div>
         <div
           v-for="subItem in item.children"
           :key="subItem.myFlag"
           style="margin-left:100px"
         >
-          <h5>{{ subItem.myNickname }} @ {{ item.myNickname }}</h5>
-          <p>{{ subItem.message }}</p>
-          <span
-            >{{ subItem.commentTime }}
+          <div class="comment">
+            <b>{{ subItem.myNickname }}</b> 回复 @{{ item.myNickname }} ：
+            {{ subItem.message }}
+          </div>
+          <div class="comment comment-date">
+            {{ subItem.commentTime.substring(0, item.commentTime.length - 2) }}
             <span class="comment-icon">
-              <i class="el-icon-thumb" @click="like()"></i>
               <i
+                id="like2"
+                class="el-icon-thumb"
+                @click="like(subItem.myFlag)"
+                v-if="likeList.indexOf(subItem.myFlag) === -1"
+              ></i>
+              <i
+                id="unLike2"
+                class="el-icon-thumb"
+                style="color: rgb(255, 209, 6);"
+                @click="like(subItem.myFlag)"
+                v-else
+              ></i>
+              {{ subItem.likeCount }}
+              <i
+                id="reply2"
                 class="el-icon-chat-line-square"
                 @click="reply(item, subItem)"
               ></i>
             </span>
-          </span>
+          </div>
         </div>
         <div v-if="active === item.myFlag" style="margin-left:100px">
           <el-input
+            id="message2"
             type="textarea"
             :rows="3"
             :placeholder="place"
@@ -115,7 +150,7 @@
             resize="none"
           >
           </el-input>
-          <div class="add" @click="add">
+          <div id="add2" class="add" @click="add">
             发表评论
           </div>
         </div>
@@ -136,6 +171,7 @@ export default {
       book: [],
       active: "",
       click: false,
+      isLike: true,
       message: "",
       message1: "",
       message2: "",
@@ -143,6 +179,7 @@ export default {
       parFlag: "0",
       place: "",
       comments: [],
+      likeList: [],
     };
   },
   created() {
@@ -150,6 +187,7 @@ export default {
     console.log(this.book);
     this.getCheck();
     this.getComments();
+    this.getLikeList();
   },
   methods: {
     async getCheck() {
@@ -167,9 +205,9 @@ export default {
     },
     async getComments() {
       console.log(this.book.isbn);
-      const { data: res } = await this.$http.get(
-        `comment/findEnd/${this.book.isbn}`
-      );
+      const { data: res } = await this.$http.post(`comment/findEnd`, {
+        isbn: this.book.isbn,
+      });
       this.comments = res.data;
       console.log(res);
     },
@@ -268,6 +306,37 @@ export default {
       this.active = "";
       return this.getComments();
     },
+    async like(myFlag) {
+      if (this.likeList.indexOf(myFlag) === -1) {
+        this.isLike = true;
+      } else {
+        this.isLike = false;
+      }
+      const { data: res } = await this.$http.post("comment/updateComment", {
+        myFlag: myFlag,
+        isLike: this.isLike,
+        isbn: this.book.isbn,
+        jobNumber: this.jobNumber,
+      });
+      this.getComments();
+      this.getLikeList();
+      console.log(res);
+      // if (res.status !== 3034) {
+      //   return this.$message.error("发表评论失败!");
+      // }
+    },
+    async getLikeList() {
+      const { data: res } = await this.$http.post("comment/personalLike", {
+        isbn: this.book.isbn,
+        jobNumber: this.jobNumber,
+      });
+      // const { data: res } = await this.$http.get(
+      //   `comment//${this.book.isbn}/${this.jobNumber}`
+      // );
+      console.log(1);
+      console.log(res);
+      this.likeList = res.data;
+    },
     // time(date) {
     //   var y = date.getFullYear();
     //   var m = date.getMonth() + 1;
@@ -357,7 +426,7 @@ export default {
   top: -20px;
   background: #fff;
   padding: 15px;
-  z-index: 1000;
+  z-index: 999999;
   border: 1px solid rgba(90, 88, 88, 0.37);
   box-shadow: 1px 5px 10px rgba(90, 88, 66, 0.61);
 }
@@ -368,5 +437,12 @@ export default {
   i:hover {
     color: rgb(255, 209, 6);
   }
+}
+.comment {
+  line-height: 30px;
+}
+.comment-date {
+  font-size: 13px;
+  color: #5f6061;
 }
 </style>
