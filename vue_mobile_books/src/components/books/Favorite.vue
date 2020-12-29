@@ -14,25 +14,28 @@
         finished-text="没有更多了"
         @load="getBookList"
       >
-        <van-swipe-cell v-for="item in booklist" :key="item.isbn" right-width="100">
-          <van-collapse v-model="activeName" accordion>
-            <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
-              <div><span class="title">作者:</span> {{ item.author }}</div>
-              <div><span class="title">编号:</span> {{ item.isbn }}</div>
-              <div><span class="title">简介:</span> {{ item.synopsis }}</div>
-              <div><span class="title">类型:</span> {{ item.type }}</div>
-              <div class="btn">
-                <van-button
-                  type="primary"
-                  size="mini"
-                  @click="cancelFavorite(item.isbn)"
-                  id="cancelFavoriteButton"
-                  >取消收藏</van-button
-                >
-              </div>
-            </van-collapse-item>
-          </van-collapse>
-        </van-swipe-cell>
+        <van-collapse
+          v-model="activeName"
+          accordion
+          v-for="item in booklist"
+          :key="item.isbn"
+        >
+          <van-collapse-item :title="'《' + item.name + '》'" :name="item.isbn">
+            <div><span class="title">作者:</span> {{ item.author }}</div>
+            <div><span class="title">编号:</span> {{ item.isbn }}</div>
+            <div><span class="title">简介:</span> {{ item.synopsis }}</div>
+            <div><span class="title">类型:</span> {{ item.type }}</div>
+            <div class="btn">
+              <van-button
+                type="primary"
+                size="mini"
+                @click="cancelFavorite(item.isbn)"
+                id="cancelFavoriteButton"
+                >取消收藏</van-button
+              >
+            </div>
+          </van-collapse-item>
+        </van-collapse>
       </van-list>
     </div>
   </div>
@@ -109,13 +112,6 @@ export default {
 }
 </style>
 <style lang="less" scoped>
-.van-row {
-  margin-left: 20px;
-  margin-right: 60px;
-}
-.row1 {
-  margin-top: 30px;
-}
 /*.row2 {
   margin-top: 30px;
   margin-right: -50px;
