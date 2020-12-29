@@ -157,7 +157,7 @@ export default {
         "#bdc3c7",
         "#7f8c8d",
       ];*/
-      var avatarColor = "#3296fa"; //colors[Math.floor(Math.random() * colors.length)];
+      var avatarColor = "rgba(50,150,250,0.6)"; //colors[Math.floor(Math.random() * colors.length)];
 
       /*根据id获取canvas
        * 如果为空，则创建新的canvas

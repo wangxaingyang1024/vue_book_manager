@@ -111,24 +111,28 @@
           id="interCommentButton"
         />
         <div class="interComment" v-for="(item2, index2) in item1.children" :key="index2">
-          <span>{{ item2.myNickname }}@{{ item1.myNickname }}：</span>
+          <span>{{ item2.myNickname }}：</span>
           <span>{{ item2.message }}</span>
-          <!-- <span class="likeCount1" v-if="like === false">{{ item1.likeCount }}</span>
-          <span class="likeCount2" v-else>{{ item1.likeCount }}</span> -->
-          <!-- <van-icon
-            size="14"
-            name="thumb-circle-o"
-            v-if="like === false"
-            @click="onLike"
-            id="onLikeButton"
-          />
-          <van-icon size="14" color="#f17a98" v-else name="thumb-circle" /> -->
           <van-icon
             size="14"
-            name="chat-o"
+            name="comment-o"
             @click="interComment(item1, item2)"
             id="interCommentButton"
           />
+          <div
+            class="penetComment"
+            v-for="(item3, index3) in item2.children"
+            :key="index3"
+          >
+            <span>{{ item3.myNickname }}&nbsp;@&nbsp;{{ item2.myNickname }}：</span>
+            <span>{{ item3.message }}</span>
+            <van-icon
+              size="14"
+              name="comment-o"
+              @click="interComment(item1, item2, item3)"
+              id="interCommentButton"
+            />
+          </div>
         </div>
       </div>
     </van-list>
@@ -145,7 +149,7 @@
         autosize
         type="textarea"
         maxlength="100"
-        :placeholder="'回复@:' + placeholder"
+        :placeholder="place"
         show-word-limit
         clearable
       />
@@ -167,8 +171,12 @@ export default {
     //获取点赞列表
     this.getLikeList();
   },
+  /*mounted() {
+    this.commentNum();
+  },*/
   data() {
     return {
+      num: 0,
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       token: window.sessionStorage.getItem("token"),
       loading: false,
@@ -183,12 +191,11 @@ export default {
       message: "",
       message1: "",
       message2: "",
-      //获取二级评论数据绑定
-      placeholder: "",
       //点赞判断
       islike: true,
       parNumber: 0,
       parFlag: "0",
+      //获取评论数据绑定
       place: "",
       //获取的评论列表
       commentlist: [],
@@ -276,13 +283,18 @@ export default {
       this.commentlist = res.data;
       console.log(res);
     },
-    //二级评论按钮
-    interComment(item1, item2) {
+    //评论按钮
+    interComment(item1, item2, item3) {
       this.show2 = true;
-      this.placeholder = item1.myNickname;
+      //this.placeholder = item1.myNickname;
+      if (item3) {
+        this.parNumber = item3.myNumber;
+        this.parFlag = item2.myFlag;
+        return (this.place = `回复@${item3.myNickname}:`);
+      }
       if (item2) {
         this.parNumber = item2.myNumber;
-        this.parFlag = item1.myFlag;
+        this.parFlag = item2.myFlag;
         return (this.place = `回复@${item2.myNickname}:`);
       }
       this.parNumber = item1.myNumber;
@@ -364,6 +376,19 @@ export default {
       }
       this.collection = res.data;
     },
+    //计算评论总数
+    /*commentNum() {
+      this.comments.forEach((item1) => {
+        this.num = this.num + 1;
+        item1.children.forEach((item2) => {
+          this.num += 1;
+          item2.children.forEach((item3) => {
+            this.num += 1;
+          });
+        });
+      });
+      console.log(this.num);
+    },*/
   },
 };
 </script>
@@ -483,6 +508,13 @@ export default {
     float: right;
     top: -4px;
     right: 3px;
+  }
+}
+.penetComment {
+  padding: 10px;
+  .van-icon {
+    float: right;
+    right: -7px;
   }
 }
 .likeCount1 {
