@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>
-        <%= htmlWebpackPlugin.options.isProd ? '' : 'dev - ' %> 明日图书馆
+      <%= htmlWebpackPlugin.options.isProd ? '' : 'dev - ' %> 明日图书馆
     </title>
     <% if(htmlWebpackPlugin.options.isProd){ %>
-        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-        <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.8.2/theme-chalk/index.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+    />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.8.2/theme-chalk/index.css"
+      rel="stylesheet"
+    />
 
-        <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
-        <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
-        <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
-        <script src="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-        <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.8.2/index.js"></script>
-        <script src="../src/js/demo.js"></script>
-        <% } %>
-</head>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.8.2/index.js"></script>
+    <% } %>
+  </head>
 
-<body>
+  <body>
     <noscript>
       <strong
         >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
@@ -31,6 +35,5 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-</body>
-
+  </body>
 </html>

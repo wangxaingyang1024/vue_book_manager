@@ -13,7 +13,7 @@ module.exports = {
         target:
           process.env.NODE_ENV === "production"
             ? "http://182.92.77.213:8899"
-            : "http://192.168.2.103:8891",
+            : "http://192.168.2.103:8899",
         // target: "http://182.92.77.213:8899",
         changeOrigin: true,
         pathRewrite: { "^/api": "/api" },

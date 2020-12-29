@@ -201,6 +201,11 @@ export default {
 .el-menu-item-group__title {
   padding: 0 !important;
 }
+.el-form-item__label {
+  width: 90px;
+  font-size: 15px;
+  color: #345785c9;
+}
 </style>
 <style lang="less" scoped>
 .el-header {
@@ -237,6 +242,7 @@ export default {
   margin-bottom: 0;
   width: 50%;
 }
+
 .el-card {
   width: 100%;
   min-height: calc(100% - 2px);

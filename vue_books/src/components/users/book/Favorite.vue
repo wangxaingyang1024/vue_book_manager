@@ -125,7 +125,13 @@ export default {
   },
 };
 </script>
-
+<style lang="less">
+.el-form-item__label {
+  width: 90px;
+  font-size: 15px;
+  color: #345785c9;
+}
+</style>
 <style lang="less" scoped>
 .el-table__column-filter-trigger i {
   font-size: 20px;
