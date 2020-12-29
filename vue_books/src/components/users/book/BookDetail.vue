@@ -2,6 +2,7 @@
   <div>
     <el-page-header @back="goBack" content="详情页面" id="goBack">
     </el-page-header>
+    <!-- 书籍详情 -->
     <el-card v-loading="loading">
       <div>
         <span class="title">书名：</span>
@@ -55,9 +56,9 @@
         </el-tooltip>
       </div>
     </el-card>
-    <h3>XX条评论</h3>
-    <el-card>
-      <!-- <add-comment></add-comment> -->
+    <!-- 评论区 -->
+    <h3>{{ num }}条评论</h3>
+    <el-card v-loading="commentLoading">
       <el-input
         id="message1"
         type="textarea"
@@ -75,9 +76,9 @@
         发表评论
       </div>
       <hr />
-      <!-- <comments></comments> -->
+      <!-- 一级评论 -->
       <div v-for="item in comments" :key="item.myFlag">
-        <b>{{ item.myNickname }}</b>
+        <b class="nickname">{{ item.myNickname }}</b>
         <p>{{ item.message }}</p>
         <div class="comment-date">
           {{ item.commentTime.substring(0, item.commentTime.length - 2) }}
@@ -103,13 +104,15 @@
             ></i>
           </span>
         </div>
+        <!-- 二级评论 -->
         <div
           v-for="subItem in item.children"
           :key="subItem.myFlag"
-          style="margin-left:100px"
+          style="margin-left:70px"
         >
           <div class="comment">
-            <b>{{ subItem.myNickname }}</b> 回复 @{{ item.myNickname }} ：
+            <b class="nickname">{{ subItem.myNickname }}</b
+            >&nbsp;
             {{ subItem.message }}
           </div>
           <div class="comment comment-date">
@@ -136,8 +139,46 @@
               ></i>
             </span>
           </div>
+          <!-- 三级评论 -->
+          <div v-for="tinyItem in subItem.children" :key="tinyItem.myFlag">
+            <div class="comment">
+              <b class="nickname">{{ tinyItem.myNickname }}</b
+              >&nbsp; <span class="reply">回复</span> @{{ subItem.myNickname }}
+              ：
+              {{ tinyItem.message }}
+            </div>
+            <div class="comment comment-date">
+              {{
+                tinyItem.commentTime.substring(
+                  0,
+                  subItem.commentTime.length - 2
+                )
+              }}
+              <span class="comment-icon">
+                <i
+                  id="like2"
+                  class="el-icon-thumb"
+                  @click="like(tinyItem.myFlag)"
+                  v-if="likeList.indexOf(tinyItem.myFlag) === -1"
+                ></i>
+                <i
+                  id="unLike2"
+                  class="el-icon-thumb"
+                  style="color: rgb(255, 209, 6);"
+                  @click="like(tinyItem.myFlag)"
+                  v-else
+                ></i>
+                {{ tinyItem.likeCount }}
+                <i
+                  id="reply2"
+                  class="el-icon-chat-line-square"
+                  @click="reply(item, subItem, tinyItem)"
+                ></i>
+              </span>
+            </div>
+          </div>
         </div>
-        <div v-if="active === item.myFlag" style="margin-left:100px">
+        <div v-if="active === item.myFlag" style="margin-left:70px">
           <el-input
             id="message2"
             type="textarea"
@@ -161,12 +202,12 @@
 </template>
 
 <script>
-import Comments from "./Comments.vue";
 export default {
-  components: { Comments },
   data() {
     return {
+      num: 0,
       loading: false,
+      commentLoading: false,
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       book: [],
       active: "",
@@ -184,12 +225,15 @@ export default {
   },
   created() {
     this.book = JSON.parse(window.sessionStorage.getItem("book"));
-    console.log(this.book);
     this.getCheck();
     this.getComments();
     this.getLikeList();
   },
+  mounted() {
+    this.commentNum();
+  },
   methods: {
+    //查看是否收藏
     async getCheck() {
       this.loading = !this.loading;
       const { data: res } = await this.$http.post(`book/isClick`, {
@@ -203,17 +247,24 @@ export default {
       }
       this.click = res.data;
     },
+    //获取评论列表
     async getComments() {
-      console.log(this.book.isbn);
+      this.commentLoading = !this.commentLoading;
       const { data: res } = await this.$http.post(`comment/findEnd`, {
         isbn: this.book.isbn,
       });
-      this.comments = res.data;
+      this.commentLoading = !this.commentLoading;
       console.log(res);
+      if (res.status !== 3036) {
+        return this.$message.error("获取评论列表失败!");
+      }
+      this.comments = res.data;
     },
+    //返回书籍列表
     goBack() {
       window.history.back();
     },
+    //收藏书籍
     async favorite() {
       if (this.click === false) {
         this.loading = !this.loading;
@@ -253,6 +304,7 @@ export default {
       this.click = !this.click;
       return this.$message.success("已取消收藏!");
     },
+    //借阅书籍
     async borrowBook() {
       if (this.jobNumber === null || this.token === null) {
         return this.$message.warning("请先登录再进行此操作！");
@@ -272,10 +324,12 @@ export default {
       }
       this.$message.success("借阅书籍成功!");
     },
+    //发表父级评论
     p() {
       this.parNumber = 0;
       this.add();
     },
+    //发表二级评论
     async add() {
       if (this.parNumber === 0) {
         this.message = this.message1;
@@ -286,6 +340,7 @@ export default {
       if (this.message === "") {
         return this.$message.warning("评论内容不能为空!");
       }
+      this.commentLoading = !this.commentLoading;
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
         parNumber: this.parNumber,
@@ -294,6 +349,7 @@ export default {
         message: this.message,
         likeCount: 0,
       });
+      this.commentLoading = !this.commentLoading;
       console.log(res);
       if (res.status !== 3034) {
         return this.$message.error("发表评论失败!");
@@ -306,61 +362,71 @@ export default {
       this.active = "";
       return this.getComments();
     },
+    //点赞评论
     async like(myFlag) {
       if (this.likeList.indexOf(myFlag) === -1) {
         this.isLike = true;
       } else {
         this.isLike = false;
       }
+      this.commentLoading = !this.commentLoading;
       const { data: res } = await this.$http.post("comment/updateComment", {
         myFlag: myFlag,
         isLike: this.isLike,
         isbn: this.book.isbn,
         jobNumber: this.jobNumber,
       });
+      console.log(res);
+      this.commentLoading = !this.commentLoading;
+      if (res.status !== 200) {
+        return this.$message.error("点赞失败!");
+      }
       this.getComments();
       this.getLikeList();
-      console.log(res);
-      // if (res.status !== 3034) {
-      //   return this.$message.error("发表评论失败!");
-      // }
     },
+    //获取点赞列表
     async getLikeList() {
+      this.commentLoading = !this.commentLoading;
       const { data: res } = await this.$http.post("comment/personalLike", {
         isbn: this.book.isbn,
         jobNumber: this.jobNumber,
       });
-      // const { data: res } = await this.$http.get(
-      //   `comment//${this.book.isbn}/${this.jobNumber}`
-      // );
-      console.log(1);
       console.log(res);
+      this.commentLoading = !this.commentLoading;
+      if (res.status !== 200) {
+        return this.$message.error("获取点赞列表失败!");
+      }
       this.likeList = res.data;
     },
-    // time(date) {
-    //   var y = date.getFullYear();
-    //   var m = date.getMonth() + 1;
-    //   m = m < 10 ? "0" + m : m;
-    //   var d = date.getDate();
-    //   d = d < 10 ? "0" + d : d;
-    //   var h = date.getHours();
-    //   h = h < 10 ? "0" + h : h;
-    //   var minute = date.getMinutes();
-    //   minute = minute < 10 ? "0" + minute : minute;
-    //   var second = date.getSeconds();
-    //   second = second < 10 ? "0" + second : second;
-    //   return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
-    // },
-    reply(item, subItem) {
+    //点击回复评论
+    reply(item, subItem, tinyItem) {
       this.active = item.myFlag;
+      if (tinyItem) {
+        this.parNumber = tinyItem.myNumber;
+        this.parFlag = subItem.myFlag;
+        return (this.place = `回复@${subItem.myNickname}:`);
+      }
       if (subItem) {
         this.parNumber = subItem.myNumber;
-        this.parFlag = item.myFlag;
+        this.parFlag = subItem.myFlag;
         return (this.place = `回复@${subItem.myNickname}:`);
       }
       this.parNumber = item.myNumber;
       this.parFlag = item.myFlag;
       this.place = `回复@${item.myNickname}:`;
+    },
+    //计算总评论数
+    commentNum() {
+      this.comments.forEach((item) => {
+        this.num = this.num + 1;
+        item.children.forEach((subItem) => {
+          this.num += 1;
+          subItem.children.forEach((tinyItem) => {
+            this.num += 1;
+          });
+        });
+      });
+      console.log(this.num);
     },
   },
 };
@@ -398,6 +464,7 @@ export default {
   }
   hr {
     margin: 30px 0;
+    background-color: rgba(173, 173, 173, 0.541);
   }
 }
 .el-textarea {
@@ -443,6 +510,13 @@ export default {
 }
 .comment-date {
   font-size: 13px;
-  color: #5f6061;
+  color: #878788;
+}
+.reply {
+  color: rgb(192, 196, 135);
+}
+.nickname {
+  font-size: 13px;
+  color: rgba(71, 71, 71, 0.74);
 }
 </style>
