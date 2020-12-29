@@ -143,7 +143,9 @@
           <div v-for="tinyItem in subItem.children" :key="tinyItem.myFlag">
             <div class="comment">
               <b class="nickname">{{ tinyItem.myNickname }}</b
-              >&nbsp; <span class="reply">回复</span> @{{ subItem.myNickname }}
+              >&nbsp; <span class="reply">回复</span> @{{
+                tinyItem.parNickname
+              }}
               ：
               <span class="message"> {{ tinyItem.message }}</span>
             </div>
@@ -407,7 +409,7 @@ export default {
       if (tinyItem) {
         this.parNumber = tinyItem.myNumber;
         this.parFlag = subItem.myFlag;
-        return (this.place = `回复@${subItem.myNickname}:`);
+        return (this.place = `回复@${tinyItem.myNickname}:`);
       }
       if (subItem) {
         this.parNumber = subItem.myNumber;
