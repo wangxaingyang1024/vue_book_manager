@@ -150,11 +150,11 @@ export default {
           if (res.status !== 3032) {
             return this.$message.error("修改失败！");
           } else {
-            location.reload();
             // this.getUserForm();
             this.$message.success("修改成功！");
             console.log(this.userForm.nickName);
             window.sessionStorage.setItem("nickName", this.userForm.nickName);
+            location.reload();
           }
         }
       });
