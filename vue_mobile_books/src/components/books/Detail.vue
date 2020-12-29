@@ -49,7 +49,7 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary" @click="add1">发表评论</van-button>
+      <van-button type="primary" @click="p">发表评论</van-button>
     </van-action-sheet>
     <!-- 评论内容界面 -->
     <span class="commentSpan">热门评论</span>
@@ -60,17 +60,17 @@
       @load="this.getCommentList"
     >
       <div class="exterComment" v-for="(item1, index1) in commentlist" :key="index1">
-        <p class="name">{{ item1.myName }}</p>
+        <p class="name">{{ item1.myNickname }}</p>
         <p class="time">{{ item1.commentTime.slice(0, 19) }}</p>
         <p class="comments">{{ item1.message }}</p>
         <span class="likeCount1" v-if="like === false">{{ item1.likeCount }}</span>
         <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
         <van-icon size="18" name="thumb-circle-o" v-if="like === false" @click="onLike" />
         <van-icon size="18" color="#f17a98" v-else name="thumb-circle" />
-        <van-icon size="18" name="chat-o" @click="interComment(item1.mid)" />
-        <div class="interComment" v-for="(item2, index2) in item1.list" :key="index2">
-          <span>{{ item2.myName }}：</span>
+        <div class="interComment" v-for="(item2, index2) in item1.children" :key="index2">
+          <span>{{ item2.myNickname }}@{{ item1.myNickname }}：</span>
           <span>{{ item2.message }}</span>
+          <van-icon size="18" name="chat-o" @click="interComment(item1, item2)" />
         </div>
       </div>
     </van-list>
@@ -86,7 +86,7 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary" @click="add2">发表回复</van-button>
+      <van-button type="primary" @click="add">发表回复</van-button>
     </van-action-sheet>
   </div>
 </template>
@@ -115,12 +115,16 @@ export default {
       show1: false,
       show2: false,
       //评论弹框数据绑定内容
+      message: "",
       message1: "",
       message2: "",
       //获取二级评论数据绑定
       placeholder: "",
       //点赞判断
       like: false,
+      parNumber: 0,
+      parFlag: "0",
+      place: "",
       //获取的评论列表
       commentlist: [],
     };
@@ -135,14 +139,25 @@ export default {
     exterComment(bookObject) {
       this.show1 = true;
     },
-    //发表一级评论
-    async add1() {
-      if (this.message1 === "") {
+    p() {
+      this, (this.parNumber = 0);
+      this.add();
+    },
+    //发表评论
+    async add() {
+      if (this.parNumber === 0) {
+        this.message = this.message1;
+        this.parFlag = "0";
+      } else {
+        this.message = this.message2;
+      }
+      if (this.message === "") {
         return this.$toast.fail("请先输入内容");
       }
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
-        parNumber: 0,
+        parNumber: this.parNumber,
+        parFlag: this.parFlag,
         isbn: this.bookObject.isbn,
         message: this.message1,
         likeCount: 0,
@@ -150,7 +165,10 @@ export default {
       if (res.status !== 3034) {
         return this.$toast.fail("发表评论失败");
       }
+      this.message = "";
       this.message1 = "";
+      this.message2 = "";
+      this.parNumber = 0;
       this.$toast.success("发表评论成功");
       this.getCommentList();
     },
@@ -190,17 +208,17 @@ export default {
       console.log(res);
     },
     //二级评论按钮
-    interComment(mid) {
+    interComment(item1, item2) {
       this.show2 = true;
-      //找到当前对应的评论
-      let a = {};
-      this.commentlist.forEach((val) => {
-        if (val.mid == mid) {
-          a = val;
-        }
-      });
-      this.placeholder = a.myName;
-      //console.log(a);
+      this.placeholder = item1.myNickname;
+      if (item2) {
+        this.parNumber = item2.myNumber;
+        this.parFlag = item1.myFlag;
+        return (this.place = `回复@${item2.myNickname}:`);
+      }
+      this.parNumber = item1.myNumber;
+      this.parFlag = item1.myFlag;
+      this.place = `回复@${item1.myNickname}:`;
     },
     //点赞
     onLike() {
@@ -361,7 +379,7 @@ export default {
   .van-icon {
     width: 20px;
     float: right;
-    top: -25px;
+    top: -8px;
     right: 3px;
   }
 }
