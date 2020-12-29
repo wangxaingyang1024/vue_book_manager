@@ -490,7 +490,7 @@ export default {
   top: -20px;
   background: #fff;
   padding: 15px;
-  z-index: 999999;
+  z-index: 999;
   border: 1px solid rgba(90, 88, 88, 0.37);
   box-shadow: 1px 5px 10px rgba(90, 88, 66, 0.61);
 }
