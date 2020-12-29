@@ -229,9 +229,7 @@ export default {
     this.getComments();
     this.getLikeList();
   },
-  mounted() {
-    this.commentNum();
-  },
+
   methods: {
     //查看是否收藏
     async getCheck() {
@@ -259,6 +257,7 @@ export default {
         return this.$message.error("获取评论列表失败!");
       }
       this.comments = res.data;
+      this.commentNum();
     },
     //返回书籍列表
     goBack() {
@@ -417,13 +416,11 @@ export default {
     },
     //计算总评论数
     commentNum() {
+      this.num = this.num + this.comments.length;
       this.comments.forEach((item) => {
-        this.num = this.num + 1;
+        this.num = this.num + item.children.length;
         item.children.forEach((subItem) => {
-          this.num += 1;
-          subItem.children.forEach((tinyItem) => {
-            this.num += 1;
-          });
+          this.num = this.num + subItem.children.length;
         });
       });
       console.log(this.num);
