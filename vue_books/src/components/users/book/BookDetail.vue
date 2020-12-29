@@ -257,6 +257,7 @@ export default {
         return this.$message.error("获取评论列表失败!");
       }
       this.comments = res.data;
+      this.num = 0;
       this.commentNum();
     },
     //返回书籍列表
@@ -377,7 +378,7 @@ export default {
       });
       console.log(res);
       this.commentLoading = !this.commentLoading;
-      if (res.status !== 200) {
+      if (res.status !== 3035) {
         return this.$message.error("点赞失败!");
       }
       this.getComments();
@@ -423,7 +424,6 @@ export default {
           this.num = this.num + subItem.children.length;
         });
       });
-      console.log(this.num);
     },
   },
 };
