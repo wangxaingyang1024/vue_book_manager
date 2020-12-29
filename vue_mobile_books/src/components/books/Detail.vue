@@ -499,6 +499,7 @@ export default {
   margin-left: 20px;
   font-size: 12px;
   padding: 10px;
+  margin-bottom: -10px;
   :nth-child(1) {
     color: #2a3e8d;
   }
@@ -512,6 +513,7 @@ export default {
 }
 .penetComment {
   padding: 10px;
+  margin-bottom: -10px;
   .van-icon {
     float: right;
     right: -7px;
