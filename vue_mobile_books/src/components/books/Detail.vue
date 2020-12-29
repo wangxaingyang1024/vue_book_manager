@@ -124,7 +124,7 @@
             v-for="(item3, index3) in item2.children"
             :key="index3"
           >
-            <span>{{ item3.myNickname }}&nbsp;@&nbsp;{{ item2.myNickname }}：</span>
+            <span>{{ item3.myNickname }}&nbsp;@&nbsp;{{ item3.parNickname }}：</span>
             <span>{{ item3.message }}</span>
             <van-icon
               size="14"
