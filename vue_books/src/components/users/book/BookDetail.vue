@@ -111,9 +111,9 @@
           style="margin-left:70px"
         >
           <div class="comment">
-            <b class="nickname">{{ subItem.myNickname }}</b
-            >&nbsp;
-            {{ subItem.message }}
+            <b class="nickname">{{ subItem.myNickname }}</b>
+            <span v-html="'&nbsp;&nbsp;'"></span>
+            <span class="message">{{ subItem.message }}</span>
           </div>
           <div class="comment comment-date">
             {{ subItem.commentTime.substring(0, item.commentTime.length - 2) }}
@@ -145,7 +145,7 @@
               <b class="nickname">{{ tinyItem.myNickname }}</b
               >&nbsp; <span class="reply">回复</span> @{{ subItem.myNickname }}
               ：
-              {{ tinyItem.message }}
+              <span class="message"> {{ tinyItem.message }}</span>
             </div>
             <div class="comment comment-date">
               {{
@@ -229,9 +229,7 @@ export default {
     this.getComments();
     this.getLikeList();
   },
-  mounted() {
-    this.commentNum();
-  },
+
   methods: {
     //查看是否收藏
     async getCheck() {
@@ -259,6 +257,8 @@ export default {
         return this.$message.error("获取评论列表失败!");
       }
       this.comments = res.data;
+      this.num = 0;
+      this.commentNum();
     },
     //返回书籍列表
     goBack() {
@@ -378,7 +378,7 @@ export default {
       });
       console.log(res);
       this.commentLoading = !this.commentLoading;
-      if (res.status !== 200) {
+      if (res.status !== 3035) {
         return this.$message.error("点赞失败!");
       }
       this.getComments();
@@ -417,16 +417,13 @@ export default {
     },
     //计算总评论数
     commentNum() {
+      this.num = this.num + this.comments.length;
       this.comments.forEach((item) => {
-        this.num = this.num + 1;
+        this.num = this.num + item.children.length;
         item.children.forEach((subItem) => {
-          this.num += 1;
-          subItem.children.forEach((tinyItem) => {
-            this.num += 1;
-          });
+          this.num = this.num + subItem.children.length;
         });
       });
-      console.log(this.num);
     },
   },
 };
@@ -518,5 +515,8 @@ export default {
 .nickname {
   font-size: 13px;
   color: rgba(71, 71, 71, 0.74);
+}
+.message {
+  font-size: 80%;
 }
 </style>
