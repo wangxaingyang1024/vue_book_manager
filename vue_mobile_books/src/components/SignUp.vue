@@ -72,10 +72,14 @@
       </van-field>
       <van-field
         v-model="signUpForm.code"
+        type="number"
         center
         clearable
         label="邮箱验证码"
+        :rules="[{ required: true }]"
         placeholder="请输入验证码"
+        maxlength="6"
+        minlength="6"
         id="code"
       >
         <template #button>
