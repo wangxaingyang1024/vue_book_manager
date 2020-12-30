@@ -83,7 +83,7 @@ export default {
       maxDate: new Date(2020, 12, 31),
       currentDate: new Date(),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      userForm: {},
+      userForm: {}
     };
   },
   created() {
@@ -94,18 +94,18 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast",
+        className: "toast"
       });
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
+      this.$toast.clear();
       console.log(res);
       if (res.status !== 200) {
         return this.$toast.fail({
           message: "获取个人信息失败!",
-          className: "toast",
+          className: "toast"
         });
       }
       this.userForm = res.data;
-      this.$toast.clear();
       this.userForm.birth = this.userForm.birth.slice(0, 10);
       this.userForm.gender = this.userForm.gender + "";
     },
@@ -119,7 +119,9 @@ export default {
       if (val === "") {
         return true;
       }
-      return /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(val);
+      return /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(
+        val
+      );
     },
     // 显示弹窗
     showPopup() {
@@ -146,16 +148,22 @@ export default {
 
     //点击按钮提交表单
     async editUser() {
-      if (this.userForm.nickName !== "" && !this.nickNameRule(this.userForm.nickName)) {
+      if (
+        this.userForm.nickName !== "" &&
+        !this.nickNameRule(this.userForm.nickName)
+      ) {
         return;
       }
-      if (this.userForm.phone !== undefined && !this.phoneRule(this.userForm.phone)) {
+      if (
+        this.userForm.phone !== undefined &&
+        !this.phoneRule(this.userForm.phone)
+      ) {
         return;
       }
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast",
+        className: "toast"
       });
       const { data: res } = await this.$http.put("upProfile", this.userForm);
       if (res.status !== 3032) {
@@ -164,15 +172,15 @@ export default {
         // location.reload();
         this.getUserForm();
         this.$toast.success({ message: "修改成功!", className: "toast" });
-        console.log(this.userForm.nickName);
-        this.router.push("person");
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
+        history.go(-1);
+        location.reload;
       }
     },
     onClickLeft() {
       this.$router.push("setting");
-    },
-  },
+    }
+  }
 };
 </script>
 

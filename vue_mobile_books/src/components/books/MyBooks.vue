@@ -12,7 +12,12 @@
       </van-collapse>
       <!-- 左滑还书 -->
       <template #right>
-        <van-button text="归还" class="return" @click="returnBook(item.isbn)" id="returnBookButton"/>
+        <van-button
+          text="归还"
+          class="return"
+          @click="returnBook(item.isbn)"
+          id="returnBookButton"
+        />
       </template>
     </van-swipe-cell>
   </div>
@@ -44,6 +49,7 @@ export default {
       const { data: res } = await this.$http.get(
         "book/findOne/" + this.jobNumber
       );
+      this.$toast.clear();
       console.log(res);
       if (res.status === 402) {
         return;
@@ -52,7 +58,6 @@ export default {
         return this.$toast.fail("获取图书失败！");
       }
       this.booklist = res.data;
-      this.$toast.clear();
       if (!window.sessionStorage.getItem("num")) {
         window.sessionStorage.setItem("num", "num");
         this.$toast({
@@ -84,6 +89,7 @@ export default {
           jobNumber: this.jobNumber,
           isbn: isbn
         });
+        this.$toast.clear();
         if (res.status !== 6008) {
           return this.$toast.fail({
             message: "归还书籍失败!",

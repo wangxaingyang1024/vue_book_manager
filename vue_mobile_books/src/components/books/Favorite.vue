@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="爱看书籍">
+    <van-nav-bar title="我的收藏">
       <template #left>
         <van-icon name="arrow-left" @click="onClickLeft" />
       </template>
@@ -57,19 +57,30 @@ export default {
           author: "dasdas",
           isbn: 524121,
           synopsis: "dasdasdasd",
-          type: "sadasdasd",
-        },
+          type: "sadasdasd"
+        }
       ],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      activeName: "",
+      activeName: ""
     };
   },
   methods: {
     //获取书籍列表
     async getBookList() {
-      const { data: res } = await this.$http.get(`book/getFavorite/${this.jobNumber}`);
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
+      const { data: res } = await this.$http.get(
+        `book/getFavorite/${this.jobNumber}`
+      );
+      this.$toast.clear();
       if (res.status !== 6013) {
-        return this.$toast.fail("获取图书列表失败！");
+        return this.$toast.fail({
+          message: "获取图书列表失败！",
+          className: "toast"
+        });
       }
       this.booklist = res.data;
       console.log(res.data);
@@ -80,30 +91,39 @@ export default {
       const confirmResult = await this.$dialog
         .confirm({
           message: "确定要取消收藏吗？",
-          confirmButtonColor: "red",
+          confirmButtonColor: "red"
         })
-        .catch((err) => err);
+        .catch(err => err);
       if (confirmResult !== "confirm") {
         return;
       } else {
+        this.$toast.loading({
+          duration: 0, // 持续展示 toast
+          forbidClick: true,
+          className: "toast"
+        });
         const { data: res } = await this.$http.post(`book/favorite`, {
           jobNumber: this.jobNumber,
           isbn: isbn,
-          isClick: false,
+          isClick: false
         });
+        this.$toast.clear();
         console.log(res);
         if (res.status !== 6014) {
-          return this.$toast.fail("取消收藏失败");
+          return this.$toast.fail({
+            message: "取消收藏失败",
+            className: "toast"
+          });
         }
-        this.$toast.success("取消收藏成功！");
+        this.$toast.success({ message: "取消收藏成功！", className: "toast" });
         this.getBookList();
       }
     },
     //返回
     onClickLeft() {
       this.$router.push("person");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">
@@ -122,7 +142,11 @@ export default {
 .return {
   width: 100px;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(89, 201, 108));
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    rgb(89, 201, 108)
+  );
 }
 .title {
   color: rgb(138, 197, 224);

@@ -1,7 +1,12 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="密码设置" left-arrow @click-left="onClickLeft" id="leaveAdmin">
+    <van-nav-bar
+      title="密码设置"
+      left-arrow
+      @click-left="onClickLeft"
+      id="leaveAdmin"
+    >
     </van-nav-bar>
     <van-form>
       <van-field
@@ -14,8 +19,8 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
-          },
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+          }
         ]"
         id="oldPsw"
       />
@@ -29,9 +34,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           },
-          { validator: newPsw, message: '新密码不能与旧密码相同' },
+          { validator: newPsw, message: '新密码不能与旧密码相同' }
         ]"
         id="newPsw"
       />
@@ -45,14 +50,20 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           },
-          { validator: reNewPsw, message: '两次密码不一致' },
+          { validator: reNewPsw, message: '两次密码不一致' }
         ]"
         id="checkPsw"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" @click="editUser" id="editUserButton">
+        <van-button
+          round
+          block
+          type="info"
+          @click="editUser"
+          id="editUserButton"
+        >
           提交
         </van-button>
       </div>
@@ -68,8 +79,8 @@ export default {
         oldPsw: "",
         newPsw: "",
         checkPsw: "",
-        username: window.sessionStorage.getItem("username"),
-      },
+        username: window.sessionStorage.getItem("username")
+      }
     };
   },
   methods: {
@@ -108,9 +119,10 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast",
+        className: "toast"
       });
       const { data: res } = await this.$http.post("changePsw", this.userForm);
+      this.$toast.clear();
       console.log(res);
       if (res.status !== 1002)
         return this.$toast.fail({ message: "修改失败!", className: "toast" });
@@ -120,8 +132,8 @@ export default {
     },
     onClickLeft() {
       this.$router.push("setting");
-    },
-  },
+    }
+  }
 };
 </script>
 

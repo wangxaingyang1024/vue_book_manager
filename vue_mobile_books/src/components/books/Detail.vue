@@ -3,7 +3,11 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="书籍详情">
       <template #left>
-        <van-icon name="arrow-left" @click="onClickLeft" id="onClickLeftButton" />
+        <van-icon
+          name="arrow-left"
+          @click="onClickLeft"
+          id="onClickLeftButton"
+        />
       </template>
     </van-nav-bar>
     <!-- 书籍详情 -->
@@ -17,13 +21,20 @@
       </template>
       <template #tags>
         <span class="span">状态：</span>
-        <van-tag type="success" v-if="bookObject.status === true">未借出</van-tag>
+        <van-tag type="success" v-if="bookObject.status === true"
+          >未借出</van-tag
+        >
         <van-tag v-else>已借出</van-tag>
       </template>
       <template #price>
         <span class="text">简介：{{ bookObject.synopsis }}</span>
         <span class="text">类型：{{ bookObject.type }}</span>
-        <van-icon name="chat-o" size="22" @click="exterComment" id="exterCommentButton" />
+        <van-icon
+          name="chat-o"
+          size="22"
+          @click="exterComment"
+          id="exterCommentButton"
+        />
         <van-icon
           v-if="collection === false"
           name="star-o"
@@ -63,7 +74,7 @@
         rows="5"
         autosize
         type="textarea"
-        maxlength="100"
+        maxlength="50"
         placeholder="请输入评论"
         show-word-limit
         clearable
@@ -78,7 +89,11 @@
       finished-text="没有更多了"
       @load="this.getCommentList"
     >
-      <div class="exterComment" v-for="(item1, index1) in commentlist" :key="index1">
+      <div
+        class="exterComment"
+        v-for="(item1, index1) in commentlist"
+        :key="index1"
+      >
         <p class="name">{{ item1.myNickname }}</p>
         <p class="time">{{ item1.commentTime.slice(0, 19) }}</p>
         <p class="comments">{{ item1.message }}</p>
@@ -110,7 +125,11 @@
           @click="interComment(item1)"
           id="interCommentButton"
         />
-        <div class="interComment" v-for="(item2, index2) in item1.children" :key="index2">
+        <div
+          class="interComment"
+          v-for="(item2, index2) in item1.children"
+          :key="index2"
+        >
           <span>{{ item2.myNickname }}：</span>
           <span>{{ item2.message }}</span>
           <van-icon
@@ -124,7 +143,11 @@
             v-for="(item3, index3) in item2.children"
             :key="index3"
           >
-            <span>{{ item3.myNickname }}&nbsp;@&nbsp;{{ item3.parNickname }}：</span>
+            <span
+              >{{ item3.myNickname }}&nbsp;@&nbsp;{{
+                item3.parNickname
+              }}：</span
+            >
             <span>{{ item3.message }}</span>
             <van-icon
               size="14"
@@ -148,32 +171,20 @@
         rows="5"
         autosize
         type="textarea"
-        maxlength="100"
+        maxlength="50"
         :placeholder="place"
         show-word-limit
         clearable
       />
-      <van-button type="primary" @click="add" id="addButton">发表回复</van-button>
+      <van-button type="primary" @click="add" id="addButton"
+        >发表回复</van-button
+      >
     </van-action-sheet>
   </div>
 </template>
 
 <script>
 export default {
-  created() {
-    let r = window.sessionStorage.getItem("bookDetail");
-    this.bookObject = JSON.parse(r);
-    //console.log(this.bookObject);
-    //获取评论列表
-    this.getCommentList();
-    //获取是否已收藏
-    this.getCheck();
-    //获取点赞列表
-    this.getLikeList();
-  },
-  mounted() {
-    this.commentNum();
-  },
   data() {
     return {
       num: 0,
@@ -200,8 +211,21 @@ export default {
       //获取的评论列表
       commentlist: [],
       //获取点赞列表
-      likelist: [],
+      likelist: []
     };
+  },
+  created() {
+    let r = window.sessionStorage.getItem("bookDetail");
+    this.bookObject = JSON.parse(r);
+    //console.log(this.bookObject);
+    //获取评论列表
+    this.getCommentList();
+    //获取是否已收藏
+    this.getCheck();
+    //获取点赞列表
+    this.getLikeList();
+    //计算总评论数
+    this.commentNum();
   },
   methods: {
     //跳转回图书页面
@@ -214,7 +238,7 @@ export default {
       this.show1 = true;
     },
     p() {
-      this, (this.parNumber = 0);
+      this.parNumber = 0;
       this.add();
     },
     //发表评论
@@ -226,18 +250,30 @@ export default {
         this.message = this.message2;
       }
       if (this.message === "") {
-        return this.$toast.fail("请先输入内容");
+        return this.$toast.fail({
+          message: "请先输入内容！",
+          className: "toast"
+        });
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
         parNumber: this.parNumber,
         parFlag: this.parFlag,
         isbn: this.bookObject.isbn,
         message: this.message,
-        likeCount: 0,
+        likeCount: 0
       });
+      this.$toast.clear();
       if (res.status !== 3034) {
-        return this.$toast.fail("发表评论失败");
+        return this.$toast.fail({
+          message: "发表评论失败!",
+          className: "toast"
+        });
       }
       this.message = "";
       this.message1 = "";
@@ -261,28 +297,39 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast",
+        className: "toast"
       });
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
-        isbn: isbn,
+        isbn: isbn
       });
+      this.$toast.clear();
       //console.log(res);
       if (res.status !== 6006) {
         return this.$toast.fail({ message: "借阅失败!", className: "toast" });
       }
       this.$toast.success({ message: "借阅成功!", className: "toast" });
       this.bookObject.status = false;
-      window.sessionStorage.setItem("bookDetail", JSON.stringify(this.bookObject));
+      window.sessionStorage.setItem(
+        "bookDetail",
+        JSON.stringify(this.bookObject)
+      );
       location.reload();
     },
     //获取评论列表
     async getCommentList() {
-      console.log(this.bookObject.isbn);
-      const { data: res } = await this.$http.post(`comment/findEnd`, {
-        isbn: this.bookObject.isbn,
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
       });
+      const { data: res } = await this.$http.post(`comment/findEnd`, {
+        isbn: this.bookObject.isbn
+      });
+      this.$toast.clear();
+      this.num = 0;
       this.commentlist = res.data;
+      this.commentNum();
       console.log(res);
     },
     //评论按钮
@@ -305,10 +352,16 @@ export default {
     },
     //获取点赞列表
     async getLikeList() {
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("comment/personalLike", {
         isbn: this.bookObject.isbn,
-        jobNumber: this.jobNumber,
+        jobNumber: this.jobNumber
       });
+      this.$toast.clear();
       this.likelist = res.data;
     },
     //点赞
@@ -318,83 +371,108 @@ export default {
       } else {
         this.islike = false;
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("comment/updateComment", {
         myFlag: myFlag,
         isLike: this.islike,
         isbn: this.bookObject.isbn,
-        jobNumber: this.jobNumber,
+        jobNumber: this.jobNumber
       });
+      this.$toast.clear();
       this.getCommentList();
       this.getLikeList();
     },
     //收藏
     async favorite() {
       if (this.collection === false) {
+        this.$toast.loading({
+          duration: 0, // 持续展示 toast
+          forbidClick: true,
+          className: "toast"
+        });
         const { data: res } = await this.$http.post("book/favorite", {
           jobNumber: this.jobNumber,
           isbn: this.bookObject.isbn,
-          isClick: true,
+          isClick: true
         });
+        this.$toast.clear();
         if (res.status !== 6015) {
-          return this.$toast.fail("收藏失败!");
+          return this.$toast.fail({ message: "收藏失败!", className: "toast" });
         }
         this.collection = !this.collection;
-        return this.$toast.success("收藏成功!");
+        return this.$toast.success({
+          message: "收藏成功!",
+          className: "toast"
+        });
       }
       //弹框询问用户是否取消收藏
       const confirmResult = await this.$dialog
         .confirm({
           message: "确定要取消收藏吗？",
-          confirmButtonColor: "red",
+          confirmButtonColor: "red"
         })
-        .catch((err) => err);
+        .catch(err => err);
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
         return;
       }
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post("book/favorite", {
         jobNumber: this.jobNumber,
         isbn: this.bookObject.isbn,
-        isClick: false,
+        isClick: false
       });
+      this.$toast.clear();
       if (res.status !== 6014) {
-        return this.$toast.error("取消收藏失败!");
+        return this.$toast.error({
+          message: "取消收藏失败!",
+          className: "toast"
+        });
       }
       this.collection = !this.collection;
       //return this.$toast.success("已取消收藏!");
     },
     //查询是否已收藏
     async getCheck() {
-      this.loading = !this.loading;
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
+      });
       const { data: res } = await this.$http.post(`book/isClick`, {
         jobNumber: this.jobNumber,
-        isbn: this.bookObject.isbn,
+        isbn: this.bookObject.isbn
       });
-      this.loading = !this.loading;
+      this.$toast.clear();
       //console.log(res);
       if (res.status !== 200) {
-        return this.$toast.fail("查询是否已收藏失败!");
+        return this.$toast.fail({
+          message: "查询是否已收藏失败!",
+          className: "toast"
+        });
       }
       this.collection = res.data;
     },
     //计算评论总数
     commentNum() {
-      this.commentlist.forEach((item1) => {
-        this.num += 1;
-        item1.children.forEach((item2) => {
-          this.num += 1;
-          item2.children.forEach((item3) => {
-            this.num += 1;
-            item3.children.forEach((item4) => {
-              this.num += 1;
-            });
-          });
+      this.num = this.num + this.commentlist.length;
+      this.commentlist.forEach(item => {
+        this.num = this.num + item.children.length;
+        item.children.forEach(subItem => {
+          this.num = this.num + subItem.children.length;
         });
       });
-      console.log(this.num);
-    },
-  },
+    }
+  }
 };
 </script>
 

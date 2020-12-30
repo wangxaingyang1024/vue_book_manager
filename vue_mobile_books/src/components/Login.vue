@@ -1,7 +1,8 @@
 <template>
   <div class="bg">
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="用户登录" left-arrow @click-left="home" id="leaveLogin"> </van-nav-bar>
+    <van-nav-bar title="用户登录" left-arrow @click-left="home" id="leaveLogin">
+    </van-nav-bar>
     <!-- 登录表单区域 -->
     <div class="welcome"></div>
     <van-form @submit="login">
@@ -65,6 +66,7 @@ export default {
         className: "toast"
       });
       const { data: res } = await this.$http.post("login", this.loginForm);
+      this.$toast.clear();
       if (res.status === 3031)
         return this.$toast.fail({
           message: "用户名不存在，请先注册!",

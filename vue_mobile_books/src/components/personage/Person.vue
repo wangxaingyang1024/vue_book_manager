@@ -46,7 +46,13 @@
       @click="toFavorite"
       id="favoriteButton"
     />
-    <van-cell title="我的评论" is-link to="" icon="comment-o" id="commentButton" />
+    <van-cell
+      title="我的评论"
+      is-link
+      to=""
+      icon="comment-o"
+      id="commentButton"
+    />
     <div class="separated"></div>
     <van-cell
       title="设置"
@@ -65,7 +71,7 @@ export default {
       nickName: window.sessionStorage.getItem("nickName"),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       msg: false,
-      userForm: {},
+      userForm: {}
     };
   },
   created() {
@@ -80,10 +86,11 @@ export default {
         this.$toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
-          className: "toast",
+          className: "toast"
         });
       }
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
+      this.$toast.clear();
       console.log(res);
       if (res.status === 402) {
         return;
@@ -91,10 +98,9 @@ export default {
       if (res.status !== 200) {
         return this.$toast.fail({
           message: "获取个人信息失败!",
-          className: "toast",
+          className: "toast"
         });
       }
-      this.$toast.clear();
       this.userForm = res.data;
       this.userForm.birth = this.userForm.birth.slice(0, 10);
     },
@@ -185,12 +191,14 @@ export default {
       }
       context.fillText(nickname.slice(-2), avatarSize / 2, avatarSize / 2);
 
-      document.getElementById(avatarContainerId).src = canvas.toDataURL("image/png");
+      document.getElementById(avatarContainerId).src = canvas.toDataURL(
+        "image/png"
+      );
     },
     test() {
       this.$router.push("test");
-    },
-  },
+    }
+  }
 };
 </script>
 
