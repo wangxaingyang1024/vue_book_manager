@@ -19,7 +19,7 @@
         ref="input"
         :rules="[
           { required: true },
-          { pattern, message: '需以字母开头，字母数字组合3~10长度' },
+          { pattern, message: '需以字母开头，字母数字组合3~10长度' }
         ]"
         id="username"
       />
@@ -33,8 +33,8 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
-          },
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+          }
         ]"
         id="password"
       />
@@ -48,9 +48,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
           },
-          { validator: rePsw, message: '两次密码必须一致' },
+          { validator: rePsw, message: '两次密码必须一致' }
         ]"
         id="checkPassword"
       />
@@ -64,8 +64,8 @@
           { required: true },
           {
             validator: email,
-            message: '请输入正确的邮箱格式',
-          },
+            message: '请输入正确的邮箱格式'
+          }
         ]"
         id="email"
       >
@@ -86,8 +86,7 @@
             id="getAuthCodeButton"
             v-if="show"
             >发送验证码</van-button
-          ><van-button v-if="!show" disabled type="danger" class="getAuthCode"
-          size="small"
+          ><van-button v-if="!show" disabled type="default" size="small"
             >{{ count }}s后可重发
           </van-button>
         </template>
@@ -124,10 +123,10 @@ export default {
         age: "",
         checkPassword: "",
         email: "",
-        code: "",
+        code: ""
       },
       //检验用户名规则
-      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/,
+      pattern: /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/
     };
   },
   mounted() {
@@ -177,9 +176,15 @@ export default {
           }
         }, 1000);
       }
-      const { data: res } = await this.$http.post("email/verify", {
-        email: this.signUpForm.email,
+      this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        className: "toast"
       });
+      const { data: res } = await this.$http.post("email/verify", {
+        email: this.signUpForm.email
+      });
+      this.$toast.clear();
       if (res.status !== 200) return this.$toast.fail("获取验证码失败！");
       else {
         this.$toast.success("验证码已发送到您的邮箱！");
@@ -190,27 +195,27 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast",
+        className: "toast"
       });
-
       const { data: res } = await this.$http.post("signUp", this.signUpForm);
+      this.$toast.clear();
       //注册成功跳转到登录，失败则停留当前页面
       if (res.status == 3021)
         return this.$toast.fail({
           message: "用户名已存在!",
-          className: "toast",
+          className: "toast"
         });
       if (res.status !== 3024) {
         this.$toast.fail({ message: "注册失败!", className: "toast" });
       } else {
         this.$toast.success({
           message: "注册成功！请登录!",
-          className: "toast",
+          className: "toast"
         });
         this.$router.push("/login");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
