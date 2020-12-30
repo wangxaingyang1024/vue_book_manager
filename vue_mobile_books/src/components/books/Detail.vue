@@ -71,7 +71,7 @@
       <van-button type="primary" @click="p" id="pButton">发表评论</van-button>
     </van-action-sheet>
     <!-- 评论内容界面 -->
-    <span class="commentSpan">热门评论</span>
+    <span class="commentSpan">热门评论（{{ num }}条）</span>
     <van-list
       v-model="loading"
       :finished="finished"
@@ -171,9 +171,9 @@ export default {
     //获取点赞列表
     this.getLikeList();
   },
-  /*mounted() {
+  mounted() {
     this.commentNum();
-  },*/
+  },
   data() {
     return {
       num: 0,
@@ -272,6 +272,8 @@ export default {
         return this.$toast.fail({ message: "借阅失败!", className: "toast" });
       }
       this.$toast.success({ message: "借阅成功!", className: "toast" });
+      this.bookObject.status = false;
+      window.sessionStorage.setItem("bookDetail", JSON.stringify(this.bookObject));
       location.reload();
     },
     //获取评论列表
@@ -377,18 +379,21 @@ export default {
       this.collection = res.data;
     },
     //计算评论总数
-    /*commentNum() {
-      this.comments.forEach((item1) => {
-        this.num = this.num + 1;
+    commentNum() {
+      this.commentlist.forEach((item1) => {
+        this.num += 1;
         item1.children.forEach((item2) => {
           this.num += 1;
           item2.children.forEach((item3) => {
             this.num += 1;
+            item3.children.forEach((item4) => {
+              this.num += 1;
+            });
           });
         });
       });
       console.log(this.num);
-    },*/
+    },
   },
 };
 </script>
