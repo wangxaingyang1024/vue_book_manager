@@ -3,11 +3,7 @@
     <!-- 顶部导航区域 -->
     <van-nav-bar title="书籍详情">
       <template #left>
-        <van-icon
-          name="arrow-left"
-          @click="onClickLeft"
-          id="onClickLeftButton"
-        />
+        <van-icon name="arrow-left" @click="onClickLeft" id="onClickLeftButton" />
       </template>
     </van-nav-bar>
     <!-- 书籍详情 -->
@@ -21,20 +17,13 @@
       </template>
       <template #tags>
         <span class="span">状态：</span>
-        <van-tag type="success" v-if="bookObject.status === true"
-          >未借出</van-tag
-        >
+        <van-tag type="success" v-if="bookObject.status === true">未借出</van-tag>
         <van-tag v-else>已借出</van-tag>
       </template>
       <template #price>
         <span class="text">简介：{{ bookObject.synopsis }}</span>
         <span class="text">类型：{{ bookObject.type }}</span>
-        <van-icon
-          name="chat-o"
-          size="22"
-          @click="exterComment"
-          id="exterCommentButton"
-        />
+        <van-icon name="chat-o" size="22" @click="exterComment" id="exterCommentButton" />
         <van-icon
           v-if="collection === false"
           name="star-o"
@@ -89,76 +78,80 @@
       finished-text="没有更多了"
       @load="this.getCommentList"
     >
-      <div
-        class="exterComment"
-        v-for="(item1, index1) in commentlist"
-        :key="index1"
-      >
-        <p class="name">{{ item1.myNickname }}</p>
-        <p class="time">{{ item1.commentTime.slice(0, 19) }}</p>
-        <p class="comments">{{ item1.message }}</p>
-        <span class="likeCount1" v-if="likelist.indexOf(item1.myFlag) === -1">{{
-          item1.likeCount
-        }}</span>
-        <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
-        <div style="margin-right:35px">
-          <van-icon
-            size="18"
-            name="thumb-circle-o"
-            v-if="likelist.indexOf(item1.myFlag) === -1"
-            @click="like(item1.myFlag)"
-            class="like"
-            id="likeButton"
-          />
-          <van-icon
-            size="18"
-            color="#f17a98"
-            v-else
-            name="thumb-circle"
-            class="like"
-            @click="like(item1.myFlag)"
-            id="likeButton"
-          />
-          <van-icon
-            class="item1"
-            size="18"
-            name="chat-o"
-            @click="interComment(item1)"
-            id="interCommentButton"
-          />
-        </div>
-        <div
-          class="interComment"
-          v-for="(item2, index2) in item1.children"
-          :key="index2"
-        >
-          <span>{{ item2.myNickname }}：</span>
-          <span>{{ item2.message }}</span>
-          <van-icon
-            size="14"
-            name="comment-o"
-            @click="interComment(item1, item2)"
-            id="interCommentButton"
-          />
-          <div
-            class="penetComment"
-            v-for="(item3, index3) in item2.children"
-            :key="index3"
+      <div class="exterComment" v-for="(item1, index1) in commentlist" :key="index1">
+        <!-- 第一行用户名和时间 -->
+        <van-row type="flex" class="noeRow">
+          <van-col
+            span="4"
+            style="font-size: 14px; margin-left: 9px; line-height: 20px; color: #4d5586"
+            >{{ item1.myNickname }}</van-col
           >
-            <span
-              >{{ item3.myNickname }}&nbsp;@&nbsp;{{
-                item3.parNickname
-              }}：</span
-            >
-            <span>{{ item3.message }}</span>
+          <van-col span="12" style="font-size: 12px; line-height: 20px">{{
+            item1.commentTime.slice(0, 19)
+          }}</van-col>
+        </van-row>
+        <!-- 第二行一级评论加回复点赞 -->
+        <van-row type="flex" justify="end" class="twoRow">
+          <van-col span="17" style="margin-right: 20px">{{ item1.message }}</van-col>
+          <van-col span="2">
             <van-icon
-              size="14"
-              name="comment-o"
-              @click="interComment(item1, item2, item3)"
+              class="item1"
+              size="18"
+              name="chat-o"
+              @click="interComment(item1)"
               id="interCommentButton"
             />
+          </van-col>
+          <van-col span="2">
+            <van-icon
+              size="18"
+              name="thumb-circle-o"
+              v-if="likelist.indexOf(item1.myFlag) === -1"
+              @click="like(item1.myFlag)"
+              class="like"
+              id="likeButton"
+            />
+            <van-icon
+              size="18"
+              color="#f17a98"
+              v-else
+              name="thumb-circle"
+              class="like"
+              @click="like(item1.myFlag)"
+              id="likeButton"
+            />
+            <span class="likeCount1" v-if="likelist.indexOf(item1.myFlag) === -1">{{
+              item1.likeCount
+            }}</span>
+            <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
+          </van-col>
+        </van-row>
+        <!-- 第三行二三级评论 -->
+        <van-row class="threeRow">
+          <div
+            class="interComment"
+            v-for="(item2, index2) in item1.children"
+            :key="index2"
+          >
+            <van-row @click="interComment(item1, item2)" id="interCommentButton">
+              <van-col span="5" style="color: #4d5586">{{ item2.myNickname }}：</van-col>
+              <van-col span="15">{{ item2.message }}</van-col>
+            </van-row>
+            <van-row>
+              <div v-for="(item3, index3) in item2.children" :key="index3">
+                <van-row
+                  @click="interComment(item1, item2, item3)"
+                  id="interCommentButton"
+                >
+                  <van-col span="9" style="color: #4d5586"
+                    >{{ item3.myNickname }}&nbsp;@&nbsp;{{ item3.parNickname }}：</van-col
+                  >
+                  <van-col span="12">{{ item3.message }}</van-col>
+                </van-row>
+              </div>
+            </van-row>
           </div>
-        </div>
+        </van-row>
       </div>
     </van-list>
     <!-- 二级评论弹框 -->
@@ -178,9 +171,7 @@
         show-word-limit
         clearable
       />
-      <van-button type="primary" @click="add" id="addButton"
-        >发表回复</van-button
-      >
+      <van-button type="primary" @click="add" id="addButton">发表回复</van-button>
     </van-action-sheet>
   </div>
 </template>
@@ -213,7 +204,7 @@ export default {
       //获取的评论列表
       commentlist: [],
       //获取点赞列表
-      likelist: []
+      likelist: [],
     };
   },
   created() {
@@ -254,13 +245,13 @@ export default {
       if (this.message === "") {
         return this.$toast.fail({
           message: "请先输入内容！",
-          className: "toast"
+          className: "toast",
         });
       }
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("comment/addComment", {
         myNumber: this.jobNumber,
@@ -268,13 +259,13 @@ export default {
         parFlag: this.parFlag,
         isbn: this.bookObject.isbn,
         message: this.message,
-        likeCount: 0
+        likeCount: 0,
       });
       this.$toast.clear();
       if (res.status !== 3034) {
         return this.$toast.fail({
           message: "发表评论失败!",
-          className: "toast"
+          className: "toast",
         });
       }
       this.message = "";
@@ -299,11 +290,11 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
-        isbn: isbn
+        isbn: isbn,
       });
       this.$toast.clear();
       //console.log(res);
@@ -312,10 +303,7 @@ export default {
       }
       this.$toast.success({ message: "借阅成功!", className: "toast" });
       this.bookObject.status = false;
-      window.sessionStorage.setItem(
-        "bookDetail",
-        JSON.stringify(this.bookObject)
-      );
+      window.sessionStorage.setItem("bookDetail", JSON.stringify(this.bookObject));
       location.reload();
     },
     //获取评论列表
@@ -323,10 +311,10 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post(`comment/findEnd`, {
-        isbn: this.bookObject.isbn
+        isbn: this.bookObject.isbn,
       });
       this.$toast.clear();
       this.num = 0;
@@ -357,11 +345,11 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("comment/personalLike", {
         isbn: this.bookObject.isbn,
-        jobNumber: this.jobNumber
+        jobNumber: this.jobNumber,
       });
       this.$toast.clear();
       this.likelist = res.data;
@@ -376,13 +364,13 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("comment/updateComment", {
         myFlag: myFlag,
         isLike: this.islike,
         isbn: this.bookObject.isbn,
-        jobNumber: this.jobNumber
+        jobNumber: this.jobNumber,
       });
       this.$toast.clear();
       this.getCommentList();
@@ -394,12 +382,12 @@ export default {
         this.$toast.loading({
           duration: 0, // 持续展示 toast
           forbidClick: true,
-          className: "toast"
+          className: "toast",
         });
         const { data: res } = await this.$http.post("book/favorite", {
           jobNumber: this.jobNumber,
           isbn: this.bookObject.isbn,
-          isClick: true
+          isClick: true,
         });
         this.$toast.clear();
         if (res.status !== 6015) {
@@ -408,16 +396,16 @@ export default {
         this.collection = !this.collection;
         return this.$toast.success({
           message: "收藏成功!",
-          className: "toast"
+          className: "toast",
         });
       }
       //弹框询问用户是否取消收藏
       const confirmResult = await this.$dialog
         .confirm({
           message: "确定要取消收藏吗？",
-          confirmButtonColor: "red"
+          confirmButtonColor: "red",
         })
-        .catch(err => err);
+        .catch((err) => err);
       //如果用户确认删除,则返回值为字符串confirm
       //如果用户取消删除，则返回值为字符串cancel
       if (confirmResult !== "confirm") {
@@ -426,18 +414,18 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("book/favorite", {
         jobNumber: this.jobNumber,
         isbn: this.bookObject.isbn,
-        isClick: false
+        isClick: false,
       });
       this.$toast.clear();
       if (res.status !== 6014) {
         return this.$toast.error({
           message: "取消收藏失败!",
-          className: "toast"
+          className: "toast",
         });
       }
       this.collection = !this.collection;
@@ -448,18 +436,18 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post(`book/isClick`, {
         jobNumber: this.jobNumber,
-        isbn: this.bookObject.isbn
+        isbn: this.bookObject.isbn,
       });
       this.$toast.clear();
       //console.log(res);
       if (res.status !== 200) {
         return this.$toast.fail({
           message: "查询是否已收藏失败!",
-          className: "toast"
+          className: "toast",
         });
       }
       this.collection = res.data;
@@ -467,14 +455,14 @@ export default {
     //计算评论总数
     commentNum() {
       this.num = this.num + this.commentlist.length;
-      this.commentlist.forEach(item => {
+      this.commentlist.forEach((item) => {
         this.num = this.num + item.children.length;
-        item.children.forEach(subItem => {
+        item.children.forEach((subItem) => {
           this.num = this.num + subItem.children.length;
         });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -542,79 +530,41 @@ export default {
   font-size: 15px;
   margin: 5px;
 }
-.exterComment {
-  border-bottom: 1px solid #e8e8e8;
-  background-color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 15px;
-  .van-icon {
-    display: flex;
-    justify-content: flex-end;
-    margin: 5px;
-  }
-  .name {
-    color: #2a3e8d;
-    margin-left: 10px;
-    display: inline;
-    font-size: 15px;
-  }
-  .time {
-    font-size: 12px;
-    color: #656565;
-    margin-left: 10px;
-    display: inline;
-  }
-  .comments {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-bottom: 15px;
-  }
-  .item1 {
-    display: inline;
-    margin-top: -25px;
-    margin-right: 35px;
-  }
-  .like {
-    margin-top: -25px;
-  }
+.oneRow {
+  margin-top: 10px;
 }
-.interComment {
-  width: 80%;
-  background-color: #f7f7f7;
-  margin-left: 20px;
-  font-size: 12px;
-  padding: 10px;
-  margin-bottom: -10px;
-  :nth-child(1) {
-    color: #2a3e8d;
-  }
+.twoRow {
+  margin-top: 10px;
 }
-.van-list {
-  .van-icon {
-    float: right;
-    top: -4px;
-    right: -4px;
-  }
-}
-.penetComment {
-  padding: 10px;
-  margin-bottom: -10px;
-  .van-icon {
-    float: right;
-    right: -15px;
-  }
+.threeRow {
+  margin-top: 10px;
 }
 .likeCount1 {
   font-size: 12px;
   float: right;
-  margin-right: 25px;
+  margin-right: 9px;
   margin-top: -27px;
 }
 .likeCount2 {
   font-size: 12px;
   float: right;
   margin-top: -27px;
-  margin-right: 25px;
+  margin-right: 9px;
   color: #f17a98;
+}
+.exterComment {
+  background: #fff;
+}
+.interComment {
+  width: 86%;
+  margin: 0 auto;
+  background: #f4f4f4;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  padding-top: 5px;
+  font-size: 13px;
+  .van-row {
+    margin-bottom: 10px;
+  }
 }
 </style>
