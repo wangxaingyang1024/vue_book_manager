@@ -93,9 +93,9 @@ export default {
 </script>
 <style lang="less">
 .el-form-item__label {
-  width: 90px;
+  width: 60px;
   font-size: 15px;
-  color: #345785c9;
+  color: #0a5e3ec9;
 }
 </style>
 <style lang="less" scoped>
@@ -108,7 +108,7 @@ export default {
 }
 .demo-table-expand label {
   width: 90px;
-  color: #99a9bf;
+  color: #99bfaf;
 }
 .demo-table-expand .el-form-item {
   margin-right: 0;

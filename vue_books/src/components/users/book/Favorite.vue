@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-table :data="booklist" stripe>
+    <el-table :data="booklist" stripe v-loading="loading">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       booklist: [],
+      loading: false,
       jobNumber: window.sessionStorage.getItem("jobNumber"),
       token: window.sessionStorage.getItem("token"),
     };
@@ -75,9 +76,11 @@ export default {
   },
   methods: {
     async getBookList() {
+      this.loading = !this.loading;
       const { data: res } = await this.$http.get(
         `book/getFavorite/${this.jobNumber}`
       );
+      this.loading = !this.loading;
       if (res.status !== 6013) {
         return this.$message.error("获取图书列表失败！");
       }
@@ -87,10 +90,12 @@ export default {
       if (this.jobNumber === null || this.token === null) {
         return this.$message.warning("请先登录再进行此操作！");
       }
+      this.loading = !this.loading;
       const { data: res } = await this.$http.post("book/borrow", {
         jobNumber: this.jobNumber,
         isbn: isbn,
       });
+      this.loading = !this.loading;
       if (res.status !== 6006) {
         return this.$message.error("借阅书籍失败！");
       }
@@ -110,11 +115,13 @@ export default {
       if (confirmResult !== "confirm") {
         return;
       }
+      this.loading = !this.loading;
       const { data: res } = await this.$http.post(`book/favorite`, {
         jobNumber: this.jobNumber,
         isbn: isbn,
         isClick: false,
       });
+      this.loading = !this.loading;
       console.log(res);
       if (res.status !== 6014) {
         return this.$message.error("取消收藏失败");
@@ -127,9 +134,9 @@ export default {
 </script>
 <style lang="less">
 .el-form-item__label {
-  width: 90px;
+  width: 60px;
   font-size: 15px;
-  color: #345785c9;
+  color: #0a5e3ec9;
 }
 </style>
 <style lang="less" scoped>

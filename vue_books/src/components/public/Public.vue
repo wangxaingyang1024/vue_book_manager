@@ -154,6 +154,7 @@ export default {
       const { data: res } = await this.$http.get("admin/find", {
         params: this.queryInfo,
       });
+      console.log(res);
       this.loading = !this.loading;
       if (res.status !== 6011) {
         return this.$message.error("获取图书列表失败！");
@@ -202,9 +203,9 @@ export default {
   padding: 0 !important;
 }
 .el-form-item__label {
-  width: 90px;
+  width: 60px;
   font-size: 15px;
-  color: #345785c9;
+  color: #0a5e3ec9;
 }
 </style>
 <style lang="less" scoped>

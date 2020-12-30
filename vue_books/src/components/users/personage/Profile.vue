@@ -127,7 +127,7 @@ export default {
       this.loading = !this.loading;
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
       this.loading = !this.loading;
-      console.log(res.data);
+      console.log(res);
       if (res.status !== 200) {
         return this.$message.error("获取个人信息失败！");
       }

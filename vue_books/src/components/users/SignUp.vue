@@ -91,7 +91,7 @@
           @click="getAuthCode"
           >获取验证码</el-button
         >
-        <el-button v-if="!show" disabled type="success" class="getAuthCode"
+        <el-button v-if="!show" disabled type="info" class="getAuthCode"
           >{{ count }}s后可重发
         </el-button>
         <!-- 按钮区域 -->
@@ -291,7 +291,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.querySelector("input").focus();
       },
     },
@@ -306,8 +306,6 @@ export default {
 .getAuthCode {
   width: 120px !important;
   margin-left: 70px;
-  background-color: #de8080;
-  border-color: #de8080;
 }
 </style>
 <style lang="less" scoped>
