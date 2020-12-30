@@ -33,6 +33,7 @@
     <el-form-item prop="synopsis">
       <el-input
         type="textarea"
+        resize="none"
         rows="3"
         v-model="addBook.synopsis"
         prefix-icon="el-icon-edit-outline"

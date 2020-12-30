@@ -45,7 +45,14 @@
             >
             </el-input
           ></el-col>
-          <el-table :data="booklist" stripe v-loading="loading">
+          <el-table
+            :data="booklist"
+            stripe
+            v-loading="loading"
+            @cell-click="show"
+            ref="tableRef"
+            :row-key="getRowKeys"
+          >
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -135,6 +142,13 @@ export default {
     signUp() {
       //跳转注册页面
       this.$router.push("/signUp");
+    },
+    show(row) {
+      console.log(row.expanded);
+      this.$refs.tableRef.toggleRowExpansion(row);
+    },
+    getRowKeys(row) {
+      return row.isbn;
     },
     //监听 pageSize 改变的事件
     handleSizeChange(newSize) {

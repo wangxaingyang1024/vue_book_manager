@@ -57,7 +57,7 @@
       </div>
     </el-card>
     <!-- 评论区 -->
-    <h3>{{ num }}条评论</h3>
+    <h2>评论区（{{ num }}条）</h2>
     <el-card v-loading="commentLoading">
       <el-input
         id="message1"
@@ -437,7 +437,6 @@ export default {
 <style lang="less" scoped>
 .el-card {
   padding: 10px;
-  margin-top: 15px;
   div {
     .title {
       line-height: 40px;
@@ -497,7 +496,7 @@ export default {
   padding: 15px;
   z-index: 999;
   border: 1px solid rgba(90, 88, 88, 0.37);
-  box-shadow: 1px 5px 10px rgba(90, 88, 66, 0.61);
+  box-shadow: 1px 1px 10px rgba(90, 88, 66, 0.61);
 }
 .comment-icon {
   i {
@@ -523,5 +522,9 @@ export default {
 }
 .message {
   font-size: 80%;
+}
+h2 {
+  margin: 20px;
+  color: rgba(25, 109, 50, 0.685);
 }
 </style>
