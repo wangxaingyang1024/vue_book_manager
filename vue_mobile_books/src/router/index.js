@@ -73,6 +73,13 @@ const Favorite = () =>
         "components/books/Favorite.vue"
     );
 
+//测试
+//const Test = () =>
+//import (
+/* webpackChunkName: "Favorite" */
+// "assets/Test.vue"
+// );
+
 
 
 Vue.use(VueRouter);
@@ -89,6 +96,7 @@ const router = new VueRouter({
         { path: "/profile", component: Profile },
         { path: "/detail", component: Detail },
         { path: "/favorite", component: Favorite },
+        //{ path: "/test", component: Test },
         {
             path: "/home",
             component: Home,

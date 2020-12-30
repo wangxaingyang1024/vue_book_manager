@@ -14,8 +14,8 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
-          }
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
+          },
         ]"
         id="oldPsw"
       />
@@ -29,9 +29,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
           },
-          { validator: newPsw, message: '新密码不能与旧密码相同' }
+          { validator: newPsw, message: '新密码不能与旧密码相同' },
         ]"
         id="newPsw"
       />
@@ -45,9 +45,9 @@
           { required: true },
           {
             validator: psw,
-            message: '需包含大小写字母数字，不使用特殊字符8~15长度'
+            message: '需包含大小写字母数字，不使用特殊字符8~15长度',
           },
-          { validator: reNewPsw, message: '两次密码不一致' }
+          { validator: reNewPsw, message: '两次密码不一致' },
         ]"
         id="checkPsw"
       />
@@ -68,8 +68,8 @@ export default {
         oldPsw: "",
         newPsw: "",
         checkPsw: "",
-        username: window.sessionStorage.getItem("username")
-      }
+        username: window.sessionStorage.getItem("username"),
+      },
     };
   },
   methods: {
@@ -108,7 +108,7 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.post("changePsw", this.userForm);
       console.log(res);
@@ -120,8 +120,8 @@ export default {
     },
     onClickLeft() {
       this.$router.push("setting");
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -187,6 +187,9 @@ export default {
 
       document.getElementById(avatarContainerId).src = canvas.toDataURL("image/png");
     },
+    test() {
+      this.$router.push("test");
+    },
   },
 };
 </script>

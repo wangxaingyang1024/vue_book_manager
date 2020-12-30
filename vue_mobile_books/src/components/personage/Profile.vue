@@ -1,7 +1,12 @@
 <template>
   <div>
     <!-- 顶部导航区域 -->
-    <van-nav-bar title="个人信息设置" left-arrow @click-left="onClickLeft" id="leaveProfile">
+    <van-nav-bar
+      title="个人信息设置"
+      left-arrow
+      @click-left="onClickLeft"
+      id="leaveProfile"
+    >
     </van-nav-bar>
     <van-form @submit="editUser">
       <van-field v-model="userForm.username" label="用户名" disabled />
@@ -53,7 +58,14 @@
         id="phone"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit" @click="editUser" id="editUserButton">
+        <van-button
+          round
+          block
+          type="info"
+          native-type="submit"
+          @click="editUser"
+          id="editUserButton"
+        >
           提交
         </van-button>
       </div>
@@ -71,7 +83,7 @@ export default {
       maxDate: new Date(2020, 12, 31),
       currentDate: new Date(),
       jobNumber: window.sessionStorage.getItem("jobNumber"),
-      userForm: {}
+      userForm: {},
     };
   },
   created() {
@@ -82,14 +94,14 @@ export default {
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.get(`profile/${this.jobNumber}`);
       console.log(res);
       if (res.status !== 200) {
         return this.$toast.fail({
           message: "获取个人信息失败!",
-          className: "toast"
+          className: "toast",
         });
       }
       this.userForm = res.data;
@@ -107,9 +119,7 @@ export default {
       if (val === "") {
         return true;
       }
-      return /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(
-        val
-      );
+      return /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(val);
     },
     // 显示弹窗
     showPopup() {
@@ -136,22 +146,16 @@ export default {
 
     //点击按钮提交表单
     async editUser() {
-      if (
-        this.userForm.nickName !== "" &&
-        !this.nickNameRule(this.userForm.nickName)
-      ) {
+      if (this.userForm.nickName !== "" && !this.nickNameRule(this.userForm.nickName)) {
         return;
       }
-      if (
-        this.userForm.phone !== undefined &&
-        !this.phoneRule(this.userForm.phone)
-      ) {
+      if (this.userForm.phone !== undefined && !this.phoneRule(this.userForm.phone)) {
         return;
       }
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
-        className: "toast"
+        className: "toast",
       });
       const { data: res } = await this.$http.put("upProfile", this.userForm);
       if (res.status !== 3032) {
@@ -161,13 +165,14 @@ export default {
         this.getUserForm();
         this.$toast.success({ message: "修改成功!", className: "toast" });
         console.log(this.userForm.nickName);
+        this.router.push("person");
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
       }
     },
     onClickLeft() {
       this.$router.push("setting");
-    }
-  }
+    },
+  },
 };
 </script>
 
