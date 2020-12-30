@@ -162,9 +162,11 @@ export default {
     //获取验证码
     async getAuthCode() {
       const regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-
       if (!regEmail.test(this.signUpForm.email)) {
-        return this.$toast.fail("请输入合法的邮箱！");
+        return this.$toast.fail({
+          message: "请输入合法的邮箱！",
+          className: "toast"
+        });
       }
       let TIME_COUNT = 60;
       if (!this.timer) {
@@ -189,9 +191,16 @@ export default {
         email: this.signUpForm.email
       });
       this.$toast.clear();
-      if (res.status !== 200) return this.$toast.fail("获取验证码失败！");
+      if (res.status !== 200)
+        return this.$toast.fail({
+          message: "获取验证码失败！",
+          className: "toast"
+        });
       else {
-        this.$toast.success("验证码已发送到您的邮箱！");
+        this.$toast.success({
+          message: "验证码已发送到您的邮箱！",
+          className: "toast"
+        });
       }
     },
     //注册按钮
