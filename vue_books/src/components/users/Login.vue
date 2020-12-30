@@ -163,6 +163,7 @@ export default {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   padding: 50px;
   width: 500px;
+  background: #fff;
   .el-input {
     width: 500px;
     margin-top: 20px;

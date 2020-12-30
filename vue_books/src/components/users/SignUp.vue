@@ -333,6 +333,7 @@ export default {
   margin: 50px auto;
   padding: 50px;
   width: 500px;
+  background: #fff;
   .el-input,
   .el-select,
   .el-button {

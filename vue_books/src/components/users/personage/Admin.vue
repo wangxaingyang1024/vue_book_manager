@@ -40,7 +40,9 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" round @click="editUser" id="editUserButton">提交</el-button>
+      <el-button type="primary" round @click="editUser" id="editUserButton"
+        >提交</el-button
+      >
     </el-form-item>
   </el-form>
 </template>
@@ -143,6 +145,8 @@ export default {
 <style lang="less" scoped>
 .el-form {
   padding: 50px;
+  background: #fff;
+  width: 500px;
   .el-input,
   .el-button {
     width: 500px;

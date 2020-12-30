@@ -42,7 +42,9 @@
     </el-form-item>
     <!-- 按钮区域 -->
     <el-form-item class="btns">
-      <el-button type="primary" @click="add" id="confirmButton">确认添加</el-button>
+      <el-button type="primary" @click="add" id="confirmButton"
+        >确认添加</el-button
+      >
     </el-form-item>
   </el-form>
 </template>
@@ -141,17 +143,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-input,
-.el-textarea,
-.el-cascader,
-.el-button {
-  width: 500px;
-  margin-top: 15px;
-}
-
 .el-form {
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   padding: 50px;
+  background: #fff;
   width: 500px;
+  .el-input,
+  .el-textarea,
+  .el-cascader,
+  .el-button {
+    width: 500px;
+    margin-top: 15px;
+  }
 }
 </style>

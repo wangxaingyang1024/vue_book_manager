@@ -166,6 +166,7 @@ export default {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
   padding: 50px;
   width: 500px;
+  background: rgb(255, 255, 255);
   .el-input,
   .el-button {
     width: 500px;
