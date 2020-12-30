@@ -8,8 +8,9 @@
       id="leaveProfile"
     >
     </van-nav-bar>
-    <van-form @submit="editUser">
+    <van-form>
       <van-field v-model="userForm.username" label="用户名" disabled />
+      <van-field v-model="userForm.email" label="邮箱" disabled />
       <van-field
         v-model="userForm.nickName"
         label="昵称"
@@ -62,7 +63,6 @@
           round
           block
           type="info"
-          native-type="submit"
           @click="editUser"
           id="editUserButton"
         >
@@ -169,12 +169,9 @@ export default {
       if (res.status !== 3032) {
         return this.$toast.fail({ message: "修改失败!", className: "toast" });
       } else {
-        // location.reload();
-        this.getUserForm();
         this.$toast.success({ message: "修改成功!", className: "toast" });
         window.sessionStorage.setItem("nickName", this.userForm.nickName);
-        history.go(-1);
-        location.reload;
+        this.$router.push("person");
       }
     },
     onClickLeft() {

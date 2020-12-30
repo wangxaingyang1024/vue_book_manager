@@ -101,30 +101,32 @@
           item1.likeCount
         }}</span>
         <span class="likeCount2" v-else>{{ item1.likeCount }}</span>
-        <van-icon
-          size="18"
-          name="thumb-circle-o"
-          v-if="likelist.indexOf(item1.myFlag) === -1"
-          @click="like(item1.myFlag)"
-          class="like"
-          id="likeButton"
-        />
-        <van-icon
-          size="18"
-          color="#f17a98"
-          v-else
-          name="thumb-circle"
-          class="like"
-          @click="like(item1.myFlag)"
-          id="likeButton"
-        />
-        <van-icon
-          class="item1"
-          size="18"
-          name="chat-o"
-          @click="interComment(item1)"
-          id="interCommentButton"
-        />
+        <div style="margin-right:35px">
+          <van-icon
+            size="18"
+            name="thumb-circle-o"
+            v-if="likelist.indexOf(item1.myFlag) === -1"
+            @click="like(item1.myFlag)"
+            class="like"
+            id="likeButton"
+          />
+          <van-icon
+            size="18"
+            color="#f17a98"
+            v-else
+            name="thumb-circle"
+            class="like"
+            @click="like(item1.myFlag)"
+            id="likeButton"
+          />
+          <van-icon
+            class="item1"
+            size="18"
+            name="chat-o"
+            @click="interComment(item1)"
+            id="interCommentButton"
+          />
+        </div>
         <div
           class="interComment"
           v-for="(item2, index2) in item1.children"
@@ -591,7 +593,7 @@ export default {
   .van-icon {
     float: right;
     top: -4px;
-    right: 3px;
+    right: -4px;
   }
 }
 .penetComment {
@@ -599,18 +601,20 @@ export default {
   margin-bottom: -10px;
   .van-icon {
     float: right;
-    right: -7px;
+    right: -15px;
   }
 }
 .likeCount1 {
   font-size: 12px;
   float: right;
+  margin-right: 25px;
   margin-top: -27px;
 }
 .likeCount2 {
   font-size: 12px;
   float: right;
   margin-top: -27px;
+  margin-right: 25px;
   color: #f17a98;
 }
 </style>
