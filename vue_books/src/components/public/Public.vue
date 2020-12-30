@@ -51,7 +51,6 @@
             v-loading="loading"
             @cell-click="show"
             ref="tableRef"
-            :row-key="getRowKeys"
           >
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -144,11 +143,7 @@ export default {
       this.$router.push("/signUp");
     },
     show(row) {
-      console.log(row.expanded);
       this.$refs.tableRef.toggleRowExpansion(row);
-    },
-    getRowKeys(row) {
-      return row.isbn;
     },
     //监听 pageSize 改变的事件
     handleSizeChange(newSize) {

@@ -1,6 +1,12 @@
 <template>
   <el-card>
-    <el-table :data="booklist" stripe v-loading="loading">
+    <el-table
+      :data="booklist"
+      stripe
+      v-loading="loading"
+      @cell-click="show"
+      ref="tableRef"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -128,6 +134,9 @@ export default {
       }
       this.$message.success("取消收藏成功！");
       this.getBookList();
+    },
+    show(row) {
+      this.$refs.tableRef.toggleRowExpansion(row);
     },
   },
 };

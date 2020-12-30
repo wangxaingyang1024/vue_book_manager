@@ -180,7 +180,7 @@
             </div>
           </div>
         </div>
-        <div v-if="active === item.myFlag" style="margin-left:70px">
+        <div v-if="active === item.myFlag" style="margin-left:70px" id="anchor">
           <el-input
             id="message2"
             type="textarea"
@@ -406,6 +406,9 @@ export default {
     //点击回复评论
     reply(item, subItem, tinyItem) {
       this.active = item.myFlag;
+      setTimeout(() => {
+        this.anchor();
+      }, 100);
       if (tinyItem) {
         this.parNumber = tinyItem.myNumber;
         this.parFlag = subItem.myFlag;
@@ -419,6 +422,12 @@ export default {
       this.parNumber = item.myNumber;
       this.parFlag = item.myFlag;
       this.place = `回复@${item.myNickname}:`;
+    },
+    anchor() {
+      document.querySelector("#anchor").scrollIntoView({
+        block: "end",
+        behavior: "smooth",
+      });
     },
     //计算总评论数
     commentNum() {
