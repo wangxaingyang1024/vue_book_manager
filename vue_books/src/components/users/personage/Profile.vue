@@ -99,8 +99,8 @@ export default {
         nickName: [
           {
             min: 3,
-            max: 10,
-            message: "长度3~10之间",
+            max: 20,
+            message: "长度3~20之间",
             trigger: "blur",
           },
         ],

@@ -32,8 +32,12 @@
         </span>
         <span v-else>
           <el-col :span="3">
-            <i class="el-icon-user-solid"> </i>
-            Hi, {{ this.nickName }}
+            <span
+              style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap; width:100%;display:block; "
+            >
+              <i class="el-icon-user-solid"> </i>
+              Hi, {{ this.nickName }}
+            </span>
           </el-col>
           <el-col :span="3">
             <el-button

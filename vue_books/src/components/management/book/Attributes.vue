@@ -43,7 +43,7 @@
         :model="addTypeForm"
         :rules="addTypeFormRules"
         ref="addTypeFormRef"
-        label-width="80px"
+        label-width="100px"
         status-icon
       >
         <el-form-item label="分类名称" prop="name">

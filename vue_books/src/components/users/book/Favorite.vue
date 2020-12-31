@@ -4,7 +4,7 @@
       :data="booklist"
       stripe
       v-loading="loading"
-      @cell-click="show"
+      @row-dblclick="show"
       ref="tableRef"
     >
       <el-table-column type="expand">
