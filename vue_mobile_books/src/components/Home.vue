@@ -7,7 +7,11 @@
       </template>
       <template #right>
         <span v-if="jobNumber === null">
-          <van-button icon="manager-o" size="mini" @click="login" id="loginButton"
+          <van-button
+            icon="manager-o"
+            size="mini"
+            @click="login"
+            id="loginButton"
             >登录</van-button
           >
         </span>
@@ -21,8 +25,13 @@
           v-else
           id="popover"
         >
-          <template #reference>
-            <van-icon name="manager-o" /> Hi,{{ nickName }}
+          <template #reference
+            ><span
+              style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap; max-width:80px;display:block; "
+            >
+              <van-icon name="manager-o" />
+              Hi,{{ nickName }}</span
+            >
           </template>
         </van-popover>
       </template>
@@ -31,11 +40,21 @@
     <router-view></router-view>
 
     <van-tabbar route>
-      <van-tabbar-item replace to="/books" icon="home-o" id="booksButton">主页</van-tabbar-item>
-      <van-tabbar-item replace to="/mybooks" icon="todo-list-o" id="mybooksButton"
+      <van-tabbar-item replace to="/books" icon="home-o" id="booksButton"
+        >主页</van-tabbar-item
+      >
+      <van-tabbar-item
+        replace
+        to="/mybooks"
+        icon="todo-list-o"
+        id="mybooksButton"
         >我的借阅</van-tabbar-item
       >
-      <van-tabbar-item replace to="/person" icon="user-circle-o" id="personButton"
+      <van-tabbar-item
+        replace
+        to="/person"
+        icon="user-circle-o"
+        id="personButton"
         >个人中心</van-tabbar-item
       >
       <div id="check" style="left:0" v-if="this.active === '#/books'"></div>
