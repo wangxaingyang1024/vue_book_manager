@@ -127,12 +127,4 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.el-pagination {
-  margin-top: 15px;
-}
-.el-card {
-  width: 100%;
-  min-height: calc(100% - 2px);
-}
-</style>
+<style lang="less" scoped></style>

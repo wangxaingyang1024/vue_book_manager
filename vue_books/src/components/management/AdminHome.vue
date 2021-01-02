@@ -107,35 +107,4 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.el-menu-item-group__title {
-  padding: 0 !important;
-}
-</style>
-<style lang="less" scoped>
-.el-header {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  height: 80px;
-  line-height: 50px;
-  text-align: center;
-  .topText {
-    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-    font-size: 25px;
-  }
-  i {
-    color: orange;
-  }
-}
-.el-aside {
-  height: calc(100vh - 92px);
-  margin-top: 15px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-.el-main {
-  //实现水平居中
-  justify-content: center;
-  //计算高度
-  max-height: calc(100vh - 95px);
-  width: 100vh;
-}
-</style>
+<style lang="less" scoped></style>

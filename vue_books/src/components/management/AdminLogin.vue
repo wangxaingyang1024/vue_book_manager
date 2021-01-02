@@ -21,47 +21,49 @@
       </el-row>
     </el-header>
     <el-main>
-      <!-- 登录表单区域 -->
-      <el-form
-        v-loading="loading"
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        label-width="0px"
-        class="login_form"
-      >
-        <!-- 用户名 -->
-        <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            prefix-icon="el-icon-user"
-            placeholder="用户名"
-            id="username"
-          ></el-input>
-        </el-form-item>
-        <!-- 密码 -->
-        <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            prefix-icon="el-icon-lock"
-            type="password"
-            placeholder="密码"
-            id="password"
-          ></el-input>
-        </el-form-item>
-        <!-- 按钮区域 -->
-        <el-form-item class="btns">
-          <el-button
-            type="primary"
-            round
-            @click="login"
-            class="login"
-            id="loginButton"
-            >登录</el-button
-          >
-          <!-- <el-button @click="signUp">注册</el-button> -->
-        </el-form-item>
-      </el-form>
+      <el-card>
+        <!-- 登录表单区域 -->
+        <el-form
+          v-loading="loading"
+          ref="loginFormRef"
+          :model="loginForm"
+          :rules="loginFormRules"
+          label-width="0px"
+          class="login_form"
+        >
+          <!-- 用户名 -->
+          <el-form-item prop="username">
+            <el-input
+              v-model="loginForm.username"
+              prefix-icon="el-icon-user"
+              placeholder="用户名"
+              id="username"
+            ></el-input>
+          </el-form-item>
+          <!-- 密码 -->
+          <el-form-item prop="password">
+            <el-input
+              v-model="loginForm.password"
+              prefix-icon="el-icon-lock"
+              type="password"
+              placeholder="密码"
+              id="password"
+            ></el-input>
+          </el-form-item>
+          <!-- 按钮区域 -->
+          <el-form-item class="btns">
+            <el-button
+              type="primary"
+              round
+              @click="login"
+              class="login"
+              id="loginButton"
+              >登录</el-button
+            >
+            <!-- <el-button @click="signUp">注册</el-button> -->
+          </el-form-item>
+        </el-form>
+      </el-card>
     </el-main>
   </el-container>
 </template>
@@ -142,35 +144,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-header {
-  line-height: 50px;
-  background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  height: 80px;
-  text-align: center;
-  .topText {
-    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-    font-size: 25px;
+.el-card {
+  width: 500px;
+  padding: 50px;
+  .el-input {
+    width: 450px;
+  }
+  .el-button {
+    width: 450px;
   }
 }
 .el-main {
   display: flex;
-  //实现垂直居中
   align-items: center;
-  //实现水平居中
   justify-content: center;
-  //计算高度
-  height: calc(100vh - 80px);
-}
-.el-form {
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  padding: 50px;
-  width: 500px;
-  background: rgb(255, 255, 255);
-  .el-input,
-  .el-button {
-    width: 500px;
-    margin-top: 20px;
-  }
 }
 </style>

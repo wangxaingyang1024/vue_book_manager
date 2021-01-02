@@ -4,7 +4,7 @@
 node_modules
 /dist
 /pc_book
-
+debug.log
 
 # local env files
 .env.local

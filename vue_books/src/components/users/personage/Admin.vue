@@ -1,50 +1,52 @@
 <template>
-  <!-- 个人信息区域 -->
-  <el-form
-    ref="editFormRef"
-    :model="userForm"
-    :rules="editFormRules"
-    status-icon
-  >
-    <!-- 密码 -->
-    <el-form-item prop="oldPsw">
-      <el-input
-        v-model="userForm.oldPsw"
-        prefix-icon="el-icon-lock"
-        type="password"
-        placeholder="请输入您的旧密码"
-        id="oldPsw"
-      ></el-input>
-    </el-form-item>
-    <!-- 新密码 -->
-    <el-form-item prop="newPsw">
-      <el-input
-        type="password"
-        v-model="userForm.newPsw"
-        autocomplete="off"
-        prefix-icon="el-icon-edit"
-        placeholder="请输入您的新密码"
-        id="newPsw"
-      ></el-input>
-    </el-form-item>
-    <!-- 二次验证密码 -->
-    <el-form-item prop="checkPsw">
-      <el-input
-        type="password"
-        v-model="userForm.checkPsw"
-        autocomplete="off"
-        prefix-icon="el-icon-edit"
-        placeholder="请再次输入您的新密码"
-        id="checkPsw"
-      ></el-input>
-    </el-form-item>
+  <el-card>
+    <!-- 个人信息区域 -->
+    <el-form
+      ref="editFormRef"
+      :model="userForm"
+      :rules="editFormRules"
+      status-icon
+    >
+      <!-- 密码 -->
+      <el-form-item prop="oldPsw">
+        <el-input
+          v-model="userForm.oldPsw"
+          prefix-icon="el-icon-lock"
+          type="password"
+          placeholder="请输入您的旧密码"
+          id="oldPsw"
+        ></el-input>
+      </el-form-item>
+      <!-- 新密码 -->
+      <el-form-item prop="newPsw">
+        <el-input
+          type="password"
+          v-model="userForm.newPsw"
+          autocomplete="off"
+          prefix-icon="el-icon-edit"
+          placeholder="请输入您的新密码"
+          id="newPsw"
+        ></el-input>
+      </el-form-item>
+      <!-- 二次验证密码 -->
+      <el-form-item prop="checkPsw">
+        <el-input
+          type="password"
+          v-model="userForm.checkPsw"
+          autocomplete="off"
+          prefix-icon="el-icon-edit"
+          placeholder="请再次输入您的新密码"
+          id="checkPsw"
+        ></el-input>
+      </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary" round @click="editUser" id="editUserButton"
-        >提交</el-button
-      >
-    </el-form-item>
-  </el-form>
+      <el-form-item>
+        <el-button type="primary" round @click="editUser" id="editUserButton"
+          >提交</el-button
+        >
+      </el-form-item>
+    </el-form>
+  </el-card>
 </template>
 
 <script>
@@ -143,14 +145,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.el-form {
-  padding: 50px;
-  background: #fff;
+.el-card {
   width: 500px;
-  .el-input,
+  padding: 50px;
+  .el-input {
+    width: 450px;
+  }
   .el-button {
-    width: 500px;
-    margin-top: 15px;
+    width: 450px;
   }
 }
 </style>

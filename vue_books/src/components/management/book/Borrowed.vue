@@ -141,10 +141,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-card {
-  width: 100%;
-  min-height: calc(100% - 2px);
-}
 .el-table {
   margin-top: 15px;
 }

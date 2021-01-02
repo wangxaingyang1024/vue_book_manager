@@ -1,78 +1,80 @@
 <template>
   <!-- 个人信息区域 -->
-  <el-form
-    ref="editFormRef"
-    :model="userForm"
-    :rules="editFormRules"
-    status-icon
-    v-loading="loading"
-  >
-    <!-- 用户名 -->
-    <el-form-item>
-      <el-input
-        v-model="userForm.username"
-        prefix-icon="el-icon-user"
-        disabled
-        id="username"
-      ></el-input>
-    </el-form-item>
-    <!-- 邮箱 -->
-    <el-form-item>
-      <el-input
-        v-model="userForm.email"
-        prefix-icon="el-icon-notebook-2"
-        disabled
-        id="email"
-      ></el-input>
-    </el-form-item>
-    <!-- 昵称 -->
-    <el-form-item prop="nickName">
-      <el-input
-        v-model="userForm.nickName"
-        prefix-icon="el-icon-mobile"
-        placeholder="设置您的昵称"
-        id="nickName"
-      ></el-input>
-    </el-form-item>
-    <!-- 性别 -->
-    <el-form-item prop="gender">
-      <el-radio v-model="userForm.gender" :label="1" id="gender_man"
-        >男</el-radio
-      >
-      <el-radio v-model="userForm.gender" :label="0" id="gender_woman"
-        >女</el-radio
-      >
-    </el-form-item>
-    <!-- 生日 -->
-    <el-form-item prop="date">
-      <el-date-picker
-        v-model="userForm.birth"
-        type="date"
-        placeholder="请选择您的生日"
-        format="yyyy 年 MM 月 dd 日"
-        value-format="yyyy-MM-dd"
-        :picker-options="pickerOptions"
-        id="birth"
-      >
+  <el-card>
+    <el-form
+      ref="editFormRef"
+      :model="userForm"
+      :rules="editFormRules"
+      status-icon
+      v-loading="loading"
+    >
+      <!-- 用户名 -->
+      <el-form-item>
+        <el-input
+          v-model="userForm.username"
+          prefix-icon="el-icon-user"
+          disabled
+          id="username"
+        ></el-input>
+      </el-form-item>
+      <!-- 邮箱 -->
+      <el-form-item>
+        <el-input
+          v-model="userForm.email"
+          prefix-icon="el-icon-notebook-2"
+          disabled
+          id="email"
+        ></el-input>
+      </el-form-item>
+      <!-- 昵称 -->
+      <el-form-item prop="nickName">
+        <el-input
+          v-model="userForm.nickName"
+          prefix-icon="el-icon-mobile"
+          placeholder="设置您的昵称"
+          id="nickName"
+        ></el-input>
+      </el-form-item>
+      <!-- 性别 -->
+      <el-form-item prop="gender">
+        <el-radio v-model="userForm.gender" :label="1" id="gender_man"
+          >男</el-radio
         >
-      </el-date-picker>
-    </el-form-item>
-    <!-- 电话 -->
-    <el-form-item prop="phone">
-      <el-input
-        v-model="userForm.phone"
-        prefix-icon="el-icon-phone-outline"
-        placeholder="请输入您的电话"
-        id="phone"
-      ></el-input>
-    </el-form-item>
-    <!-- 按钮区域 -->
-    <el-form-item>
-      <el-button type="primary" round @click="editUser" id="editUserButton"
-        >提交</el-button
-      >
-    </el-form-item>
-  </el-form>
+        <el-radio v-model="userForm.gender" :label="0" id="gender_woman"
+          >女</el-radio
+        >
+      </el-form-item>
+      <!-- 生日 -->
+      <el-form-item prop="date">
+        <el-date-picker
+          v-model="userForm.birth"
+          type="date"
+          placeholder="请选择您的生日"
+          format="yyyy 年 MM 月 dd 日"
+          value-format="yyyy-MM-dd"
+          :picker-options="pickerOptions"
+          id="birth"
+        >
+          >
+        </el-date-picker>
+      </el-form-item>
+      <!-- 电话 -->
+      <el-form-item prop="phone">
+        <el-input
+          v-model="userForm.phone"
+          prefix-icon="el-icon-phone-outline"
+          placeholder="请输入您的电话"
+          id="phone"
+        ></el-input>
+      </el-form-item>
+      <!-- 按钮区域 -->
+      <el-form-item>
+        <el-button type="primary" round @click="editUser" id="editUserButton"
+          >提交</el-button
+        >
+      </el-form-item>
+    </el-form>
+  </el-card>
 </template>
 
 <script>
@@ -168,18 +170,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.el-form {
-  padding: 50px;
-  width: 500px;
-  background: #fff;
-  .el-input,
-  .el-select,
-  .el-button {
-    width: 500px;
-    margin-top: 20px;
-  }
-}
 .el-card {
-  width: 100%;
+  width: 500px;
+  padding: 50px;
+  .el-input {
+    width: 450px;
+  }
+  .el-button {
+    width: 450px;
+  }
 }
 </style>

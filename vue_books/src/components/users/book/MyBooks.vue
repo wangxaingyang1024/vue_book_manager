@@ -100,28 +100,4 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.el-form-item__label {
-  width: 60px;
-  font-size: 15px;
-  color: #0a5e3ec9;
-}
-</style>
-<style lang="less" scoped>
-.el-card {
-  width: 100%;
-  min-height: calc(100% - 2px);
-}
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99bfaf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 50%;
-}
-</style>
+<style lang="less"></style>

@@ -22,85 +22,85 @@
       </el-row>
     </el-header>
     <el-main>
-      <!-- 注册表单区域 -->
-      <el-form
-        ref="addFormRef"
-        :model="addForm"
-        :rules="addFormRules"
-        status-icon
-        v-loading="loading"
-        inline
-      >
-        <!-- 用户名 -->
-        <el-form-item prop="username">
-          <el-input
-            v-model="addForm.username"
-            prefix-icon="el-icon-user"
-            placeholder="设置用户名"
-            v-focus
-            id="username"
-          ></el-input>
-        </el-form-item>
-        <!-- 密码 -->
-        <el-form-item prop="password">
-          <el-input
-            v-model="addForm.password"
-            prefix-icon="el-icon-lock"
-            type="password"
-            placeholder="设置您的登录密码"
-            id="password"
-          ></el-input>
-        </el-form-item>
-        <!-- 二次验证密码 -->
-        <el-form-item prop="checkPassword">
-          <el-input
-            type="password"
-            v-model="addForm.checkPassword"
-            autocomplete="off"
-            prefix-icon="el-icon-edit"
-            placeholder="请再次输入您的密码"
-            id="checkPassword"
-          ></el-input>
-        </el-form-item>
-        <!-- 邮箱 -->
-        <el-form-item prop="email">
-          <el-input
-            v-model="addForm.email"
-            prefix-icon="el-icon-notebook-2"
-            placeholder="请设置您的邮箱"
-            id="email"
-          ></el-input>
-        </el-form-item>
-        <!-- 验证码 -->
-        <el-form-item prop="code">
-          <el-input
-            v-model="addForm.code"
-            prefix-icon="el-icon-edit-outline"
-            placeholder="请输入验证码"
-            id="code"
-            class="code"
-            style="width: 300px"
-          ></el-input>
-        </el-form-item>
-
-        <el-button
-          v-if="show"
-          type="success"
-          class="getAuthCode"
-          id="getAuthCodeButton"
-          @click="getAuthCode"
-          >获取验证码</el-button
+      <el-card>
+        <!-- 注册表单区域 -->
+        <el-form
+          ref="addFormRef"
+          :model="addForm"
+          :rules="addFormRules"
+          status-icon
+          v-loading="loading"
+          inline
         >
-        <el-button v-if="!show" disabled type="info" class="getAuthCode"
-          >{{ count }}s后可重发
-        </el-button>
-        <!-- 按钮区域 -->
-        <el-form-item class="btns">
-          <el-button type="primary" round @click="addUser" id="addUserButton"
-            >提交</el-button
+          <!-- 用户名 -->
+          <el-form-item prop="username">
+            <el-input
+              v-model="addForm.username"
+              prefix-icon="el-icon-user"
+              placeholder="设置用户名"
+              v-focus
+              id="username"
+            ></el-input>
+          </el-form-item>
+          <!-- 密码 -->
+          <el-form-item prop="password">
+            <el-input
+              v-model="addForm.password"
+              prefix-icon="el-icon-lock"
+              type="password"
+              placeholder="设置您的登录密码"
+              id="password"
+            ></el-input>
+          </el-form-item>
+          <!-- 二次验证密码 -->
+          <el-form-item prop="checkPassword">
+            <el-input
+              type="password"
+              v-model="addForm.checkPassword"
+              autocomplete="off"
+              prefix-icon="el-icon-edit"
+              placeholder="请再次输入您的密码"
+              id="checkPassword"
+            ></el-input>
+          </el-form-item>
+          <!-- 邮箱 -->
+          <el-form-item prop="email">
+            <el-input
+              v-model="addForm.email"
+              prefix-icon="el-icon-notebook-2"
+              placeholder="请设置您的邮箱"
+              id="email"
+            ></el-input>
+          </el-form-item>
+          <!-- 验证码 -->
+          <el-form-item prop="code">
+            <el-input
+              v-model="addForm.code"
+              prefix-icon="el-icon-edit-outline"
+              placeholder="请输入验证码"
+              id="code"
+              style="width: 330px"
+            ></el-input>
+          </el-form-item>
+          <el-button
+            v-if="show"
+            type="success"
+            class="getAuthCode"
+            id="getAuthCodeButton"
+            @click="getAuthCode"
+            >获取验证码</el-button
           >
-        </el-form-item>
-      </el-form>
+          <el-button v-if="!show" disabled type="info" class="getAuthCode"
+            >{{ count }}s后可重发
+          </el-button>
+          <!-- 按钮区域 -->
+          <el-form-item class="btns">
+            <el-button type="primary" round @click="addUser" id="addUserButton"
+              >提交</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </el-card>
     </el-main>
   </el-container>
 </template>
@@ -298,50 +298,20 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.el-form-item__error {
-  margin-top: 7px;
-  margin-left: 7px;
-}
-.getAuthCode {
-  width: 120px !important;
-  margin-left: 70px;
-}
-</style>
 <style lang="less" scoped>
-.el-header {
-  line-height: 50px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  height: 80px;
-  text-align: center;
-  .topText {
-    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-    font-size: 25px;
+.el-card {
+  width: 500px;
+  padding: 50px;
+  .el-input {
+    width: 450px;
+  }
+  #addUserButton {
+    width: 450px;
   }
 }
 .el-main {
   display: flex;
-  //实现垂直居中
   align-items: center;
-  //实现水平居中
   justify-content: center;
-  //计算高度
-  min-height: calc(100vh - 80px);
-}
-.el-form {
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  margin: 50px auto;
-  padding: 50px;
-  width: 500px;
-  background: #fff;
-  .el-input,
-  .el-select,
-  .el-button {
-    width: 500px;
-    margin-top: 20px;
-  }
-  .el-date-editor {
-    margin-bottom: 20px;
-  }
 }
 </style>

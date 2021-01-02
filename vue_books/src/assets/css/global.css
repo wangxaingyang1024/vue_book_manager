@@ -6,7 +6,52 @@ body,
   margin: 0;
   padding: 0;
 }
+/* 背景 */
+#canvas {
+  background: rgba(194, 219, 235, 0.555);
+  width: 100%;
+  height: calc(100vh - 60px);
+  position: absolute;
+  margin-top: 60px;
+  z-index: -1;
+}
+.el-header {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+}
+.el-header i {
+  color: orange;
+}
+.topText {
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-size: 25px;
+}
+.el-aside {
+  background: #fff;
+  margin-top: 20px;
+  height: calc(100vh - 97px);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
 .el-main {
-  background: rgba(207, 223, 233, 0.555);
-  min-height: calc(100vh - 60px);
+  width: 100%;
+  height: calc(100vh - 60px);
+}
+/* 菜单栏 */
+.el-menu-item-group__title {
+  padding: 0 !important;
+}
+/* table展开栏 */
+.demo-table-expand label {
+  width: 90px;
+  color: #327894;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 40%;
+}
+.el-pagination {
+  margin-top: 15px;
 }

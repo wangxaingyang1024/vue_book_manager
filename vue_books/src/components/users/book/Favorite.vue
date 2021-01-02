@@ -148,28 +148,4 @@ export default {
   color: #0a5e3ec9;
 }
 </style>
-<style lang="less" scoped>
-.el-table__column-filter-trigger i {
-  font-size: 20px;
-}
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 50%;
-}
-.el-card {
-  width: 100%;
-  min-height: calc(100% - 2px);
-}
-.el-pagination,
-.el-table {
-  margin-top: 15px;
-}
-</style>
+<style lang="less" scoped></style>

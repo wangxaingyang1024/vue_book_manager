@@ -106,7 +106,15 @@
         </el-form-item>
         <!-- 简介 -->
         <el-form-item label="简介" prop="synopsis">
-          <el-input v-model="editForm.synopsis" id="synopsis"></el-input>
+          <el-input
+            type="textarea"
+            resize="none"
+            rows="3"
+            v-model="editForm.synopsis"
+            prefix-icon="el-icon-edit-outline"
+            placeholder="添加简介"
+            id="synopsis"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -237,9 +245,9 @@ export default {
     },
     //获取书籍分类
     async getTypeList() {
-      this.loading = !this.loading;
+      // this.loading = !this.loading;
       const { data: res } = await this.$http.get("admin/type/3");
-      this.loading = !this.loading;
+      // this.loading = !this.loading;
       // console.log(res.data);
       if (res.status !== 200)
         return this.$message.error("获取书籍分类列表失败！");
@@ -316,16 +324,8 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.el-table__column-filter-trigger i {
-  font-size: 20px;
-}
-.el-pagination,
+<style lang="less" scoped>
 .el-table {
   margin-top: 15px;
-}
-.el-card {
-  width: 100%;
-  min-height: calc(100% - 2px);
 }
 </style>
