@@ -21,7 +21,7 @@ export default {
     for (var i = 0; i < snow; i++) {
       arr.push({
         x: Math.random() * wid,
-        y: Math.random() * hei,
+        y: Math.random() * (hei + 60),
         r: Math.random() * 7,
       });
     }

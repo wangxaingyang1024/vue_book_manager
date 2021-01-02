@@ -5,6 +5,9 @@
       stripe
       v-loading="loading"
       @row-dblclick="show"
+      @expand-change="expandSelect"
+      :row-key="getRowKeys"
+      :expand-row-keys="expands"
       ref="tableRef"
     >
       <el-table-column type="expand">
@@ -54,6 +57,11 @@ export default {
       loading: false,
       booklist: [],
       jobNumber: window.sessionStorage.getItem("jobNumber"),
+      getRowKeys(row) {
+        // 行数据的Key
+        return row.isbn;
+      },
+      expands: [], // 通过该属性设置Table目前的展开行，需要设置row-key属性才能使用，该属性为展开行的keys数组
     };
   },
   created() {
@@ -96,6 +104,13 @@ export default {
     },
     show(row) {
       this.$refs.tableRef.toggleRowExpansion(row);
+    },
+    // table每次只能展开一行
+    expandSelect(row, expandedRows) {
+      this.expands = [];
+      if (expandedRows.length > 0) {
+        row ? this.expands.push(row.isbn) : "";
+      }
     },
   },
 };

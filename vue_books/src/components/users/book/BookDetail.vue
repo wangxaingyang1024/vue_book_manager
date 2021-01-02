@@ -423,11 +423,18 @@ export default {
       this.parFlag = item.myFlag;
       this.place = `回复@${item.myNickname}:`;
     },
+    //自动滚动至输入框
     anchor() {
+      console.log(document.querySelector("#anchor").scrollHeight);
       document.querySelector("#anchor").scrollIntoView({
         block: "end",
         behavior: "smooth",
       });
+      //TODO 自动获取焦点，需要改进
+      setTimeout(() => {
+        document.getElementById("message2").focus();
+      }, 777);
+      // document.getElementById("message2").focus();
     },
     //计算总评论数
     commentNum() {

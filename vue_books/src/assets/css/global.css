@@ -44,7 +44,7 @@ body,
 }
 /* table展开栏 */
 .demo-table-expand label {
-  width: 90px;
+  width: 70px;
   color: #327894;
 }
 .demo-table-expand .el-form-item {
